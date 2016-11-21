@@ -1,5 +1,7 @@
 use Si2
 
+--Falta verificar se o objeto é not null
+
 go
 create proc dbo.InsertEquipamentos
 @descr varchar(200),
