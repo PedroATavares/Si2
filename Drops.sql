@@ -1,0 +1,11 @@
+if object_id('AluguerPromocao') is not null  DROP TABLE AluguerPromocao
+if object_id('AluguerEquipamentos') is not null  DROP TABLE AluguerEquipamentos
+if object_id('Aluguer') is not null  DROP TABLE Aluguer
+if object_id('Empregado') is not null  DROP TABLE Empregado
+if object_id('Cliente') is not null  DROP TABLE Cliente
+if object_id('TempoExtra') is not null  DROP TABLE TempoExtra
+if object_id('Descontos') is not null  DROP TABLE Descontos
+if object_id('Promocoes') is not null  DROP TABLE Promocoes
+if object_id('PrecoAluguer') is not null  DROP TABLE PrecoAluguer
+if object_id('Equipamentos') is not null  DROP TABLE Equipamentos
+if object_id('Tipo') is not null  DROP TABLE Tipo
