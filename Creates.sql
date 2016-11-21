@@ -1,3 +1,5 @@
+use Si2
+
 create table Tipo(
 	Nome varchar(50) primary key,
 	Descricao varchar (100) NOT NULL
@@ -6,7 +8,7 @@ create table Tipo(
 Create table Equipamentos(
 	Codigo int IDENTITY(1,1) primary key,
 	Descrip varchar(200) NOT NULL,
-	Nome varchar(50) foreign key references Tipo
+	Tipo varchar(50) foreign key references Tipo
 )
 
 create table PrecoAluguer(
