@@ -1,6 +1,10 @@
 if object_id('AluguerPromocao') is not null  DROP TABLE AluguerPromocao
 if object_id('AluguerEquipamentos') is not null  DROP TABLE AluguerEquipamentos
-if object_id('Aluguer') is not null  DROP TABLE Aluguer
+if object_id('fbo.DeleteAluguer') is not null drop trigger fbo.DeleteAluguer
+if object_id('fbo.UpdateAluguer') is not null drop trigger fbo.UpdateAluguer
+if object_id('fbo.Aluguer') is not null  DROP TABLE fbo.Aluguer
+if object_id('dbo.Aluguer') is not null  DROP View dbo.Aluguer
+if schema_id('fbo') is not null  drop schema fbo
 if object_id('Empregado') is not null  DROP TABLE Empregado
 if object_id('Cliente') is not null  DROP TABLE Cliente
 if object_id('TempoExtra') is not null  DROP TABLE TempoExtra
