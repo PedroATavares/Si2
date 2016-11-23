@@ -1,5 +1,3 @@
-use Si2
-
 --Falta verificar se o objeto é not null
 
 if object_id('dbo.InsertEquipamentos') is not null drop proc dbo.InsertEquipamentos
