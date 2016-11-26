@@ -15,7 +15,7 @@ insert into Empregado values('Maria Papoila') --Id 1
 insert into Empregado values('Asdrubal Mauricio') --Id 2
 
 
-insert into Cliente (NIF,nome,Morada) values (0,'cliente final','')
+insert into Cliente (NIF,nome,Morada) values (000000000,'cliente final','')
 insert into Cliente (NIF, nome,	Morada) values (123456789, 'Rita Catita', 'Avenida Morais')
 insert into Cliente (NIF, nome,	Morada) values (987654321, 'Gervasio Manel', 'Rua de Sesamo')
 
@@ -41,6 +41,22 @@ insert into AluguerPromocao values (1,2)
 insert into Aluguer(DataInicio ,DataFim,Duracao,NumEmp,CodCli) values('2016-11-22 15:00:00','2016-11-22 16:00:00',60,2,2)
 insert into AluguerEquipamentos values(35,2,3)
 insert into AluguerPromocao values (2,1)
+
+
+insert into Tipo values ('Banana','Bananas Aquaticas')
+insert into Equipamentos values ('Banana Grande', 'Banana')
+insert into Empregado values ('Joao Madeira')
+insert into Cliente values (129364065,'','Quinta das Placas')
+insert into Aluguer values ('2016-11-1','2016-11-13',5,2,2)
+insert into Aluguer values ('2016-11-1','2016-11-14',5,1,1)
+insert into AluguerEquipamentos values (10,4,3)
+
+insert into Equipamentos values ('descricao Equ1', 'tipoDoGajo')
+insert into Empregado values ('empregado1')
+insert into Cliente values (130253849,'cliente1','morada1')
+
+insert into AluguerEquipamentos values (10,3,2)
+
 
 
 
