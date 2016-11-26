@@ -29,28 +29,54 @@ create table PrecoAluguer(
 	primary key (DataI,EquipId)
 )
 
-create table Promocoes(
+create table fbo.Promocoes(
 	Id int IDENTITY(1,1) primary key,
 	DataInicio Date NOT NULL,
 	DataFim Date NOT NULL,
-	Descrip varchar(200) NOT NULL
+	Descrip varchar(200) NOT NULL,
+	Removed int default 0, 
+	constraint Promocoes_Removed_Constraint check (Removed in (1,0))
 )
+go
+create view dbo.Promocoes as
+select Id,Descrip,DataInicio,DataFim
+from fbo.Promocoes
+where Removed=0
+go
+create trigger fbo.DeletePromocoes
+on fbo.Promocoes
+Instead of delete
+as
+DELETE a
+FROM 
+    fbo.Promocoes as a
+    JOIN deleted as b
+        ON a.Id = b.Id
+        AND a.Id not in (select id from deleted inner join  AluguerPromocao 
+							on deleted.id= AluguerPromocao.IdProm)
+
+UPDATE fbo.Promocoes
+    SET Removed = 1
+	WHERE id IN (SELECT t.id 
+                  FROM deleted t)
+
+go
 
 create table Descontos(
 	Preco smallmoney, -- Em euros
-	Id int foreign key references Promocoes 
+	Id int foreign key references fbo.Promocoes 
 )
 
 
 create table TempoExtra(
 	TempoExtra int, --Em minutos
-	Id int foreign key references Promocoes
+	Id int foreign key references fbo.Promocoes
 )
 
 create table fbo.Cliente(
 	Codigo int IDENTITY(0,1) primary key,
-	NIF int NULL,
-	nome varchar(50) NULL,
+	NIF int NULL unique,
+	Nome varchar(50) NULL,
 	Morada varchar(100) NULL,
 	Removed int default 0, 
 	constraint Cliente_Removed_Constraint check (Removed in (1,0))
@@ -98,7 +124,7 @@ create table AluguerEquipamentos(
 
 create table AluguerPromocao(
 	NumAluguer int foreign key references fbo.Aluguer,
-	IdProm int foreign key references Promocoes
+	IdProm int foreign key references fbo.Promocoes
 	primary key (NumAluguer,IdProm)
 )
 
@@ -107,27 +133,18 @@ create trigger fbo.DeleteCliente
 on fbo.cliente
 Instead of delete
 as
-
-	select * from fbo.Aluguer inner join deleted
-	on fbo.Aluguer.CodCli=deleted.Codigo
-	where DataInicio<getDate()
-
-if @@ROWCOUNT = 0
-begin
-	DELETE a
+DELETE a
 FROM 
     fbo.Cliente as a
     JOIN deleted as b
         ON a.Codigo = b.Codigo
-end
+        AND a.Codigo not in (select Codigo from deleted inner join  Aluguer 
+							on deleted.Codigo= Aluguer.CodCli)
 
-else
-begin
-	UPDATE fbo.Cliente 
+UPDATE fbo.Cliente 
     SET Removed = 1
 	WHERE Codigo IN (SELECT t.Codigo 
                   FROM deleted t)
-end
 go
 create trigger fbo.DeleteAluguer
 on fbo.Aluguer
@@ -174,38 +191,86 @@ create trigger fbo.DeleteEmpregado
 on fbo.Empregado
 Instead of delete
 as
-
-	select * from fbo.Aluguer inner join deleted
-	on fbo.Aluguer.NumEmp=deleted.Codigo
-	where DataInicio<getDate()
-
-if @@ROWCOUNT = 0
-begin
-	DELETE a
+DELETE a
 FROM 
     fbo.Empregado as a
     JOIN deleted as b
         ON a.Codigo = b.Codigo
-end
+        AND a.Codigo not in (select Codigo from deleted inner join  Aluguer 
+							on deleted.Codigo= Aluguer.NumEmp)
 
-else
-begin
-	UPDATE fbo.Empregado 
+UPDATE fbo.Empregado 
     SET Removed = 1
 	WHERE Codigo IN (SELECT t.Codigo 
                   FROM deleted t)
-end
+
 go
 create trigger fbo.DeleteEquipamento
 on fbo.Equipamentos
 Instead of delete
 as
-select * from deleted inner join (
-select * from AluguerEquipamentos inner join Aluguer
+DELETE a
+FROM 
+    fbo.Equipamentos as a
+    JOIN deleted as b
+        ON a.Codigo = b.Codigo
+        AND a.Codigo not in (select Codigo from deleted inner join  AluguerEquipamentos 
+							on deleted.Codigo= AluguerEquipamentos.CodEquip)
+
+UPDATE fbo.Equipamentos
+    SET Removed = 1
+	WHERE Codigo IN (SELECT t.Codigo 
+                  FROM deleted t)
+
+go
+
+/*
+insert into Cliente (nif,nome,Morada) values (1,'1','1')
+insert into Cliente (nif,nome,Morada) values (2,'2','2')
+insert into Cliente (nif,nome,Morada) values (3,'3','3')
+
+insert into empregado (nome) values ('1')
+insert into empregado (nome) values ('2')
+
+insert into aluguer (CodCli,DataFim,DataInicio,Duracao,NumEmp) values (0,'2010-10-12','2010-10-11',10,1)
+
+insert into tipo values ('canoa', 'canoas bonitas')
+
+insert into equipamentos (descrip,tipo) values ('canoa amarela','canoa')
+insert into equipamentos (descrip,tipo) values ('canoa vermelha','canoa')
+insert into equipamentos (descrip,tipo) values ('canoa azul','canoa')
+
+insert into AluguerEquipamentos values (10,1,1)
+insert into AluguerEquipamentos values (10,1,2)
+
+insert into promocoes (descrip,datainicio,datafim) values ('1','2010-10-10','2012-10-10')
+insert into TempoExtra values (10,1)
+
+insert into promocoes (descrip,datainicio,datafim) values ('2','2010-10-10','2012-10-10')
+insert into Descontos values (10,2)
+
+insert into promocoes (descrip,datainicio,datafim) values ('3','2010-10-10','2012-10-10')
+
+
+delete from Cliente where Codigo=1
+delete from empregado where Codigo=2
+
+delete from equipamentos where tipo = 'canoa'
+
+
+select * from fbo.empregado
+select * from fbo.cliente
+select * from fbo.equipamentos
+select * from fbo.promocoes
+
+
+select Codigo from deleted inner join (
+select * from fbo.AluguerEquipamentos inner join Aluguer
 	on AluguerEquipamentos.NumAluguer=Aluguer.Num) as R1
 	on deleted.Codigo= r1.CodEquip
 	where DataInicio<getDate()
-
+	group by Codigo
+	
 if @@ROWCOUNT = 0
 begin
 	DELETE a
@@ -229,18 +294,4 @@ begin
 	WHERE Codigo IN (SELECT t.Codigo 
                   FROM deleted t)
 end
-go
-
-/*
-insert into Cliente (nif,nome,Morada) values (1,'1','1')
-insert into Cliente (nif,nome,Morada) values (2,'2','2')
-insert into Cliente (nif,nome,Morada) values (3,'3','3')
-
-insert into empregado (nome) values ('1')
-
-insert into aluguer (CodCli,DataFim,DataInicio,Duracao,NumEmp) values (0,'2010-10-12','2010-10-11',10,1)
-
-delete from Cliente where Codigo=0
-
-select * from fbo.empregado
 */
