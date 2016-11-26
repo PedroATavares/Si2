@@ -14,7 +14,7 @@ insert into PrecoAluguer values ('2016-01-01','2017-01-01',60,35,3)
 insert into Empregado values('Maria Papoila') --Id 1
 insert into Empregado values('Asdrubal Mauricio') --Id 2
 
---Passar de nome para Nome e por o NIF a unique
+
 insert into Cliente (NIF,nome,Morada) values (0,'cliente final','')
 insert into Cliente (NIF, nome,	Morada) values (123456789, 'Rita Catita', 'Avenida Morais')
 insert into Cliente (NIF, nome,	Morada) values (987654321, 'Gervasio Manel', 'Rua de Sesamo')
@@ -22,7 +22,7 @@ insert into Cliente (NIF, nome,	Morada) values (987654321, 'Gervasio Manel', 'Ru
 insert into Promocoes (DataInicio,DataFim,Descrip) values ('2016-11-1','2017-01-01','Promoçao de inverno, 15 minutos a mais dentro de agua gelada')
 insert into Promocoes (DataInicio,DataFim,Descrip)values ('2016-11-01','2017-01-01','Promoçao de inverno, desconto de 20% em todos os equipamentos')
 
-insert into Descontos values (20,2) --pede um small money, devia de pedir um int
+insert into Descontos values (20,2) 
 insert into TempoExtra values (15,1)
 
 /*
