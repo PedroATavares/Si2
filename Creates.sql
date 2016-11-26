@@ -21,12 +21,12 @@ where Removed=0
 go
 
 create table PrecoAluguer(
-	DataI Date NOT NULL,
-	DataF Date NOT NULL,
-	Duration int, --Em minutos
+	ValidadeI Date,
+	ValidadeF Date NOT NULL,
+	Duracao int, --Em minutos
 	Valor SmallMoney,--Em euros 
 	EquipId int foreign key references fbo.Equipamentos,
-	primary key (DataI,EquipId)
+	primary key (ValidadeI, Duracao,EquipId)
 )
 
 create table fbo.Promocoes(
