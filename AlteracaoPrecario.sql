@@ -8,12 +8,13 @@ create proc alteracoesPrecario
 @EquipId int
 as
 
-if @duracao is not null
+if @ValidadeF is not null
 begin
 	update PrecoAluguer
-	set Duracao=@duracao
+	set ValidadeF=@ValidadeF
 	where ValidadeI=@ValidadeI and Duracao=@duracao and EquipId=@EquipId
 end
+
 
 if @valor is not null
 begin
