@@ -4,10 +4,10 @@ go
 create procedure InsertPromocoes
 @DataInicio Date,
 @DataFim Date,
-@Descrip varchar(200), 
+@Descricao varchar(200), 
 @id int output
 as
-	INSERT INTO Promocoes(DataInicio,DataFim,Descrip) values( @DataInicio, @DataFim, @Descrip)
+	INSERT INTO Promocoes(DataInicio,DataFim,Descricao) values( @DataInicio, @DataFim, @Descricao)
 	select @id= SCOPE_IDENTITY()
 	return
 go
@@ -27,7 +27,7 @@ create procedure UpdatePromocoes
 @id int,
 @DataInicio Date = null,
 @DataFim Date = null,
-@Descrip varchar(200) = null 
+@Descricao varchar(200) = null 
 as
 
 IF @dataInicio is not null
@@ -42,10 +42,10 @@ begin
 	set DataFim = @DataFim
 	where id = @id
 end
-IF @Descrip is not null
+IF @Descricao is not null
 begin
 	update Promocoes
-	set Descrip = @Descrip
+	set Descrip = @Descricao
 	where id = @id
 end
 go

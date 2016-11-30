@@ -1,11 +1,11 @@
 if object_id('InserirAluguerComCliente') is not null drop proc InserirAluguerComCliente
 go
 create proc InserirAluguerComCliente
-@CodCli int,
+@DataI DateTime,
+@DataF DateTime, 
 @Duracao int,
 @NumEmp int,
-@DataI DateTime = GETDATE,
-@DataF DateTime =getDate, 
+@CodCli int,
 @id int output
 as
 insert into Aluguer values (@DataI,@DataF,@Duracao,@NumEmp,@CodCli)

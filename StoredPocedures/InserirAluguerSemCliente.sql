@@ -7,15 +7,15 @@ create procedure InserirAluguerSemCliente
 @idCliente int output,
 @Duracao int,
 @NumEmp int,
-@DataI DateTime = GETDATE,
-@DataF DateTime =getDate, 
+@DataI DateTime,
+@DataF DateTime, 
 @idAluguer int output
 
 as
 	INSERT INTO Cliente values( @Nif, @Nome, @Morada)
 	select @idCliente= SCOPE_IDENTITY()
 
-	exec InserirAluguerComCliente @idCliente,@Duracao,@DataI,@DataF
+	exec InserirAluguerComCliente @DataI,@DataF,@Duracao,@NumEmp,@idCliente,@idAluguer output
 	select @idAluguer= SCOPE_IDENTITY()
 	
 	return
