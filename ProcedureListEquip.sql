@@ -7,13 +7,12 @@ create proc listarEquipamentos
 as
 if @ValidadeF is not null and @ValidadeI is not null and @tipo is not null
 begin
-	select * from(
-		select CodEquip from (
-			select Num from Aluguer 
-			where DataInicio>@ValidadeI and DataFim<@ValidadeF
-		)as temp1 cross join AluguerEquipamentos 
-		where Num=NumAluguer
-	)as temp2 cross join Equipamentos
-	where CodEquip = Codigo and Tipo=@tipo
+	select Codigo, Descrip, Tipo from (select Codigo as Id from Equipamentos 
+		where Tipo=@tipo
+			except
+			select CodEquip from (
+				select Num from Aluguer 
+				where DataInicio between @ValidadeI and @ValidadeF and DataFim between @ValidadeI and @ValidadeF
+			)as temp1 inner join AluguerEquipamentos on Num=NumAluguer
+			)as temp2 inner join Equipamentos on Codigo = Id
 end
-
