@@ -21,6 +21,7 @@ create table PrecoAluguer(
 	Duracao int, --Em minutos
 	Valor SmallMoney,--Em euros 
 	EquipId int foreign key references fbo.Equipamentos,
+	constraint PrecoAluguer_Data_Constraint check (ValidadeI<ValidadeF),
 	primary key (ValidadeI, Duracao,EquipId)
 )
 
@@ -54,6 +55,7 @@ create table fbo.Cliente(
 	constraint Cliente_Removed_Constraint check (Removido in (1,0))
 )
 go
+insert into fbo.Cliente(NIF) values (0)
 
 
 create table fbo.Empregado(
