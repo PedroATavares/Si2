@@ -23,14 +23,6 @@ insert into Promocoes (DataInicio,DataFim,Descricao)values ('2016-11-01','2017-0
 insert into Descontos values (20,2) 
 insert into TempoExtra values (15,1)
 
-/*
-select * from Tipo
-select * from Equipamentos
-select * from Empregado
-select * from Cliente
-select * from Promocoes
-*/
-
 insert into Aluguer(DataInicio ,DataFim,Duracao,NumEmp,CodCli) values('2016-11-22 15:00:00','2016-11-22 15:30:00',30,1,1)
 insert into AluguerEquipamentos values(20,1,1)
 insert into AluguerEquipamentos values(20,1,2)
@@ -49,12 +41,19 @@ insert into Aluguer values ('2016-11-1','2016-11-13',5,2,2)
 insert into Aluguer values ('2016-11-1','2016-11-14',5,1,1)
 insert into AluguerEquipamentos values (10,4,3)
 
---insert into Equipamentos values ('descricao Equ1', 'tipoDoGajo')
---insert into Empregado values ('empregado1')
---insert into Cliente values (130253849,'cliente1','morada1')
+insert into Equipamentos values ('Banana Amarela', 'Banana')
+insert into Empregado values ('empregado1')
+insert into Cliente values (130253849,'cliente1','morada1')
 
 insert into AluguerEquipamentos values (10,3,2)
 
+/*
+select * from Tipo
+select * from Equipamentos
+select * from Empregado
+select * from Cliente
+select * from Promocoes
+*/
 
 
 
