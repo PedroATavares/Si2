@@ -22,11 +22,4 @@ begin
 	set Valor=@valor
 	where ValidadeI=@ValidadeI and Duracao=@duracao and EquipId=@EquipId
 end
-
-if @EquipId is not null
-begin
-	update PrecoAluguer
-	set EquipId=@EquipId
-	where ValidadeI=@ValidadeI and Duracao=@duracao and EquipId=@EquipId
-end
 go

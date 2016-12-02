@@ -1,8 +1,9 @@
 --Listar todos os equipamentos livres para um determinado Tempo e Tipo
-
+if object_id('listarEquipamentos') is not null drop proc listarEquipamentos
+go
 create proc listarEquipamentos
-@ValidadeI date,
-@ValidadeF date = null,
+@ValidadeI datetime,
+@ValidadeF datetime = null,
 @tipo varchar(50)
 as
 if @ValidadeF is not null and @ValidadeI is not null and @tipo is not null
@@ -15,3 +16,6 @@ begin
 			)as temp1 inner join AluguerEquipamentos on Num=NumAluguer
 			)	
 end
+
+select * from aluguer
+select * from AluguerEquipamentos
