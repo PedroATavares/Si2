@@ -12,7 +12,7 @@ FROM
 							on deleted.id= AluguerPromocao.IdProm)
 
 UPDATE fbo.Promocoes
-    SET Removed = 1
+    SET Removido = 1
 	WHERE id IN (SELECT t.id 
                   FROM deleted t)
 
@@ -31,7 +31,7 @@ FROM
 							on deleted.Codigo= Aluguer.CodCli)
 
 UPDATE fbo.Cliente 
-    SET Removed = 1
+    SET Removido = 1
 	WHERE Codigo IN (SELECT t.Codigo 
                   FROM deleted t)
 go
@@ -48,7 +48,7 @@ FROM
         AND b.DataInicio > getdate()
 
 UPDATE fbo.Aluguer 
-    SET Removed = 1
+    SET Removido = 1
 	WHERE Num IN (SELECT t.Num 
                   FROM deleted t)
 go
@@ -83,7 +83,7 @@ FROM
 							on deleted.Codigo= Aluguer.NumEmp)
 
 UPDATE fbo.Empregado 
-    SET Removed = 1
+    SET Removido = 1
 	WHERE Codigo IN (SELECT t.Codigo 
                   FROM deleted t)
 
@@ -102,7 +102,7 @@ FROM
 							on deleted.Codigo= AluguerEquipamentos.CodEquip)
 
 UPDATE fbo.Equipamentos
-    SET Removed = 1
+    SET Removido = 1
 	WHERE Codigo IN (SELECT t.Codigo 
                   FROM deleted t)
 
