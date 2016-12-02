@@ -14,8 +14,6 @@ insert into PrecoAluguer values ('2016-01-01','2017-01-01',60,35,3)
 insert into Empregado values('Maria Papoila') --Id 1
 insert into Empregado values('Asdrubal Mauricio') --Id 2
 
-
-insert into Cliente (NIF,nome,Morada) values (000000000,'cliente final','')
 insert into Cliente (NIF, nome,	Morada) values (123456789, 'Rita Catita', 'Avenida Morais')
 insert into Cliente (NIF, nome,	Morada) values (987654321, 'Gervasio Manel', 'Rua de Sesamo')
 

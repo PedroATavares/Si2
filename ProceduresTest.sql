@@ -23,9 +23,10 @@ select @id
 --select * from Cliente select * from Aluguer select * from Empregado
 declare @idCliente int
 declare @idAluguer int 
-exec InserirAluguerSemCliente 100,'NomeTeste','MoradaTeste',@idCliente output,25,1,'2016-10-20','2017-10-21',@idAluguer output
-select @idCliente
-select @idAluguer
+exec InserirAluguerSemCliente 101,'NomeTeste','MoradaTeste',@idCliente output,25,1,'2016-10-20','2017-10-21',@idAluguer output
+select * from Cliente where Codigo=@idCliente
+select * from Aluguer where Num=@idAluguer
+
 -- é espectavel criar um Cliente e inseri-lo na tabela Aluguer 
 -- o Cliente pussui data inicio ->2016-10-20, data fim->2017-10-21, duracao->25, Num empregado->1
 -- inseriu-se este Cliente na tabela Aluguer com
@@ -48,6 +49,13 @@ exec listarEquipamentos '2020-10-20','2022-10-21','Gaivota'
 -- codigo->2, descricao->Gaivota Verde, Tipo->Gaivota
 
 ---------------------------------------------------------------//---------------------------------------------
+--Teste para verificar que o update nao deixa alterar a tabela Aluguer para uma data inicial anterior à data actual
+declare @idA int
+exec InserirAluguerComCliente '2016-12-05 01:00:00', '2016-12-05 02:00:00',60,1,1,@idA
 
+ update
+ Aluguer 
+ set DataInicio='2016-12-01'
+ where Num=@idA
 
-rollback
+ rollback

@@ -12,11 +12,20 @@ create procedure InserirAluguerSemCliente
 @idAluguer int output
 
 as
+begin tran
+set transaction isolation level REPEATABLE READ
+begin try
 	INSERT INTO Cliente values( @Nif, @Nome, @Morada)
 	select @idCliente= SCOPE_IDENTITY()
 
 	exec InserirAluguerComCliente @DataI,@DataF,@Duracao,@NumEmp,@idCliente,@idAluguer output
 	select @idAluguer= SCOPE_IDENTITY()
-	
+
+	commit
+end try
+
+begin catch
+	rollback
+end catch
 	return
 go

@@ -67,7 +67,7 @@ UPDATE fbo.Aluguer
    ON fbo.Aluguer.Num = inserted.Num
    inner join
    deleted
-   on fbo.Aluguer.DataInicio> GETDATE()
+   on fbo.Aluguer.DataInicio> GETDATE() and inserted.DataInicio>GETDATE()
 go
 
 create trigger fbo.DeleteEmpregado
