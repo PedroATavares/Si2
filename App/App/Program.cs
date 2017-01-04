@@ -11,35 +11,10 @@ namespace App
 {
     class Program
     {
-        private static readonly string CONNECTION_STRING = @"Server=localhost;Database=TestesSI2;User=jdbcuser;Password=jdbcuser;";
-
+        
         static void Main(string[] args)
         {
-            /*
-                using (SqlConnection con = new SqlConnection())
-                {
-                    try
-                    {
-                        con.ConnectionString = @"Server=localhost;Database=TestesSI2;User=jdbcuser;Password=jdbcuser;";
-                        using (SqlCommand cmd = con.CreateCommand())
-                        {
-                            cmd.CommandText = "declare @id int; exec InserirAluguerComCliente '2016-11-20','2017-11-21',40,1,1,@id output; select @id;";
-                            con.Open();
-
-                            using (SqlDataReader dr = cmd.ExecuteReader())
-                            {
-                                while (dr.Read())
-                                    Console.Write(dr[0] + "\n");
-                            }
-                        }
-
-                    }
-                    catch (DbException ex)
-                    {
-                        Console.WriteLine("E R R O : " + ex.Message);
-                    }
-                    Console.ReadKey();*/
-
+            Handlers handlers = new Handlers(@"Server=localhost;Database=TestesSI2;User=jdbcuser;Password=jdbcuser;");
             String key;
             do
             {
@@ -58,8 +33,8 @@ namespace App
                 key = Console.ReadLine();
                 switch (key)
                 {
-                    case "1": inserirPromoção(); break;
-                    case "2": removerPromoção();  break;
+                    case "1": handlers.inserirPromoção(); break;
+                    case "2": handlers.removerPromoção();  break;
                     case "3": break;
                     case "4": break;
                     case "5": break;
@@ -72,93 +47,7 @@ namespace App
             } while (key != "10");
         }
 
-        private static void removerPromoção()
-        {
-            int id;
-            do
-            {
-                Console.Write("Id da Promoção a Remover:");
-                id = Convert.ToInt32(Console.ReadLine());
-            } while (id <= 0);
-            removerPromoção(id);
-        }
-
-        private static void removerPromoção(int id) {
-            using (SqlConnection con = new SqlConnection())
-            {
-                try
-                {
-                    con.ConnectionString = CONNECTION_STRING;
-                    using (SqlCommand cmd = con.CreateCommand())
-                    {
-                        SqlParameter ident = new SqlParameter("@id", SqlDbType.Int);
-                        ident.Value = id;
-
-                        cmd.Parameters.Add(ident);
-                        
-                        cmd.CommandText = "exec DeletePromocoes @id;";
-                        con.Open();
-
-                        int tuples = cmd.ExecuteNonQuery();
-                        Console.WriteLine(tuples + " tuple(s) afetado(s)");
-                        
-                    }
-
-                }
-                catch (DbException ex)
-                {
-                    Console.WriteLine("E R R O : " + ex.Message);
-                }
-            }
-        }
-
-        private static void inserirPromoção()
-        {
-            Console.Write("Data de Inicio (AAAA-MM-DD):");
-            String dataInicio = Console.ReadLine();
-            Console.Write("Data de Fim (AAAA-MM-DD):");
-            String dataFim = Console.ReadLine();
-            Console.Write("Descrição (max 200 caracteres):");
-            String desc = Console.ReadLine();
-            inserirPromoção(dataInicio, dataFim, desc);
-        }
-
-        private static void inserirPromoção(String dataInicio, String dataFim, String desc)
-        {
-            using (SqlConnection con = new SqlConnection())
-            {
-                try
-                {
-                    con.ConnectionString = CONNECTION_STRING;
-                    using (SqlCommand cmd = con.CreateCommand())
-                    {
-                        SqlParameter dataI = new SqlParameter("@DataInicio", SqlDbType.Date);
-                        SqlParameter dataF = new SqlParameter("@DataFim", SqlDbType.Date);
-                        SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar,200);
-                        dataI.Value = dataInicio;
-                        dataF.Value = dataFim;
-                        descr.Value = desc;
-
-                        cmd.Parameters.Add(dataI);
-                        cmd.Parameters.Add(dataF);
-                        cmd.Parameters.Add(descr);
-                        cmd.CommandText = "declare @id int; exec InsertPromocoes @DataInicio,@DataFim,@Descricao,@id output; select @id;";
-                        con.Open();
-
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                                Console.Write(dr[0] + "\n");
-                        }
-                    }
-
-                }
-                catch (DbException ex)
-                {
-                    Console.WriteLine("E R R O : " + ex.Message);
-                }
-            }
-        }
+        
     }
 }
 
