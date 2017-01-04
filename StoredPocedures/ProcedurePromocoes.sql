@@ -45,9 +45,7 @@ end
 IF @Descricao is not null
 begin
 	update Promocoes
-	set Descrip = @Descricao
+	set Descricao = @Descricao
 	where id = @id
 end
 go
-
-

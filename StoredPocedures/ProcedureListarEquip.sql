@@ -17,5 +17,5 @@ begin
 			)	
 end
 
-select * from aluguer
+select * from aluguer 
 select * from AluguerEquipamentos
