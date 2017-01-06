@@ -19,7 +19,6 @@ begin try
 	select @idCliente= SCOPE_IDENTITY()
 
 	exec InserirAluguerComCliente @DataI,@DataF,@Duracao,@NumEmp,@idCliente,@idAluguer output
-	select @idAluguer= SCOPE_IDENTITY()
 
 	commit
 end try

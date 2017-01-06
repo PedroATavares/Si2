@@ -11,33 +11,44 @@ namespace App
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
-            using (SqlConnection con = new SqlConnection())
+            Handlers handlers = new Handlers(@"Server=localhost;Database=TestesSI2;User=jdbcuser;Password=jdbcuser;");
+            String key;
+            do
             {
-                try
+                Console.WriteLine("1 - Inserir Promoção");
+                Console.WriteLine("2 - Remover Promoção");
+                Console.WriteLine("3 - Alterar Promoção existente");
+                Console.WriteLine("4 - Inserir Aluguer com Cliente Novo");
+                Console.WriteLine("5 - Inserir Aluguer com Cliente Existente");
+                Console.WriteLine("6 - Remover Aluguer");
+                Console.WriteLine("7 - Alterar Preçário");
+                Console.WriteLine("8 - Listar todos os equipamentos livres, para um determinado tempo e tipo");
+                Console.WriteLine("9 - Listar os equipamentos sem alugueres na última semana");
+                Console.WriteLine("10 - Sair");
+                Console.WriteLine("Numbero correspondente á ação?");
+                Console.Write(">");
+                key = Console.ReadLine();
+                switch (key)
                 {
-                    con.ConnectionString = @"Data Source=.;Initial Catalog=SI2_VLAB;Integrated Security=True";
-                    using (SqlCommand cmd = con.CreateCommand())
-                    {
-                        cmd.CommandText = "select value from DEMO";
-                        con.Open();
-
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                                Console.Write(dr["value"] + "\n");
-                        }
-                    }
-
+                    case "1": handlers.inserirPromoção(); break;
+                    case "2": handlers.removerPromoção();  break;
+                    case "3": break;
+                    case "4": break;
+                    case "5": break;
+                    case "6": break;
+                    case "7": break;
+                    case "8": break;
+                    case "9": break;
+                    default: Console.WriteLine("Por favor insira um numero valido!"); break;
                 }
-                catch (DbException ex)
-                {
-                    Console.WriteLine("E R R O : " + ex.Message);
-                }
-
-            }
-        
+            } while (key != "10");
         }
+
+        
     }
 }
+
+
