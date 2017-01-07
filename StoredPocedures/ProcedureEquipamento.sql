@@ -23,7 +23,7 @@ create proc dbo.UpdateEquipamentos
 as
 	if(@descr is not null)
 	update Equipamentos
-	set Descrip=@descr
+	set Descricao=@descr
 	where Codigo=@id
 
 	if(@tipo is not null)
