@@ -9,13 +9,14 @@ namespace App
 {
     class ListarEquipamentos
     {
+        static Handler handler;
         public static void ExecProcedure(string dataI, string dataF, string type)
         {
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
-                    con.ConnectionString = @"Server=CAROLINA;Database=Si2;User=ls;Password=ls;";
+                    con.ConnectionString = handler.CONNECTION_STRING;
 
                     using (SqlCommand cmd = con.CreateCommand())
                     {
@@ -57,8 +58,9 @@ namespace App
             }
         }
 
-        public static void GetParamsFromConsole()
+        public static void GetParamsFromConsole(Handler h)
         {
+            if (handler == null) handler = h;
             Console.WriteLine("***********************************************************************");
             Console.WriteLine("Insira a Data Inicial");
             string dataI = Console.ReadLine();

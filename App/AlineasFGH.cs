@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
 
-namespace app
+namespace App
 {
     class Program
     {
