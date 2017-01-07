@@ -9,13 +9,14 @@ namespace App
 {
     class AlteracaoPrecario
     {
+        static Handler handler;
         public static void ExecProcedure(string dataI, string dataF, int duration, int price, int idEquip)
         {
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
-                    con.ConnectionString = @"Server=CAROLINA;Database=Si2;User=ls;Password=ls;";
+                    con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
 
                     using (SqlCommand cmd = new SqlCommand("alteracoesPrecario", con))
@@ -38,8 +39,6 @@ namespace App
                         equipId.Value = idEquip;
                         cmd.Parameters.Add(equipId);
 
-                        //cmd.CommandText = "exec alteracoesPrecario @ValidadeI,@ValidadeF,@duracao,@valor,@EquipId";
-                        //con.Open();
                         int i = cmd.ExecuteNonQuery();
 
                         Console.WriteLine(i + "tuplo(s) afetado(s)");
@@ -57,8 +56,9 @@ namespace App
             }    
         }
 
-       public  static void GetParamsFromConsole()
+       public static void GetParamsFromConsole(Handler h)
         {
+            if (handler == null) handler = h;
             Console.WriteLine("***********************************************************************");
             Console.WriteLine("Insira o Id do Equipamento");
             int id = Int32.Parse(Console.ReadLine());
@@ -72,6 +72,5 @@ namespace App
             int price = Int32.Parse(Console.ReadLine());
             ExecProcedure(dataI, dataF, duration,price,id);
         }
-        
     }
 }

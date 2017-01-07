@@ -9,13 +9,14 @@ namespace App
 {
     class EquipSemAluguerUltimaSemana
     {
+        static Handler handler;
         public static void ExecProcedure()
         {
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
-                    con.ConnectionString = @"Server=CAROLINA;Database=Si2;User=ls;Password=ls;";
+                    con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
                     //aqui em vez de con.createcommand, inicias o objecto explicitamente com o nome do procedimento e com a con
                     using (SqlCommand cmd = new SqlCommand("EquipamentosSemAluguerUltimaSemana", con))
@@ -46,11 +47,11 @@ namespace App
             }
         }
 
-        public static void GetParamsFromConsole()
+        public static void GetParamsFromConsole(Handler h)
         {
+            if (handler == null) handler = h;
             Console.WriteLine("***********************************************************************");
             ExecProcedure();
-
         }
     }
 }

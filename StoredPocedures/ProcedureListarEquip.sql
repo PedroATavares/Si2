@@ -16,9 +16,3 @@ begin
 			)as temp1 inner join AluguerEquipamentos on Num=NumAluguer
 			)	
 end
-<<<<<<< HEAD
-=======
-
-select * from aluguer 
-select * from AluguerEquipamentos
->>>>>>> 5652a0461da7937554ac57e408d8bf96be675376
