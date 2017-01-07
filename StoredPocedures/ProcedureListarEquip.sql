@@ -16,6 +16,3 @@ begin
 			)as temp1 inner join AluguerEquipamentos on Num=NumAluguer
 			)	
 end
-
-select * from aluguer
-select * from AluguerEquipamentos
