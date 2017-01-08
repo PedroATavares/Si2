@@ -17,74 +17,51 @@ namespace App
 
         static void Main(string[] args)
         {
-            /*
-                Handler handler = new Handler(connectionString3);
-                String key;
-                do
-                {
-                    Console.WriteLine("1 - Inserir Cliente");
-                    Console.WriteLine("2 - Remover Cliente");
-                    Console.WriteLine("3 - Actualizar informação de um Cliente");
-                    Console.WriteLine("4 - Inserir Equipamento");
-                    Console.WriteLine("5 - Remover Equipamento");
-                    Console.WriteLine("6 - Actualizar informação de um Equipamento");
-                    Console.WriteLine("7 - Inserir Promoção");
-                    Console.WriteLine("8 - Remover Promoção");
-                    Console.WriteLine("9 - Actualizar informação de uma Promoção");
-                    Console.WriteLine("10 - Inserir Aluguer com Cliente Novo");
-                    Console.WriteLine("11 - Inserir Aluguer com Cliente Existente");
-                    Console.WriteLine("12 - Remover Aluguer");
-                    Console.WriteLine("13 - Alterar Preçário");
-                    Console.WriteLine("14- Listar todos os equipamentos livres, para um determinado tempo e tipo");
-                    Console.WriteLine("15 - Listar os equipamentos sem alugueres na última semana");
-                    Console.WriteLine("16 - Sair");
-                    Console.WriteLine("Insira o numero da operação que pretende");
-                    Console.Write(">");
-                    key = Console.ReadLine();
-                    switch (key)
-                    {
-                        case "1": break;
-                        case "2": break;
-                        case "3": break;
-                        case "4": break;
-                        case "5": break;
-                        case "6": break;
-                        case "7": EditPromocaoInfo.inserirPromoção(handler); break;
-                        case "8": EditPromocaoInfo.removerPromoção(handler); break;
-                        case "9": break;
-                        case "10": InserirAluguer.InserirAluguerSemCliente(handler); break;
-                            //inserçao com cliente nao funca, diz que falta um parametro
-                        case "11": InserirAluguer.InserirAluguerComCliente(handler); break;
-                        case "12": RemoverAluguer.procRemoverAluger(handler); break;
-                        case "13": AlteracaoPrecario.GetParamsFromConsole(handler); break;
-                        case "14": ListarEquipamentos.GetParamsFromConsole(handler); break;
-                        case "15": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
-
-                        default: Console.WriteLine("Por favor insira um numero valido"); break;
-                    }
-                } while (key != "16");
-                */
-            using (var db = new SI2Context())
+            Handler handler = new Handler(connectionString3);
+            String key;
+            do
             {
-
-                var cliente = new ClienteView { nome = "Fm test", nif = 657356879, morada = "Fm Test" };
-                db.ClienteView.Add(cliente);
-                db.SaveChanges();
-                
-                // Display all Blogs from the database 
-                var query = from b in db.ClienteView
-                            orderby b.nome
-                            select b;
-
-                Console.WriteLine("All blogs in the database:");
-                foreach (var item in query)
+                Console.WriteLine("1 - Inserir Cliente");
+                Console.WriteLine("2 - Remover Cliente");
+                Console.WriteLine("3 - Actualizar informação de um Cliente");
+                Console.WriteLine("4 - Inserir Equipamento");
+                Console.WriteLine("5 - Remover Equipamento");
+                Console.WriteLine("6 - Actualizar informação de um Equipamento");
+                Console.WriteLine("7 - Inserir Promoção");
+                Console.WriteLine("8 - Remover Promoção");
+                Console.WriteLine("9 - Actualizar informação de uma Promoção");
+                Console.WriteLine("10 - Inserir Aluguer com Cliente Novo");
+                Console.WriteLine("11 - Inserir Aluguer com Cliente Existente");
+                Console.WriteLine("12 - Remover Aluguer");
+                Console.WriteLine("13 - Alterar Preçário");
+                Console.WriteLine("14- Listar todos os equipamentos livres, para um determinado tempo e tipo");
+                Console.WriteLine("15 - Listar os equipamentos sem alugueres na última semana");
+                Console.WriteLine("16 - Sair");
+                Console.WriteLine("Insira o numero da operação que pretende");
+                Console.Write(">");
+                key = Console.ReadLine();
+                switch (key)
                 {
-                    Console.WriteLine(item.nif);
+                    case "1": break;
+                    case "2": break;
+                    case "3": break;
+                    case "4": break;
+                    case "5": break;
+                    case "6": break;
+                    case "7": EditPromocaoInfo.inserirPromoção(handler); break;
+                    case "8": EditPromocaoInfo.removerPromoção(handler); break;
+                    case "9": break;
+                    case "10": InserirAluguer.InserirAluguerSemCliente(handler); break;
+                        //inserçao com cliente nao funca, diz que falta um parametro
+                    case "11": InserirAluguer.InserirAluguerComCliente(handler); break;
+                    case "12": RemoverAluguer.procRemoverAluger(handler); break;
+                    case "13": AlteracaoPrecario.GetParamsFromConsole(handler); break;
+                    case "14": ListarEquipamentos.GetParamsFromConsole(handler); break;
+                    case "15": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
+                 
+                    default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }
-
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
-            }
+            } while (key != "16");
         }
     }
 }

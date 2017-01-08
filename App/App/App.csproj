@@ -34,19 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,35 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aluguer.cs" />
-    <Compile Include="AluguerView.cs" />
-    <Compile Include="AluguerEquipamentos.cs" />
-    <Compile Include="Cliente.cs" />
-    <Compile Include="ClienteView.cs" />
-    <Compile Include="Empregado.cs" />
-    <Compile Include="EmpregadoView.cs" />
-    <Compile Include="Equipamentos.cs" />
-    <Compile Include="EquipamentosView.cs" />
     <Compile Include="Handlers.cs" />
-    <Compile Include="PrecoAluguer.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="AlteracaoPrecario.cs" />
     <Compile Include="EditClienteInfo.cs" />
     <Compile Include="EditEquipInfo.cs" />
     <Compile Include="EditPromocaoInfo.cs" />
     <Compile Include="EquipSemAluguerUltimaSemana.cs" />
+    <Compile Include="Handlers.cs" />
     <Compile Include="InserirAluguer.cs" />
     <Compile Include="ListarEquipamentos.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Promocoes.cs" />
-    <Compile Include="PromocoesView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemoverAluguer.cs" />
-    <Compile Include="SI2Context.cs" />
-    <Compile Include="Tipo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
