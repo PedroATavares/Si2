@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
+using App.EF;
 
 namespace App
 {
@@ -17,6 +18,7 @@ namespace App
 
         static void Main(string[] args)
         {
+        
             Handler handler = new Handler(connectionString3);
             String key;
             do
@@ -62,6 +64,29 @@ namespace App
                     default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }
             } while (key != "16");
+            
+            /*
+            using(var context = new SI2Entities()) {
+                var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
+                context.Clientes.Add(blog);
+                context.SaveChanges();
+                
+                // Display all Blogs from the database 
+                var query = from b in context.ClienteViews
+                            orderby b.nome
+                            select b;
+
+                Console.WriteLine("All blogs in the database:");
+                foreach (var item in query)
+                {
+                    Console.WriteLine(item.nif);
+                }
+
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+                
+            }
+            */
         }
     }
 }

@@ -34,8 +34,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +59,72 @@
     <Compile Include="EditClienteInfo.cs" />
     <Compile Include="EditEquipInfo.cs" />
     <Compile Include="EditPromocaoInfo.cs" />
+    <Compile Include="EF\Aluguer.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\AluguerEquipamento.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\AluguerView.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Cliente.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\ClienteView.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Descontos.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Empregado.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\EmpregadoView.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Equipamento.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\EquipamentosSemAluguerUltimaSemana_Result.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\EquipamentosView.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\listarEquipamentos_Result.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\PrecoAluguer.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Promocao.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\PromocoesView.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Si2Context.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Si2Context.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Si2Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Si2Context.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Si2Context.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TempoExtra.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Tipo.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="EquipSemAluguerUltimaSemana.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="InserirAluguer.cs" />
@@ -58,6 +135,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="EF\Si2Context.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Si2Context.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EF\Si2Context.edmx.diagram">
+      <DependentUpon>Si2Context.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EF\Si2Context.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Si2Context.edmx</DependentUpon>
+      <LastGenOutput>Si2Context.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EF\Si2Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Si2Context.edmx</DependentUpon>
+      <LastGenOutput>Si2Context.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
