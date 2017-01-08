@@ -18,7 +18,7 @@ namespace App
 
         static void Main(string[] args)
         {
-        
+        /*
             Handler handler = new Handler(connectionString3);
             String key;
             do
@@ -64,8 +64,8 @@ namespace App
                     default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }
             } while (key != "16");
+            */
             
-            /*
             using(var context = new SI2Entities()) {
                 var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
                 context.Clientes.Add(blog);
@@ -86,7 +86,7 @@ namespace App
                 Console.ReadKey();
                 
             }
-            */
+            
         }
     }
 }
