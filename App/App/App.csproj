@@ -55,8 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handlers.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="AlteracaoPrecario.cs" />
     <Compile Include="EditClienteInfo.cs" />
     <Compile Include="EditEquipInfo.cs" />
