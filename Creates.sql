@@ -37,13 +37,13 @@ go
 
 create table Descontos(
 	Preco smallmoney, -- Em euros
-	Id int foreign key references fbo.Promocoes 
+	Id int foreign key references fbo.Promocoes primary key
 )
 
 
 create table TempoExtra(
 	TempoExtra int, --Em minutos
-	Id int foreign key references fbo.Promocoes
+	Id int foreign key references fbo.Promocoes primary key
 )
 
 create table fbo.Cliente(
