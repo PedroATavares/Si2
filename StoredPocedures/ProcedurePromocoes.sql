@@ -1,17 +1,52 @@
 
-if object_id('InsertPromocoes') is not null  DROP PROCEDURE InsertPromocoes
+if object_id('InsertPromocaoDesconto') is not null  DROP PROCEDURE InsertPromocaoDesconto
 go
-create procedure InsertPromocoes
+create procedure InsertPromocaoDesconto
 @DataInicio Date,
 @DataFim Date,
-@Descricao varchar(200), 
+@Descricao varchar(200),
+@Preco smallmoney, 
 @id int output
 as
-	INSERT INTO Promocoes(DataInicio,DataFim,Descricao) values( @DataInicio, @DataFim, @Descricao)
-	select @id= SCOPE_IDENTITY()
+	begin tran
+	begin try 
+		INSERT INTO Promocoes(DataInicio,DataFim,Descricao) values( @DataInicio, @DataFim, @Descricao)
+		select @id= SCOPE_IDENTITY()
+		Insert into Descontos values(@Preco,@id)
+		commit
+	end try
+	begin catch
+		select @id=0
+		rollback
+	end catch
+
 	return
+
 go
 
+if object_id('InsertPromocaoTempo') is not null  DROP PROCEDURE InsertPromocaoTempo
+go
+create procedure InsertPromocaoTempo
+@DataInicio Date,
+@DataFim Date,
+@Descricao varchar(200),
+@Tempo int, 
+@id int output
+as
+	begin tran
+	begin try 
+		INSERT INTO Promocoes(DataInicio,DataFim,Descricao) values( @DataInicio, @DataFim, @Descricao)
+		select @id= SCOPE_IDENTITY()
+		Insert into TempoExtra values(@Tempo,@id)
+		commit
+	end try
+	begin catch
+		select @id=0
+		rollback
+	end catch
+
+	return
+go
 if object_id('DeletePromocoes') is not null  DROP PROCEDURE DeletePromocoes
 go
 create procedure DeletePromocoes
