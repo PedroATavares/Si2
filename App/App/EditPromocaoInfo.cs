@@ -11,7 +11,7 @@ namespace App
     {
         private static Handler handler;
 
-        public static void removerPromoção(Handler h)
+        public static void RemoverPromoção(Handler h)
         {
             if (handler == null) handler = h;
             int id;
@@ -20,25 +20,23 @@ namespace App
                 Console.Write("Id da Promoção a Remover:");
                 id = Convert.ToInt32(Console.ReadLine());
             } while (id <= 0);
-            removerPromoção(id);
+            RemoverPromoção(id);
         }
 
-        private static void removerPromoção(int id)
+        private static void RemoverPromoção(int id)
         {
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
-                    using (SqlCommand cmd = con.CreateCommand())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("DeletePromocoes",con))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         SqlParameter ident = new SqlParameter("@id", SqlDbType.Int);
                         ident.Value = id;
-
                         cmd.Parameters.Add(ident);
-
-                        cmd.CommandText = "exec DeletePromocoes @id;";
-                        con.Open();
 
                         int i = cmd.ExecuteNonQuery();
 
@@ -54,7 +52,7 @@ namespace App
             }
         }
 
-        public static void inserirPromoção(Handler h)
+        public static void InserirPromoção(Handler h)
         {
             if (handler == null) handler = h;
 
@@ -64,18 +62,21 @@ namespace App
             String dataFim = Console.ReadLine();
             Console.Write("Descrição (max 200 caracteres):");
             String desc = Console.ReadLine();
-            inserirPromoção(dataInicio, dataFim, desc);
+            InserirPromoção(dataInicio, dataFim, desc);
         }
 
-        private static void inserirPromoção(String dataInicio, String dataFim, String desc)
+        private static void InserirPromoção(String dataInicio, String dataFim, String desc)
         {
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
-                    using (SqlCommand cmd = con.CreateCommand())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("InsertPromocoes",con))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
                         SqlParameter dataI = new SqlParameter("@DataInicio", SqlDbType.Date);
                         SqlParameter dataF = new SqlParameter("@DataFim", SqlDbType.Date);
                         SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
@@ -86,8 +87,7 @@ namespace App
                         cmd.Parameters.Add(dataI);
                         cmd.Parameters.Add(dataF);
                         cmd.Parameters.Add(descr);
-                        cmd.CommandText = "declare @id int; exec InsertPromocoes @DataInicio,@DataFim,@Descricao,@id output; select @id;";
-                        con.Open();
+                        //cmd.CommandText = "declare @id int; exec InsertPromocoes @DataInicio,@DataFim,@Descricao,@id output; select @id;";
 
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
@@ -103,5 +103,59 @@ namespace App
                 }
             }
         }
+
+        public static void AlterarPromoção(Handler h)
+        {
+            if (handler == null) handler = h;
+
+            Console.Write("Id da Promoção a alterar:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Data de Inicio (AAAA-MM-DD):");
+            String dataInicio = Console.ReadLine();
+            Console.Write("Data de Fim (AAAA-MM-DD):");
+            String dataFim = Console.ReadLine();
+            Console.Write("Descrição (max 200 caracteres):");
+            String desc = Console.ReadLine();
+            AlterarPromoção(id, dataInicio, dataFim, desc);
+        }
+
+        private static void AlterarPromoção(int num, String dataInicio, String dataFim, String desc)
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("UpdatePromocoes", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        SqlParameter id = new SqlParameter("@Id", SqlDbType.Int);
+                        SqlParameter dataI = new SqlParameter("@DataInicio", SqlDbType.Date);
+                        SqlParameter dataF = new SqlParameter("@DataFim", SqlDbType.Date);
+                        SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
+                        id.Value = num;
+                        dataI.Value = dataInicio == "" ? null : dataInicio;
+                        dataF.Value = dataFim == "" ? null : dataFim;
+                        descr.Value = desc == "" ? null : desc;
+
+                        cmd.Parameters.Add(id);
+                        cmd.Parameters.Add(dataI);
+                        cmd.Parameters.Add(dataF);
+                        cmd.Parameters.Add(descr);
+                        //cmd.CommandText = "declare @id int; exec InsertPromocoes @DataInicio,@DataFim,@Descricao,@id output; select @id;";
+
+                        int i = cmd.ExecuteNonQuery();
+                    }
+
+                }
+                catch (DbException ex)
+                {
+                    Console.WriteLine("E R R O : " + ex.Message);
+                }
+            }
+        }
+
     }
 }

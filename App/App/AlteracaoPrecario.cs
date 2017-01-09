@@ -27,14 +27,17 @@ namespace App
                         validadeI.Value = dataI;
                         cmd.Parameters.Add(validadeI);
                         SqlParameter validadeF = new SqlParameter("@ValidadeF", SqlDbType.Date);
-                        validadeF.Value = dataF;
+                        validadeF.Value = dataF=="" ? null : dataF;
                         cmd.Parameters.Add(validadeF);
                         SqlParameter duracao = new SqlParameter("@duracao", SqlDbType.Int);
                         duracao.Value = duration;
                         cmd.Parameters.Add(duracao);
                         SqlParameter valor = new SqlParameter("@valor", SqlDbType.SmallMoney);
-                        valor.Value = price;
-                        cmd.Parameters.Add(valor);
+                        if(price >-1)
+                        {
+                            valor.Value = price;
+                            cmd.Parameters.Add(valor);
+                        }
                         SqlParameter equipId = new SqlParameter("@EquipId", SqlDbType.Int);
                         equipId.Value = idEquip;
                         cmd.Parameters.Add(equipId);
@@ -69,7 +72,8 @@ namespace App
             Console.WriteLine("Insira a nova Data Final, caso seja o que pretenda alterar");
             string dataF = Console.ReadLine();
             Console.WriteLine("Insira o novo Preço, caso seja o que pretenda alterar");
-            int price = Int32.Parse(Console.ReadLine());
+            string s = Console.ReadLine();
+            int price = s == "" ? -1: Int32.Parse(s);
             ExecProcedure(dataI, dataF, duration,price,id);
         }
     }
