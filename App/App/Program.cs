@@ -22,35 +22,42 @@ namespace App
             String key;
             do
             {
-                Console.WriteLine("1 - Inserir Promoção");
-                Console.WriteLine("2 - Remover Promoção");
-                Console.WriteLine("3 - Actualizar informação de uma Promoção");
-                Console.WriteLine("4 - Inserir Aluguer com Cliente Novo");
-                Console.WriteLine("5 - Inserir Aluguer com Cliente Existente");
-                Console.WriteLine("6 - Remover Aluguer");
-                Console.WriteLine("7 - Alterar Preçário");
-                Console.WriteLine("8 - Listar todos os equipamentos livres, para um determinado tempo e tipo");
-                Console.WriteLine("9 - Listar os equipamentos sem alugueres na última semana");
-                Console.WriteLine("10 - Sair");
+                Console.WriteLine("1 - Inserir Promoção do tipo Desconto");
+                Console.WriteLine("2 - Remover Promoção do tipo Desconto");
+                Console.WriteLine("3 - Actualizar informação de uma Promoção do tipo Desconto");
+                Console.WriteLine("4 - Inserir Promoção do tipo Tempo Extra");
+                Console.WriteLine("5 - Remover Promoção do tipo Tempo Extra");
+                Console.WriteLine("6 - Actualizar informação de uma Promoção do tipo Tempo Extra");
+                Console.WriteLine("7 - Inserir Aluguer com Cliente Novo");
+                Console.WriteLine("8 - Inserir Aluguer com Cliente Existente");
+                Console.WriteLine("9 - Remover Aluguer");
+                Console.WriteLine("10 - Alterar Preçário");
+                Console.WriteLine("11 - Listar todos os equipamentos livres, para um determinado tempo e tipo");
+                Console.WriteLine("12 - Listar os equipamentos sem alugueres na última semana");
+                Console.WriteLine("13 - Sair");
                 Console.WriteLine("Insira o numero da operação que pretende");
                 Console.Write(">");
                 key = Console.ReadLine();
                 switch (key)
                 {
-                    case "1": EditPromocaoInfo.InserirPromoção(handler); break;
-                    case "2": EditPromocaoInfo.RemoverPromoção(handler); break;
-                    case "3": EditPromocaoInfo.AlterarPromoção(handler); break;
-                    case "4": InserirAluguer.InserirAluguerSemCliente(handler); break;
+                    case "1": EditDescontoInfo.InserirPromoçãoDesconto(handler); break;
+                    case "2": EditDescontoInfo.RemoverPromoção(handler); break;
+                    case "3": EditDescontoInfo.AlterarPromoção(handler); break;
+                    case "4": EditTempoExtraInfo.InserirPromoçãoTempo(handler); break;
+                    case "5": EditTempoExtraInfo.RemoverPromoção(handler); break;
+                    case "6": EditTempoExtraInfo.AlterarPromoção(handler); break;
+
+                    case "7": InserirAluguer.InserirAluguerSemCliente(handler); break;
                         //inserçao com cliente nao funca, diz que falta um parametro
-                    case "5": InserirAluguer.InserirAluguerComCliente(handler); break;
-                    case "6": RemoverAluguer.procRemoverAluger(handler); break;
-                    case "7": AlteracaoPrecario.GetParamsFromConsole(handler); break;
-                    case "8": ListarEquipamentos.GetParamsFromConsole(handler); break;
-                    case "9": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
+                    case "8": InserirAluguer.InserirAluguerComCliente(handler); break;
+                    case "9": RemoverAluguer.procRemoverAluger(handler); break;
+                    case "10": AlteracaoPrecario.GetParamsFromConsole(handler); break;
+                    case "11": ListarEquipamentos.GetParamsFromConsole(handler); break;
+                    case "12": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
                  
                     default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }
-            } while (key != "10");
+            } while (key != "13");
             
             /*
             using(var context = new SI2Entities()) {

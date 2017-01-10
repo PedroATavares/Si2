@@ -186,11 +186,11 @@ namespace App
         private static void initParametrosAluguerComCliente()
         {
             
-            dataI = new SqlParameter("@DataInicial", SqlDbType.Date);
-            dataF = new SqlParameter("@DataFinal", SqlDbType.Date);
+            dataI = new SqlParameter("@DataI", SqlDbType.Date);
+            dataF = new SqlParameter("@DataF", SqlDbType.Date);
             duracao = new SqlParameter("@Duracao", SqlDbType.Int);
-            numEmpregado = new SqlParameter("@NumEmpregado", SqlDbType.Int);
-            codigoCliente = new SqlParameter("@CodigoCliente", SqlDbType.Int);
+            numEmpregado = new SqlParameter("@NumEmp", SqlDbType.Int);
+            codigoCliente = new SqlParameter("@CodCli", SqlDbType.Int);
             nif = new SqlParameter("@NIF", SqlDbType.Int);
 
             dataI.Value = dI;

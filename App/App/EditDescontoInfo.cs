@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace App
 {
-    class EditTempoExtraInfo
+    class EditDescontoInfo
     {
         private static Handler handler;
 
@@ -31,7 +31,7 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("DeletePromocoes",con))
+                    using (SqlCommand cmd = new SqlCommand("DeletePromocoes", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         SqlParameter ident = new SqlParameter("@id", SqlDbType.Int);
@@ -52,7 +52,7 @@ namespace App
             }
         }
 
-        public static void InserirPromoçãoTempo(Handler h)
+        public static void InserirPromoçãoDesconto(Handler h)
         {
             if (handler == null) handler = h;
 
@@ -62,12 +62,12 @@ namespace App
             String dataFim = Console.ReadLine();
             Console.Write("Descrição (max 200 caracteres):");
             String desc = Console.ReadLine();
-            Console.Write("Tempo extra (em minutos):");
-            int tempo = Int32.Parse(Console.ReadLine());
-            InserirPromoção(dataInicio, dataFim, desc, tempo);
+            Console.Write("Valor em percentagem do Desconto (por exemplo 20):");
+            int desconto = Int32.Parse(Console.ReadLine());
+            InserirPromocaoDesconto(dataInicio, dataFim, desc, desconto);
         }
 
-        private static void InserirPromoção(String dataInicio, String dataFim, String desc, int temp)
+        private static void InserirPromocaoDesconto(String dataInicio, String dataFim, String desc, int descon)
         {
             using (SqlConnection con = new SqlConnection())
             {
@@ -75,33 +75,33 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("InsertPromocaoTempo", con))
+                    using (SqlCommand cmd = new SqlCommand("InsertPromocaoDesconto", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         SqlParameter dataI = new SqlParameter("@DataInicio", SqlDbType.Date);
                         SqlParameter dataF = new SqlParameter("@DataFim", SqlDbType.Date);
                         SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
-                        SqlParameter tempo = new SqlParameter("@Tempo", SqlDbType.Int);
+                        SqlParameter tempo = new SqlParameter("@Tempo", SqlDbType.SmallMoney);
                         SqlParameter toRet = new SqlParameter("@id", SqlDbType.Int);
                         toRet.Direction = ParameterDirection.Output;
-                        
+
                         dataI.Value = dataInicio;
                         dataF.Value = dataFim;
                         descr.Value = desc;
-                        tempo.Value = temp;
+                        tempo.Value = descon;
 
                         cmd.Parameters.Add(dataI);
                         cmd.Parameters.Add(dataF);
                         cmd.Parameters.Add(descr);
                         cmd.Parameters.Add(tempo);
                         cmd.Parameters.Add(toRet);
-                        
+
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
-                            Console.Write(toRet.ToString());
+                            //Console.Write(toRet.Value.ToString());
                             while (dr.Read())
-                                Console.Write("Id da promoçao:"+dr[0] + "\n");
+                                Console.Write("Id da promoçao:" + dr[0] + "\n");
                         }
                     }
 

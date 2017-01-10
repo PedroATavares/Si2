@@ -9,8 +9,8 @@ namespace App
 {
     class AlteracaoPrecario
     {
-        static Handler handler;
-        public static void ExecProcedure(string dataI, string dataF, int duration, int price, int idEquip)
+        private static Handler handler;
+        private static void ExecProcedure(string dataI, string dataF, int duration, int price, int idEquip)
         {
             using (SqlConnection con = new SqlConnection())
             {
