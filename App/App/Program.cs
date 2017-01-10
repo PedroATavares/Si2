@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
 using App.EF;
+using System.Data.Entity.Core.Objects;
 
 namespace App
 {
@@ -18,7 +19,8 @@ namespace App
 
         static void Main(string[] args)
         {
-            Handler handler = new Handler(connectionString3);
+                    
+            Handler handler = new Handler(connectionString1);
             String key;
             do
             {
@@ -61,7 +63,7 @@ namespace App
             
             /*
             using(var context = new SI2Entities()) {
-               // var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
+                // var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
                 //context.Clientes.Add(blog);
                 //context.SaveChanges();
 
@@ -75,14 +77,15 @@ namespace App
                 {
                     Console.WriteLine(item.Codigo);
                 }
-
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
                 
             }
             */
+
         }
     }
 }
+
 
 
