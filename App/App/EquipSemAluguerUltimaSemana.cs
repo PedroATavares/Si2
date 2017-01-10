@@ -18,11 +18,9 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    //aqui em vez de con.createcommand, inicias o objecto explicitamente com o nome do procedimento e com a con
                     using (SqlCommand cmd = new SqlCommand("EquipamentosSemAluguerUltimaSemana", con))
                     {
-                        //depois defines o tipo do comando como Stored procedure
-                        cmd.CommandType = CommandType.StoredProcedure;
+                       cmd.CommandType = CommandType.StoredProcedure;
 
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
