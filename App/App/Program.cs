@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
 using App.EF;
+using System.Data.Entity.Core.Objects;
 
 namespace App
 {
@@ -19,7 +20,7 @@ namespace App
         static void Main(string[] args)
         {
                     
-            Handler handler = new Handler(connectionString3);
+            Handler handler = new Handler(connectionString1);
             String key;
             do
             {
@@ -67,27 +68,30 @@ namespace App
             
             /*
             using(var context = new SI2Entities()) {
-               // var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
+                // var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
                 //context.Clientes.Add(blog);
                 //context.SaveChanges();
                 
                 var query = from b in context.ClienteViews
                             orderby b.nome
                             select b;
-
+                
                 Console.WriteLine("All Clients in the database:");
-                foreach (var item in query)
-                {
-                    Console.WriteLine(item.nif);
-                }
+                var id = new ObjectParameter("id",0);
+                var nid = context.InsertCliente(7625423, "Coco", "Leite", id);
+                
+                Console.WriteLine(id.Value);
+                
 
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
                 
             }
             */
+
         }
     }
 }
+
 
 
