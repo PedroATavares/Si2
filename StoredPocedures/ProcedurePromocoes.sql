@@ -1,3 +1,4 @@
+use TestesSI2
 
 if object_id('InsertPromocoes') is not null  DROP PROCEDURE InsertPromocoes
 go

@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('InserirAluguerSemCliente') is not null  DROP PROCEDURE InserirAluguerSemCliente
 go
 create procedure InserirAluguerSemCliente

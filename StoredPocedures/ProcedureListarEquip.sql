@@ -1,3 +1,5 @@
+use TestesSI2
+
 --Listar todos os equipamentos livres para um determinado Tempo e Tipo
 if object_id('listarEquipamentos') is not null drop proc listarEquipamentos
 go

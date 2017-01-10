@@ -27,20 +27,20 @@ namespace App.EF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AluguerEquipamento> AluguerEquipamentos { get; set; }
-        public virtual DbSet<PrecoAluguer> PrecoAluguers { get; set; }
-        public virtual DbSet<Tipo> Tipoes { get; set; }
-        public virtual DbSet<Aluguer> Aluguers { get; set; }
-        public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<Empregado> Empregadoes { get; set; }
-        public virtual DbSet<Equipamento> Equipamentos { get; set; }
-        public virtual DbSet<Promocao> Promocoes { get; set; }
-        public virtual DbSet<AluguerView> AluguerViews { get; set; }
-        public virtual DbSet<ClienteView> ClienteViews { get; set; }
-        public virtual DbSet<EmpregadoView> EmpregadoViews { get; set; }
-        public virtual DbSet<EquipamentosView> EquipamentosViews { get; set; }
-        public virtual DbSet<PromocoesView> PromocoesViews { get; set; }
-        public virtual DbSet<Descontos> Descontos { get; set; }
+        public virtual DbSet<AluguerEquipamento> AluguerEquipamento { get; set; }
+        public virtual DbSet<PrecoAluguer> PrecoAluguer { get; set; }
+        public virtual DbSet<Tipo> Tipoe { get; set; }
+        public virtual DbSet<Aluguer> Aluguer { get; set; }
+        public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<Empregado> Empregado { get; set; }
+        public virtual DbSet<Equipamento> Equipamento { get; set; }
+        public virtual DbSet<Promocao> Promocao { get; set; }
+        public virtual DbSet<AluguerView> AluguerView { get; set; }
+        public virtual DbSet<ClienteView> ClienteView { get; set; }
+        public virtual DbSet<EmpregadoView> EmpregadoView { get; set; }
+        public virtual DbSet<EquipamentosView> EquipamentosView { get; set; }
+        public virtual DbSet<PromocoesView> PromocoesView { get; set; }
+        public virtual DbSet<Descontos> Desconto { get; set; }
         public virtual DbSet<TempoExtra> TempoExtra { get; set; }
     
         public virtual int alteracoesPrecario(Nullable<System.DateTime> validadeI, Nullable<System.DateTime> validadeF, Nullable<int> duracao, Nullable<decimal> valor, Nullable<int> equipId)

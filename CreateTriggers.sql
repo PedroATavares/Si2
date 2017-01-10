@@ -1,4 +1,6 @@
+use TestesSI2
 
+go
 create trigger fbo.DeletePromocoes
 on fbo.Promocoes
 Instead of delete
