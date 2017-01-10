@@ -106,7 +106,7 @@ end
 IF @Preco is not null
 begin
 	update Descontos
-	set Preco = @Preco
+	set Percentagem = @Preco
 	where id = @id
 end
 
