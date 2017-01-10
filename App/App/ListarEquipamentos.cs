@@ -17,9 +17,12 @@ namespace App
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
 
-                    using (SqlCommand cmd = con.CreateCommand())
+                    using (SqlCommand cmd = new SqlCommand("listarEquipamentos",con))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
                         SqlParameter validadeI = new SqlParameter("@ValidadeI", SqlDbType.Date);
                         validadeI.Value = dataI;
                         cmd.Parameters.Add(validadeI);

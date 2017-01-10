@@ -19,11 +19,12 @@ namespace App
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
-                    using (SqlCommand cmd = con.CreateCommand())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("RemoverAluguer", con))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                        con.Open();
-                        printAluguer(cmd);
+                        printAluguer(con);
 
                         Console.WriteLine("Escolha o Aluguer (id) que deseja eliminar : ");
                         int idAluguerr = Convert.ToInt32(Console.ReadLine());
@@ -32,7 +33,7 @@ namespace App
                         idAluguer.Value = idAluguerr;
                         cmd.Parameters.Add(idAluguer);
 
-                        cmd.CommandText = " exec RemoverAluger @idAluguer";
+                       // cmd.CommandText = " exec RemoverAluger @idAluguer";
 
                         int i = cmd.ExecuteNonQuery();
 
@@ -51,14 +52,17 @@ namespace App
             }
         }
 
-        private static void printAluguer(SqlCommand cmd)
+        private static void printAluguer(SqlConnection con)
         {
-            cmd.CommandText = "select * from Aluguer";
-            using (SqlDataReader dr = cmd.ExecuteReader())
+            using (SqlCommand cmd = con.CreateCommand())
             {
-                Console.WriteLine("Estes sao os Alugueres existentes -------------------\nNum | DataInicio  | DataFim   |  Duracao | Nº Empregado | Codigo Cliente ");
-                while (dr.Read())
-                    Console.Write(dr["Num"] + " | " + dr["DataInicio"] + " | " + dr["DataFim"] + " |  " + dr["Duracao"] + " |  " + dr["NumEmp"] + " |  " + dr["CodCli"] + "\n");
+                cmd.CommandText = "select * from Aluguer";
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    Console.WriteLine("Estes sao os Alugueres existentes -------------------\nNum | DataInicio  | DataFim   |  Duracao | Nº Empregado | Codigo Cliente ");
+                    while (dr.Read())
+                        Console.Write(dr["Num"] + " | " + dr["DataInicio"] + " | " + dr["DataFim"] + " |  " + dr["Duracao"] + " |  " + dr["NumEmp"] + " |  " + dr["CodCli"] + "\n");
+                }
             }
         }
 

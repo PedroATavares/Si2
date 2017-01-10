@@ -56,8 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlteracaoPrecario.cs" />
-    <Compile Include="EditClienteInfo.cs" />
-    <Compile Include="EditEquipInfo.cs" />
+    <Compile Include="EditDescontoInfo.cs" />
     <Compile Include="EditPromocaoInfo.cs" />
     <Compile Include="EF\Aluguer.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>

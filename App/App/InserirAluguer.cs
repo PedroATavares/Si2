@@ -19,17 +19,19 @@ namespace App
             if (handler == null) handler = h;
             using (SqlConnection con = new SqlConnection())
             {
+                
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
-                    using (SqlCommand cmd = con.CreateCommand())
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("InserirAluguerSemCliente",con))
                     {
-                        con.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
 
                         printQuestoesAluguerSemCliente();
                         initParametrosAluguerSemCliente(cmd);     
 
-                        cmd.CommandText = "declare @idCliente int; declare @idAluguer int; exec InserirAluguerSemCliente @NIF, @Nome, @Morada, @idCliente output, @Duracao, @NumEmpregado, @DataInicial, @DataFinal, @idAluguer output";
+                        //cmd.CommandText = "declare @idCliente int; declare @idAluguer int; exec InserirAluguerSemCliente @NIF, @Nome, @Morada, @idCliente output, @Duracao, @NumEmpregado, @DataInicial, @DataFinal, @idAluguer output";
 
                         int i = cmd.ExecuteNonQuery();
 
@@ -98,9 +100,9 @@ namespace App
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
                     using (SqlCommand cmd = con.CreateCommand())
                     {
-                        con.Open();
                         printClientes(cmd);
 
                         Console.WriteLine("\nEscolha um dos Clientes (codigo NIF):");
@@ -123,6 +125,10 @@ namespace App
                             while (dr.Read())
                                 codigoCliente.Value = dr["Codigo"];
                         }
+                    }
+                    using (SqlCommand cmd = new SqlCommand("InserirAluguerComCliente", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.Add(dataI);
                         cmd.Parameters.Add(dataF);
@@ -130,7 +136,7 @@ namespace App
                         cmd.Parameters.Add(numEmpregado);
                         cmd.Parameters.Add(codigoCliente);
 
-                        cmd.CommandText = "declare @id int; exec InserirAluguerComCliente @DataInicial, @DataFinal, @Duracao, @NumEmpregado, @CodigoCliente,@id output; select @id";
+                        //cmd.CommandText = "declare @id int; exec InserirAluguerComCliente @DataInicial, @DataFinal, @Duracao, @NumEmpregado, @CodigoCliente,@id output; select @id";
 
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
@@ -139,8 +145,8 @@ namespace App
                         }
                         Console.ReadLine();
                     }
-
                 }
+
                 catch (DbException ex)
                 {
                     Console.WriteLine("E R R O : " + ex.Message);
@@ -180,11 +186,11 @@ namespace App
         private static void initParametrosAluguerComCliente()
         {
             
-            dataI = new SqlParameter("@DataInicial", SqlDbType.Date);
-            dataF = new SqlParameter("@DataFinal", SqlDbType.Date);
+            dataI = new SqlParameter("@DataI", SqlDbType.Date);
+            dataF = new SqlParameter("@DataF", SqlDbType.Date);
             duracao = new SqlParameter("@Duracao", SqlDbType.Int);
-            numEmpregado = new SqlParameter("@NumEmpregado", SqlDbType.Int);
-            codigoCliente = new SqlParameter("@CodigoCliente", SqlDbType.Int);
+            numEmpregado = new SqlParameter("@NumEmp", SqlDbType.Int);
+            codigoCliente = new SqlParameter("@CodCli", SqlDbType.Int);
             nif = new SqlParameter("@NIF", SqlDbType.Int);
 
             dataI.Value = dI;

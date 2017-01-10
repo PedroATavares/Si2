@@ -38,8 +38,8 @@ create table fbo.Promocoes(
 go
 
 create table Descontos(
-	Preco smallmoney, -- Em euros
-	Id int foreign key references fbo.Promocoes 
+	Percentagem int,
+	Id int foreign key references fbo.Promocoes primary key
 )
 
 
