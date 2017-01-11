@@ -91,6 +91,9 @@
     <Compile Include="EF\Equipamentos1.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\EquipamentosEspecificos_Result.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\EquipamentosSemAluguerUltimaSemana_Result.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
@@ -104,6 +107,9 @@
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Promocoes1.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\ShowEquipamentos_Result.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Si2Context.Context.cs">

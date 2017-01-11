@@ -16,6 +16,7 @@ namespace App
         static readonly string connectionString = @"Server=localhost;Database=TestesSI2;Trusted_Connection=True;";
         static void Main(string[] args)
         {
+
             bool ado=false;
             Handler handler = new Handler(connectionString);
             String key;
