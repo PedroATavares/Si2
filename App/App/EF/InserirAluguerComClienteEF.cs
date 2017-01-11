@@ -10,13 +10,13 @@ namespace App
         private static int numEmp, niff, duracaoo;
         private static string dI, dF;
 
-        public static void procInserirAluguerComClienteEF()
+        public static void procInserirAluguerComCliente()
         {
 
-            using (var ctx = new SI2Entities() )
+            using (var ctx = new TestesSI2Entities() )
             {
                 Console.WriteLine("Estes sao os Clientes existentes -------------------\nCODIGO|  NIF   |     NOME   |      MORADA");
-                printClientesEF(ctx);
+                printClientes(ctx);
 
                 Console.WriteLine("\nEscolha um dos Clientes (codigo NIF):");
                 niff = Convert.ToInt32(Console.ReadLine());
@@ -24,13 +24,13 @@ namespace App
                 if (niff <= 0)
                 {
                     Console.WriteLine("O NIF que colocou esta incorrecto, volte a tentar");
-                    printClientesEF(ctx);
+                    printClientes(ctx);
                 }
 
                 printQuestoesAluguer();
 
                 int num = 0 ;
-                foreach ( var i in ctx.ClienteView.Where(x => x.nif == niff).Select(x => x.codigo)){
+                foreach ( var i in ctx.Cliente1.Where(x => x.nif == niff).Select(x => x.codigo)){
                     num = i;
                 }
                 
@@ -42,9 +42,9 @@ namespace App
             Console.WriteLine("Adicao concluida !!! ");
         }
 
-        private static void printClientesEF(SI2Entities ctx)
+        private static void printClientes(TestesSI2Entities ctx)
         {
-            foreach (var row in ctx.ClienteView)
+            foreach (var row in ctx.Cliente1)
                 if (row.nif > 0)
                     Console.WriteLine(row.codigo + "   |  " + row.nif + "  |  " + row.nome + "  |  " + row.morada);
         }

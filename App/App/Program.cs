@@ -19,8 +19,17 @@ namespace App
 
         static void Main(string[] args)
         {
-            //InserirAluguerComClienteEF.procInserirAluguerComClienteEF();
-            InserirAluguerSemClienteEF.procInserirAluguerSemCliente();
+            //InserirAluguerComClienteEF.procInserirAluguerComCliente();
+            //InserirAluguerSemClienteEF.procInserirAluguerSemCliente();
+            //RemoverAluguerEF.procRemoverAluger();
+            //AlteracaoPrecarioEF.procAlteracaoPrecario();
+            //ListarEquipamentosEF.proclistarEquipamentos();
+            //EquipSemAluguerUltimaSemanaEF.procEquipamentosSemAluguerUltimaSemana();
+            //EditPromocaoInfoEF.procDeletePromocoes();
+            //EditPromocaoInfoEF.procInsertPromocaoTempo();
+           // EditPromocaoInfoEF.procUpdatePromocoesTempo();
+            //EditDescontoInfoEF.procUpdatePromocoesDescontos();
+
                     
             Handler handler = new Handler(connectionString1);
             String key;

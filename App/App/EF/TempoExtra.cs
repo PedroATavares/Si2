@@ -17,6 +17,6 @@ namespace App.EF
         public Nullable<int> TempoExtra1 { get; set; }
         public int Id { get; set; }
     
-        public virtual Promocao Promocoes { get; set; }
+        public virtual Promocoes Promocoes { get; set; }
     }
 }

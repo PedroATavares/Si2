@@ -17,13 +17,13 @@ namespace App.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tipo()
         {
-            this.Equipamentos = new HashSet<Equipamento>();
+            this.Equipamentos = new HashSet<Equipamentos>();
         }
     
         public string Nome { get; set; }
         public string Descricao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Equipamento> Equipamentos { get; set; }
+        public virtual ICollection<Equipamentos> Equipamentos { get; set; }
     }
 }

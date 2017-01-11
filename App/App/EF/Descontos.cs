@@ -14,9 +14,9 @@ namespace App.EF
     
     public partial class Descontos
     {
-        public Nullable<decimal> Preco { get; set; }
+        public Nullable<int> Percentagem { get; set; }
         public int Id { get; set; }
     
-        public virtual Promocao Promocoes { get; set; }
+        public virtual Promocoes Promocoes { get; set; }
     }
 }

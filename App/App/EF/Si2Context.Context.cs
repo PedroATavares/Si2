@@ -15,10 +15,10 @@ namespace App.EF
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class SI2Entities : DbContext
+    public partial class TestesSI2Entities : DbContext
     {
-        public SI2Entities()
-            : base("name=SI2Entities")
+        public TestesSI2Entities()
+            : base("name=TestesSI2Entities")
         {
         }
     
@@ -27,20 +27,20 @@ namespace App.EF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AluguerEquipamento> AluguerEquipamento { get; set; }
+        public virtual DbSet<AluguerEquipamentos> AluguerEquipamentos { get; set; }
+        public virtual DbSet<Descontos> Descontos { get; set; }
         public virtual DbSet<PrecoAluguer> PrecoAluguer { get; set; }
-        public virtual DbSet<Tipo> Tipoe { get; set; }
+        public virtual DbSet<Tipo> Tipo { get; set; }
         public virtual DbSet<Aluguer> Aluguer { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Empregado> Empregado { get; set; }
-        public virtual DbSet<Equipamento> Equipamento { get; set; }
-        public virtual DbSet<Promocao> Promocao { get; set; }
-        public virtual DbSet<AluguerView> AluguerView { get; set; }
-        public virtual DbSet<ClienteView> ClienteView { get; set; }
-        public virtual DbSet<EmpregadoView> EmpregadoView { get; set; }
-        public virtual DbSet<EquipamentosView> EquipamentosView { get; set; }
-        public virtual DbSet<PromocoesView> PromocoesView { get; set; }
-        public virtual DbSet<Descontos> Desconto { get; set; }
+        public virtual DbSet<Equipamentos> Equipamentos { get; set; }
+        public virtual DbSet<Promocoes> Promocoes { get; set; }
+        public virtual DbSet<Aluguer1> Aluguer1 { get; set; }
+        public virtual DbSet<Cliente1> Cliente1 { get; set; }
+        public virtual DbSet<Empregado1> Empregado1 { get; set; }
+        public virtual DbSet<Equipamentos1> Equipamentos1 { get; set; }
+        public virtual DbSet<Promocoes1> Promocoes1 { get; set; }
         public virtual DbSet<TempoExtra> TempoExtra { get; set; }
     
         public virtual int alteracoesPrecario(Nullable<System.DateTime> validadeI, Nullable<System.DateTime> validadeF, Nullable<int> duracao, Nullable<decimal> valor, Nullable<int> equipId)
@@ -188,7 +188,7 @@ namespace App.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEquipamentos", descrParameter, tipoParameter, toRet);
         }
     
-        public virtual int InsertPromocoes(Nullable<System.DateTime> dataInicio, Nullable<System.DateTime> dataFim, string descricao, ObjectParameter id)
+        public virtual int InsertPromocaoDesconto(Nullable<System.DateTime> dataInicio, Nullable<System.DateTime> dataFim, string descricao, Nullable<decimal> preco, ObjectParameter id)
         {
             var dataInicioParameter = dataInicio.HasValue ?
                 new ObjectParameter("DataInicio", dataInicio) :
@@ -202,7 +202,32 @@ namespace App.EF
                 new ObjectParameter("Descricao", descricao) :
                 new ObjectParameter("Descricao", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertPromocoes", dataInicioParameter, dataFimParameter, descricaoParameter, id);
+            var precoParameter = preco.HasValue ?
+                new ObjectParameter("Preco", preco) :
+                new ObjectParameter("Preco", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertPromocaoDesconto", dataInicioParameter, dataFimParameter, descricaoParameter, precoParameter, id);
+        }
+    
+        public virtual int InsertPromocaoTempo(Nullable<System.DateTime> dataInicio, Nullable<System.DateTime> dataFim, string descricao, Nullable<int> tempo, ObjectParameter id)
+        {
+            var dataInicioParameter = dataInicio.HasValue ?
+                new ObjectParameter("DataInicio", dataInicio) :
+                new ObjectParameter("DataInicio", typeof(System.DateTime));
+    
+            var dataFimParameter = dataFim.HasValue ?
+                new ObjectParameter("DataFim", dataFim) :
+                new ObjectParameter("DataFim", typeof(System.DateTime));
+    
+            var descricaoParameter = descricao != null ?
+                new ObjectParameter("Descricao", descricao) :
+                new ObjectParameter("Descricao", typeof(string));
+    
+            var tempoParameter = tempo.HasValue ?
+                new ObjectParameter("Tempo", tempo) :
+                new ObjectParameter("Tempo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertPromocaoTempo", dataInicioParameter, dataFimParameter, descricaoParameter, tempoParameter, id);
         }
     
         public virtual ObjectResult<listarEquipamentos_Result> listarEquipamentos(Nullable<System.DateTime> validadeI, Nullable<System.DateTime> validadeF, string tipo)
@@ -269,7 +294,7 @@ namespace App.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateEquipamentos", idParameter, descrParameter, tipoParameter);
         }
     
-        public virtual int UpdatePromocoes(Nullable<int> id, Nullable<System.DateTime> dataInicio, Nullable<System.DateTime> dataFim, string descricao)
+        public virtual int UpdatePromocoesDescontos(Nullable<int> id, Nullable<System.DateTime> dataInicio, Nullable<System.DateTime> dataFim, string descricao, Nullable<decimal> preco)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -287,7 +312,36 @@ namespace App.EF
                 new ObjectParameter("Descricao", descricao) :
                 new ObjectParameter("Descricao", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdatePromocoes", idParameter, dataInicioParameter, dataFimParameter, descricaoParameter);
+            var precoParameter = preco.HasValue ?
+                new ObjectParameter("Preco", preco) :
+                new ObjectParameter("Preco", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdatePromocoesDescontos", idParameter, dataInicioParameter, dataFimParameter, descricaoParameter, precoParameter);
+        }
+    
+        public virtual int UpdatePromocoesTempo(Nullable<int> id, Nullable<System.DateTime> dataInicio, Nullable<System.DateTime> dataFim, string descricao, Nullable<decimal> tempo)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var dataInicioParameter = dataInicio.HasValue ?
+                new ObjectParameter("DataInicio", dataInicio) :
+                new ObjectParameter("DataInicio", typeof(System.DateTime));
+    
+            var dataFimParameter = dataFim.HasValue ?
+                new ObjectParameter("DataFim", dataFim) :
+                new ObjectParameter("DataFim", typeof(System.DateTime));
+    
+            var descricaoParameter = descricao != null ?
+                new ObjectParameter("Descricao", descricao) :
+                new ObjectParameter("Descricao", typeof(string));
+    
+            var tempoParameter = tempo.HasValue ?
+                new ObjectParameter("Tempo", tempo) :
+                new ObjectParameter("Tempo", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdatePromocoesTempo", idParameter, dataInicioParameter, dataFimParameter, descricaoParameter, tempoParameter);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace App
 
         public static void procInserirAluguerSemCliente()
         {
-            using (var ctx = new SI2Entities())
+            using (var ctx = new TestesSI2Entities())
             {
                 Console.WriteLine("Dados do novo Cliente  -----------------");
                 printQuestoesCliente();

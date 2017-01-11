@@ -12,13 +12,13 @@ namespace App.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class AluguerEquipamento
+    public partial class AluguerEquipamentos
     {
         public Nullable<decimal> preco { get; set; }
         public int NumAluguer { get; set; }
         public int CodEquip { get; set; }
     
-        public virtual Equipamento Equipamento { get; set; }
+        public virtual Equipamentos Equipamentos { get; set; }
         public virtual Aluguer Aluguer { get; set; }
     }
 }
