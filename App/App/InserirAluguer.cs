@@ -8,9 +8,8 @@ namespace App
     class InserirAluguer
     {
         private static Handler handler;
-        private static int numEmp, niff, cod, duracaoo, idAluguerr;
+        private static int numEmp, niff, cod, duracaoo;
         private static string dI, dF, moradaa, nomee;
-        //private static SqlParameter dataI, dataF, duracao, numEmpregado, codigoCliente, nif, idAluguer, morada, nome;
 
         private static void InserirAluguerSemCliente()
         {
@@ -85,7 +84,7 @@ namespace App
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
                     PrintsComCliente();
-                    PrintClientes(con);
+                    PrintEntities.PrintClientes(con);
                     using (SqlCommand cmd = new SqlCommand("InserirAluguerComCliente", con))
                     {
                         cmd.CommandType= CommandType.StoredProcedure;
@@ -104,27 +103,6 @@ namespace App
                 }
             }
         }
-
-        private static void PrintClientes(SqlConnection con)
-        {
-            using (SqlCommand cmd = con.CreateCommand())
-            {
-                cmd.CommandText = "select * from Cliente";
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    Console.WriteLine(
-                        "Estes sao os Clientes existentes -------------------\nCODIGO|  NIF   |     NOME   |      MORADA");
-                    while (dr.Read())
-                        if (!dr["nif"].Equals(0))
-                            Console.Write(dr["codigo"] + " | " + dr["nif"] + " | " + dr["nome"] + " |  " + dr["morada"] +
-                                          "\n");
-                }
-                Console.WriteLine("Insira o código de Cliente pretendido:");
-                cod = Int32.Parse(Console.ReadLine());
-            }
-        }
-
-
 
         public static void PrintsComCliente()
         {
