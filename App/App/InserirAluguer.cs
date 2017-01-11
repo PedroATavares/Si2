@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
@@ -10,13 +8,12 @@ namespace App
     class InserirAluguer
     {
         private static Handler handler;
-        private static int numEmp, niff, duracaoo, idAluguerr;
+        private static int numEmp, niff, cod, duracaoo, idAluguerr;
         private static string dI, dF, moradaa, nomee;
-        private static SqlParameter dataI, dataF, duracao, numEmpregado, codigoCliente, nif, idAluguer, morada, nome;
+        //private static SqlParameter dataI, dataF, duracao, numEmpregado, codigoCliente, nif, idAluguer, morada, nome;
 
-        public static void InserirAluguerSemCliente(Handler h)
+        private static void InserirAluguerSemCliente()
         {
-            if (handler == null) handler = h;
             using (SqlConnection con = new SqlConnection())
             {
                 
@@ -28,16 +25,9 @@ namespace App
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        printQuestoesAluguerSemCliente();
-                        initParametrosAluguerSemCliente(cmd);     
+                        InitParametrosSemCliente(cmd);
 
-                        //cmd.CommandText = "declare @idCliente int; declare @idAluguer int; exec InserirAluguerSemCliente @NIF, @Nome, @Morada, @idCliente output, @Duracao, @NumEmpregado, @DataInicial, @DataFinal, @idAluguer output";
-
-                        int i = cmd.ExecuteNonQuery();
-
-                        Console.WriteLine(i + "tuplo(s) afetado(s)");
-
-                        //Console.ReadLine();
+                        cmd.ExecuteNonQuery();
                     }
                 }
                 catch (DbException ex)
@@ -49,8 +39,10 @@ namespace App
             }
         }
 
-        private static void printQuestoesAluguerSemCliente()
+        public static void PrintsSemCliente(Handler h)
         {
+            if (handler == null) handler = h;
+            Console.WriteLine("********************************************************** \n");
             Console.WriteLine("Dados do novo Cliente  -----------------");
             Console.WriteLine("\n NIF do Cliente :");
             niff = Convert.ToInt32(Console.ReadLine());
@@ -58,34 +50,24 @@ namespace App
             nomee = Console.ReadLine();
             Console.WriteLine("\n Morada do Cliente :");
             moradaa = Console.ReadLine();
-            printQuestoesAluguerComCliente();
+            PrintsComCliente();
+            InserirAluguerSemCliente();
         }
 
-        private static void initParametrosAluguerSemCliente(SqlCommand cmd)
+        private static void InitParametrosSemCliente(SqlCommand cmd)
         {
-            nif = new SqlParameter("@NIF", SqlDbType.Int);
-            nome = new SqlParameter("@Nome", SqlDbType.VarChar, 50);
-            morada = new SqlParameter("@Morada", SqlDbType.VarChar, 100);
-            dataI = new SqlParameter("@DataInicial", SqlDbType.Date);
-            dataF = new SqlParameter("@DataFinal", SqlDbType.Date);
-            duracao = new SqlParameter("@Duracao", SqlDbType.Int);
-            numEmpregado = new SqlParameter("@NumEmpregado", SqlDbType.Int);
+            SqlParameter nif = new SqlParameter("@NIF", SqlDbType.Int);
+            SqlParameter nome = new SqlParameter("@Nome", SqlDbType.VarChar, 50);
+            SqlParameter morada = new SqlParameter("@Morada", SqlDbType.VarChar, 100);
 
             nif.Value = niff;
             nome.Value = nomee;
             morada.Value = moradaa;
-            dataI.Value = dI;
-            dataF.Value = dF;
-            duracao.Value = duracaoo;
-            numEmpregado.Value = numEmp;
 
             cmd.Parameters.Add(nif);
             cmd.Parameters.Add(nome);
             cmd.Parameters.Add(morada);
-            cmd.Parameters.Add(dataI);
-            cmd.Parameters.Add(dataF);
-            cmd.Parameters.Add(duracao);
-            cmd.Parameters.Add(numEmpregado);
+            InitParametrosComCliente(cmd);
 
         }
 
@@ -95,55 +77,22 @@ namespace App
         public static void InserirAluguerComCliente(Handler h)
         {
             if (handler == null) handler = h;
+
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    using (SqlCommand cmd = con.CreateCommand())
-                    {
-                        printClientes(cmd);
-
-                        Console.WriteLine("\nEscolha um dos Clientes (codigo NIF):");
-                        niff = Convert.ToInt32(Console.ReadLine());
-
-                        if (niff <= 0)
-                        {
-                            Console.WriteLine("O NIF que colocou esta incorrecto, volte a tentar");
-                            printClientes(cmd);
-                        }
-
-                        printQuestoesAluguerComCliente();
-                        initParametrosAluguerComCliente();
-
-                        cmd.Parameters.Add(nif);
-                        cmd.CommandText = "select Codigo from Cliente where Cliente.Nif = @NIF ";
-
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                                codigoCliente.Value = dr["Codigo"];
-                        }
-                    }
+                    PrintsComCliente();
+                    PrintClientes(con);
                     using (SqlCommand cmd = new SqlCommand("InserirAluguerComCliente", con))
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.Add(dataI);
-                        cmd.Parameters.Add(dataF);
-                        cmd.Parameters.Add(duracao);
-                        cmd.Parameters.Add(numEmpregado);
-                        cmd.Parameters.Add(codigoCliente);
-
-                        //cmd.CommandText = "declare @id int; exec InserirAluguerComCliente @DataInicial, @DataFinal, @Duracao, @NumEmpregado, @CodigoCliente,@id output; select @id";
-
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                                Console.Write("Id do novo Aluguer: " + dr[0] + "\n");
-                        }
-                        Console.ReadLine();
+                        cmd.CommandType= CommandType.StoredProcedure;
+                        InitParametrosComCliente(cmd);
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("Inserido com sucesso");
+                        Console.WriteLine("********************************************************************\t");
                     }
                 }
 
@@ -156,21 +105,28 @@ namespace App
             }
         }
 
-        private static void printClientes(SqlCommand cmd)
+        private static void PrintClientes(SqlConnection con)
         {
-            cmd.CommandText = "select * from Cliente";
-            using (SqlDataReader dr = cmd.ExecuteReader())
+            using (SqlCommand cmd = con.CreateCommand())
             {
-                Console.WriteLine("Estes sao os Clientes existentes -------------------\nCODIGO|  NIF   |     NOME   |      MORADA");
-                while (dr.Read())
-                    if (!dr["nif"].Equals(0))
-                        Console.Write(dr["codigo"] + " | " + dr["nif"] + " | " + dr["nome"] + " |  " + dr["morada"] + "\n");
+                cmd.CommandText = "select * from Cliente";
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    Console.WriteLine(
+                        "Estes sao os Clientes existentes -------------------\nCODIGO|  NIF   |     NOME   |      MORADA");
+                    while (dr.Read())
+                        if (!dr["nif"].Equals(0))
+                            Console.Write(dr["codigo"] + " | " + dr["nif"] + " | " + dr["nome"] + " |  " + dr["morada"] +
+                                          "\n");
+                }
+                Console.WriteLine("Insira o código de Cliente pretendido:");
+                cod = Int32.Parse(Console.ReadLine());
             }
         }
 
 
 
-        private static void printQuestoesAluguerComCliente()
+        public static void PrintsComCliente()
         {
             Console.WriteLine("Dados do novo Aluguer  -----------------");
             Console.WriteLine("\n Coloque a Data Inicial");
@@ -183,21 +139,34 @@ namespace App
             numEmp = Convert.ToInt32(Console.ReadLine());
         }
 
-        private static void initParametrosAluguerComCliente()
+        private static void InitParametrosComCliente(SqlCommand cmd)
         {
-            
-            dataI = new SqlParameter("@DataI", SqlDbType.Date);
-            dataF = new SqlParameter("@DataF", SqlDbType.Date);
-            duracao = new SqlParameter("@Duracao", SqlDbType.Int);
-            numEmpregado = new SqlParameter("@NumEmp", SqlDbType.Int);
-            codigoCliente = new SqlParameter("@CodCli", SqlDbType.Int);
-            nif = new SqlParameter("@NIF", SqlDbType.Int);
+
+            SqlParameter dataI = new SqlParameter("@DataI", SqlDbType.DateTime);
+            SqlParameter dataF = new SqlParameter("@DataF", SqlDbType.DateTime);
+            SqlParameter duracao = new SqlParameter("@Duracao", SqlDbType.Int);
+            SqlParameter numEmpregado = new SqlParameter("@NumEmp", SqlDbType.Int);
+            SqlParameter codigoCliente = new SqlParameter("@CodCli", SqlDbType.Int);
+            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+            id.Direction = ParameterDirection.Output;
 
             dataI.Value = dI;
             dataF.Value = dF;
             duracao.Value = duracaoo;
             numEmpregado.Value = numEmp;
-            nif.Value = niff;
+            codigoCliente.Value = cod;
+
+
+            Console.WriteLine(dataI.Value.ToString());
+            Console.WriteLine(dataF.Value.ToString());
+            
+            cmd.Parameters.Add(dataI);
+            cmd.Parameters.Add(dataF);
+            cmd.Parameters.Add(duracao);
+            cmd.Parameters.Add(numEmpregado);
+            cmd.Parameters.Add(codigoCliente);
+            cmd.Parameters.Add(id);
+
         }
     
     }

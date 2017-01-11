@@ -20,7 +20,7 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("RemoverAluguer", con))
+                    using (SqlCommand cmd = new SqlCommand("RemoverAluger", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -29,18 +29,14 @@ namespace App
                         Console.WriteLine("Escolha o Aluguer (id) que deseja eliminar : ");
                         int idAluguerr = Convert.ToInt32(Console.ReadLine());
 
-                        SqlParameter idAluguer = new SqlParameter("@idAluguer", SqlDbType.Int);
+                        SqlParameter idAluguer = new SqlParameter("@id", SqlDbType.Int);
                         idAluguer.Value = idAluguerr;
                         cmd.Parameters.Add(idAluguer);
-
-                       // cmd.CommandText = " exec RemoverAluger @idAluguer";
-
                         int i = cmd.ExecuteNonQuery();
 
-                        Console.WriteLine(i + "tuplo(s) afetado(s)");
-                        //printAluguer(cmd);
+                        
+                        printAluguer(con);
 
-                        //Console.ReadLine();
                     };
                 }
                 catch (DbException ex)

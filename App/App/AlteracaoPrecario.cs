@@ -10,6 +10,26 @@ namespace App
     class AlteracaoPrecario
     {
         private static Handler handler;
+
+        public static void GetParamsFromConsole(Handler h)
+        {
+            if (handler == null) handler = h;
+            Console.WriteLine("***********************************************************************");
+            Console.WriteLine("Insira o Id do Equipamento (obrigatório):");
+            int id = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Insira a Data Inicial  (obrigatório):");
+            string dataI = Console.ReadLine();
+            Console.WriteLine("Insira a duraçao  (obrigatório):");
+            int duration = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Insira a nova Data Final (opcional):");
+            string dataF = Console.ReadLine();
+            Console.WriteLine("Insira o novo Preço (opcional)");
+            string s = Console.ReadLine();
+            int price = s == "" ? -1 : Int32.Parse(s);
+            Console.WriteLine("***********************************************************************");
+            ExecProcedure(dataI, dataF, duration, price, id);
+        }
+
         private static void ExecProcedure(string dataI, string dataF, int duration, int price, int idEquip)
         {
             using (SqlConnection con = new SqlConnection())
@@ -26,9 +46,12 @@ namespace App
                         SqlParameter validadeI = new SqlParameter("@ValidadeI", SqlDbType.Date);
                         validadeI.Value = dataI;
                         cmd.Parameters.Add(validadeI);
-                        SqlParameter validadeF = new SqlParameter("@ValidadeF", SqlDbType.Date);
-                        validadeF.Value = dataF=="" ? null : dataF;
-                        cmd.Parameters.Add(validadeF);
+                        if (dataF != "")
+                        {
+                            SqlParameter validadeF = new SqlParameter("@ValidadeF", SqlDbType.Date);
+                            validadeF.Value = dataF;
+                            cmd.Parameters.Add(validadeF);
+                        }
                         SqlParameter duracao = new SqlParameter("@duracao", SqlDbType.Int);
                         duracao.Value = duration;
                         cmd.Parameters.Add(duracao);
@@ -42,10 +65,9 @@ namespace App
                         equipId.Value = idEquip;
                         cmd.Parameters.Add(equipId);
 
-                        int i = cmd.ExecuteNonQuery();
-
-                        Console.WriteLine(i + "tuplo(s) afetado(s)");
-                        Console.WriteLine("***********************************************************************");
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("Alterado com Sucesso");
+                        Console.Write("***********************************************************************\n");
                         
                     }
 
@@ -59,22 +81,5 @@ namespace App
             }    
         }
 
-       public static void GetParamsFromConsole(Handler h)
-        {
-            if (handler == null) handler = h;
-            Console.WriteLine("***********************************************************************");
-            Console.WriteLine("Insira o Id do Equipamento");
-            int id = Int32.Parse(Console.ReadLine());
-            Console.WriteLine("Insira a Data Inicial");
-            string dataI = Console.ReadLine();
-            Console.WriteLine("Insira a duraçao");
-            int duration = Int32.Parse(Console.ReadLine());
-            Console.WriteLine("Insira a nova Data Final, caso seja o que pretenda alterar");
-            string dataF = Console.ReadLine();
-            Console.WriteLine("Insira o novo Preço, caso seja o que pretenda alterar");
-            string s = Console.ReadLine();
-            int price = s == "" ? -1: Int32.Parse(s);
-            ExecProcedure(dataI, dataF, duration,price,id);
-        }
     }
 }

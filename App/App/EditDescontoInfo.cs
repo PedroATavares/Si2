@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
@@ -11,19 +9,48 @@ namespace App
     {
         private static Handler handler;
 
-        public static void RemoverPromoção(Handler h)
+        public static void RemoverDesconto(Handler h)
         {
             if (handler == null) handler = h;
-            int id;
-            do
-            {
-                Console.Write("Id da Promoção a Remover:");
-                id = Convert.ToInt32(Console.ReadLine());
-            } while (id <= 0);
-            RemoverPromoção(id);
+            ShowDescontos();
+            Console.Write("Id da Promoção Desconto a Remover:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            RemoverDesconto(id);
         }
 
-        private static void RemoverPromoção(int id)
+        private static void ShowDescontos()
+        {
+            using(SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
+                    using (SqlCommand cmd = con.CreateCommand())
+                    {
+                        cmd.CommandText = "select Promocoes.Id as Id, Promocoes.Descricao as Descr, Promocoes.DataInicio as DI, Promocoes.DataFim as DF, Descontos.Percentagem as perc " +
+                                          "from Descontos "+
+	                                      "inner join Promocoes "+
+	                                      "on Descontos.Id = Promocoes.Id ";
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                                if (!dr["Id"].Equals(0))
+                                    Console.Write("-ID:"+dr["Id"] + "\t Percentagem:"+dr["perc"]+ "\t Descr:" + dr["Descr"] + "\t Data Inicio:" + dr["DI"] + "\t Data Fim:" + dr["DF"] + "\n");
+                        }
+
+                    }
+
+                }
+                catch (DbException e)
+                {
+                    Console.WriteLine("E R R O" + e.Message);
+            
+                }
+            }
+        }
+
+        private static void RemoverDesconto(int id)
         {
             using (SqlConnection con = new SqlConnection())
             {
@@ -38,9 +65,8 @@ namespace App
                         ident.Value = id;
                         cmd.Parameters.Add(ident);
 
-                        int i = cmd.ExecuteNonQuery();
-
-                        Console.WriteLine(i + "tuplo(s) afetado(s)");
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("Removido com sucesso");
                         Console.WriteLine("***********************************************************************");
                     }
 
@@ -48,11 +74,12 @@ namespace App
                 catch (DbException ex)
                 {
                     Console.WriteLine("E R R O : " + ex.Message);
+                    Console.Write("***********************************************************************\n");
                 }
             }
         }
 
-        public static void InserirPromoçãoDesconto(Handler h)
+        public static void InserirDesconto(Handler h)
         {
             if (handler == null) handler = h;
 
@@ -64,10 +91,11 @@ namespace App
             String desc = Console.ReadLine();
             Console.Write("Valor em percentagem do Desconto (por exemplo 20):");
             int desconto = Int32.Parse(Console.ReadLine());
-            InserirPromocaoDesconto(dataInicio, dataFim, desc, desconto);
+            Console.Write("***********************************************************************\n");
+            InserirDesconto(dataInicio, dataFim, desc, desconto);
         }
 
-        private static void InserirPromocaoDesconto(String dataInicio, String dataFim, String desc, int descon)
+        private static void InserirDesconto(String dataInicio, String dataFim, String desc, int descon)
         {
             using (SqlConnection con = new SqlConnection())
             {
@@ -82,53 +110,55 @@ namespace App
                         SqlParameter dataI = new SqlParameter("@DataInicio", SqlDbType.Date);
                         SqlParameter dataF = new SqlParameter("@DataFim", SqlDbType.Date);
                         SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
-                        SqlParameter tempo = new SqlParameter("@Tempo", SqlDbType.SmallMoney);
+                        SqlParameter percentagem = new SqlParameter("@Percentagem", SqlDbType.SmallMoney);
                         SqlParameter toRet = new SqlParameter("@id", SqlDbType.Int);
                         toRet.Direction = ParameterDirection.Output;
 
                         dataI.Value = dataInicio;
                         dataF.Value = dataFim;
                         descr.Value = desc;
-                        tempo.Value = descon;
+                        percentagem.Value = descon;
 
                         cmd.Parameters.Add(dataI);
                         cmd.Parameters.Add(dataF);
                         cmd.Parameters.Add(descr);
-                        cmd.Parameters.Add(tempo);
+                        cmd.Parameters.Add(percentagem);
                         cmd.Parameters.Add(toRet);
 
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            //Console.Write(toRet.Value.ToString());
-                            while (dr.Read())
-                                Console.Write("Id da promoçao:" + dr[0] + "\n");
-                        }
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("Inserido com Sucesso");
+                        Console.Write("***********************************************************************\n");
                     }
 
                 }
                 catch (DbException ex)
                 {
                     Console.WriteLine("E R R O : " + ex.Message);
+                    Console.Write("***********************************************************************\n");
                 }
             }
         }
 
-        public static void AlterarPromoção(Handler h)
+        public static void AlterarDesconto(Handler h)
         {
             if (handler == null) handler = h;
-
-            Console.Write("Id da Promoção a alterar:");
+            ShowDescontos();
+            Console.Write("Id da Promoção a alterar (obrigatório):");
             int id = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Data de Inicio (AAAA-MM-DD):");
+            Console.Write("Data de Inicio (AAAA-MM-DD)(opcional):");
             String dataInicio = Console.ReadLine();
-            Console.Write("Data de Fim (AAAA-MM-DD):");
+            Console.Write("Data de Fim (AAAA-MM-DD)(opcional):");
             String dataFim = Console.ReadLine();
-            Console.Write("Descrição (max 200 caracteres):");
+            Console.Write("Descrição (max 200 caracteres)(opcional):");
             String desc = Console.ReadLine();
-            AlterarPromoção(id, dataInicio, dataFim, desc);
+            Console.Write("Valor da percentagem (opcional):");
+            string s = Console.ReadLine();
+            int percentagem = s == "" ? -1 : Convert.ToInt32(s);
+            Console.Write("***********************************************************************\n");
+            AlterarDesconto(id, dataInicio, dataFim, desc, percentagem);
         }
 
-        private static void AlterarPromoção(int num, String dataInicio, String dataFim, String desc)
+        private static void AlterarDesconto(int num, String dataInicio, String dataFim, String desc, int percentagem)
         {
             using (SqlConnection con = new SqlConnection())
             {
@@ -136,32 +166,53 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("UpdatePromocoes", con))
+                    using (SqlCommand cmd = new SqlCommand("UpdatePromocoesDescontos", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         SqlParameter id = new SqlParameter("@Id", SqlDbType.Int);
-                        SqlParameter dataI = new SqlParameter("@DataInicio", SqlDbType.Date);
-                        SqlParameter dataF = new SqlParameter("@DataFim", SqlDbType.Date);
-                        SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
                         id.Value = num;
-                        dataI.Value = dataInicio == "" ? null : dataInicio;
-                        dataF.Value = dataFim == "" ? null : dataFim;
-                        descr.Value = desc == "" ? null : desc;
-
                         cmd.Parameters.Add(id);
-                        cmd.Parameters.Add(dataI);
-                        cmd.Parameters.Add(dataF);
-                        cmd.Parameters.Add(descr);
-                        //cmd.CommandText = "declare @id int; exec InsertPromocoes @DataInicio,@DataFim,@Descricao,@id output; select @id;";
 
-                        int i = cmd.ExecuteNonQuery();
+                        if (dataInicio != ""){
+                            SqlParameter dataI = new SqlParameter("@DataInicio", SqlDbType.Date);
+                            dataI.Value = dataInicio;
+                            cmd.Parameters.Add(dataI);   
+                        }
+                        if (dataFim != ""){
+                            SqlParameter dataF = new SqlParameter("@DataFim", SqlDbType.Date);
+                            dataF.Value = dataFim;
+                            cmd.Parameters.Add(dataF);
+                        }
+                        if (dataInicio != ""){
+                            SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
+                            descr.Value = desc;
+                            cmd.Parameters.Add(descr);
+
+                        }
+                        if (percentagem > 0){
+                            SqlParameter perc = new SqlParameter("@Percentagem", SqlDbType.Int);
+                            perc.Value = percentagem;
+                            cmd.Parameters.Add(perc);
+                        }
+                        if (desc != "")
+                        {
+                            SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
+                            descr.Value = desc;
+                            cmd.Parameters.Add(descr);
+                        }
+
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("Alterado com Sucesso");
+                        Console.Write("***********************************************************************\n");
                     }
 
                 }
                 catch (DbException ex)
                 {
+
                     Console.WriteLine("E R R O : " + ex.Message);
+                    Console.Write("***********************************************************************\n");
                 }
             }
         }
