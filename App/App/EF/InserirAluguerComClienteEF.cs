@@ -7,7 +7,7 @@ namespace App
 {
     class InserirAluguerComClienteEF
     {
-        private static int numEmp, niff, duracaoo;
+        private static int numEmp, niff, duracaoo, tuplos;
         private static string dI, dF;
 
         public static void procInserirAluguerComCliente()
@@ -35,11 +35,12 @@ namespace App
                 }
                 
                 var id = new ObjectParameter("id", 0);
-                ctx.InserirAluguerComCliente(Convert.ToDateTime(dI), Convert.ToDateTime(dF), duracaoo, numEmp, num, id);
+                tuplos = ctx.InserirAluguerComCliente(Convert.ToDateTime(dI), Convert.ToDateTime(dF), duracaoo, numEmp, num, id);
 
-                Console.WriteLine(id);
+                Console.WriteLine("ID gerado : " + id);
             }
-            Console.WriteLine("Adicao concluida !!! ");
+            Console.WriteLine("Adicao concluida, foram afectados " + tuplos + " tuplos" );
+            Console.ReadKey();
         }
 
         private static void printClientes(TestesSI2Entities ctx)

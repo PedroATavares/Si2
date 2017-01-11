@@ -49,14 +49,9 @@ namespace App
 
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
-                            String xml = $"<xml>\n<alugueres dataInicio=\"{dataInicio}\" dataFim=\"{dataFim}\">";
+                            String xml = String.Format("<xml>\n<alugueres dataInicio=\"{0}\" dataFim=\"{1}\">", dataInicio, dataFim);
                             while (dr.Read())
                             {
-                                Console.Write("NumAluguer:" + dr["NumAluguer"] + "\t");
-                                Console.Write("CodCli:" + dr["CodCli"] + "\t");
-                                Console.Write("Tipo:" + dr["Tipo"] + "\n");
-                                Console.Write("CodEquip:" + dr["CodEquip"] + "\n");
-
                                 xml = createXmlAluguer(dr, xml);
 
                             }
@@ -79,10 +74,10 @@ namespace App
 
         private static String createXmlAluguer(SqlDataReader dr, String xml)
         {
-            return xml += $"<aluguer id=\"{dr["NumAluguer"]}\" tipo=\"{dr["Tipo"]}\"> \n" +
-                   $"<cliente>{dr["CodCli"]}</cliente>\n" +
-                   $"<equipamento>{dr["CodEquip"]}</equipamento>\n" +
-                   $"</aluguer>\n";
+            return xml += String.Format("<aluguer id=\"{0}\" tipo=\"{1}\"> \n" +
+                   "<cliente>{2}</cliente>\n" +
+                   "<equipamento>{3}</equipamento>\n" +
+                   "</aluguer>\n", dr["NumAluguer"], dr["Tipo"], dr["CodCli"], dr["CodEquip"]);
         }
     }
 }

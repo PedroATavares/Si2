@@ -14,7 +14,7 @@ namespace App.EF
 
         //------------------Inserir Pomocao ---------------------        
 
-        public static void procInsertPromocaoDesconto()
+        public static void InserirPromocao()
         {
 
             using (var ctx = new TestesSI2Entities())
@@ -22,8 +22,10 @@ namespace App.EF
                 printQuestoesInsert();
 
                 var id = new ObjectParameter("id", 0);
-                ctx.InsertPromocaoDesconto(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), descricao, desconto, id);
+                tuplos = ctx.InsertPromocaoDesconto(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), descricao, desconto, id);
             }
+            Console.WriteLine("Insercao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printQuestoesInsert()
@@ -40,7 +42,7 @@ namespace App.EF
 
         //----------------- Alterar Pomocoes -----------------------
 
-        public static void procUpdatePromocoesDescontos()
+        public static void AlterarPromocao()
         {
 
             using (var ctx = new TestesSI2Entities())
@@ -90,7 +92,8 @@ namespace App.EF
                 else
                     tuplos = ctx.UpdatePromocoesDescontos(id, Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), descricao, desconto);
             }
-            Console.WriteLine("Update concluido, foram afectados " + tuplos + " tuplos");
+            Console.WriteLine("Alteracao concluido, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printQuestoesUpdate()
@@ -109,7 +112,7 @@ namespace App.EF
 
         // ----------------- Delete Promocoes ----------------------
 
-        public static void procDeletePromocoes()
+        public static void RemoverPromocao()
         {
 
             using (var ctx = new TestesSI2Entities())
@@ -118,9 +121,9 @@ namespace App.EF
                 printQuestaoRemover();
 
                 tuplos = ctx.DeletePromocoes(id);
-
-                Console.WriteLine("Remocao concluida, foram afectados " + tuplos + " tuplos");
             }
+            Console.WriteLine("Remocao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printQuestaoRemover()

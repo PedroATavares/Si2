@@ -13,7 +13,7 @@ namespace App.EF
         private static string dataI, dataF, descricao;
 
         //------------------Inserir Pomocao ---------------------        
-        public static void procInsertPromocaoTempo()
+        public static void InserirPromocao()
         {
 
             using (var ctx = new TestesSI2Entities())
@@ -21,8 +21,10 @@ namespace App.EF
                 printQuestoesInsert();
 
                 var id = new ObjectParameter("id", 0);
-                ctx.InsertPromocaoTempo(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), descricao, tempo, id);                
+                tuplos = ctx.InsertPromocaoTempo(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), descricao, tempo, id);                
             }
+            Console.WriteLine("Insercao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printQuestoesInsert()
@@ -39,7 +41,7 @@ namespace App.EF
         }
 
         // ----------------- Delete Promocoes ----------------------
-        public static void procDeletePromocoes()
+        public static void RemoverPromocao()
         {
 
             using (var ctx = new TestesSI2Entities())
@@ -48,9 +50,9 @@ namespace App.EF
                 printQuestaoRemover();
 
                 tuplos = ctx.DeletePromocoes(id);
-                
-                Console.WriteLine("Remocao concluida, foram afectados " + tuplos + " tuplos");
             }
+            Console.WriteLine("Remocao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printQuestaoRemover()
@@ -60,7 +62,7 @@ namespace App.EF
         }
 
         //----------------- Alterar Pomocoes -----------------------
-        public static void procUpdatePromocoesTempo()
+        public static void AlterarPromocao()
         {
 
             using (var ctx = new TestesSI2Entities())
@@ -112,8 +114,8 @@ namespace App.EF
                     tuplos = ctx.UpdatePromocoesTempo(id, Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), descricao, tempo);
                     
             }
-            Console.WriteLine("Update concluido, foram afectados " + tuplos + " tuplos");
-
+            Console.WriteLine("Alteracao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printQuestaoUpdate()

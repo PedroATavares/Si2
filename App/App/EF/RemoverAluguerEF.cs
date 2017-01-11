@@ -7,6 +7,8 @@ namespace App
 {
     class RemoverAluguerEF
     {
+        private static int tuplos;
+
         public static void procRemoverAluger()
         {
             using (var ctx = new TestesSI2Entities())
@@ -15,11 +17,10 @@ namespace App
                 Console.WriteLine("Escolha o Aluguer (id) que deseja eliminar : ");
                 int idAluguer = Convert.ToInt32(Console.ReadLine());
 
-                ctx.RemoverAluger(idAluguer);
-
-                printAluguer(ctx);
+                tuplos = ctx.RemoverAluger(idAluguer);
             }
-            Console.WriteLine("Remocao concluida !!");
+            Console.WriteLine("Remocao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printAluguer(TestesSI2Entities ctx)

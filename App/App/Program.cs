@@ -13,28 +13,26 @@ namespace App
 {
     class Program
     {
-        static readonly string connectionString1 = @"Server=localhost;Database=TestesSI2;User=jdbcuser;Password=jdbcuser;";
-        static readonly string connectionString2 = @"Server=localhost;Database=SI2.SInverno;User=sa;Password=plastico.2";
-        static readonly string connectionString3 = @"Server=CAROLINA;Database=TestesSI2;User=ls;Password=ls;";
-
+        static readonly string connectionString = @"Server=localhost;Database=TestesSI2;Trusted_Connection=True;";
         static void Main(string[] args)
         {
-            //InserirAluguerComClienteEF.procInserirAluguerComCliente();
-            //InserirAluguerSemClienteEF.procInserirAluguerSemCliente();
-            //RemoverAluguerEF.procRemoverAluger();
-            //AlteracaoPrecarioEF.procAlteracaoPrecario();
-            //ListarEquipamentosEF.proclistarEquipamentos();
-            //EquipSemAluguerUltimaSemanaEF.procEquipamentosSemAluguerUltimaSemana();
-            //EditPromocaoInfoEF.procDeletePromocoes();
-            //EditPromocaoInfoEF.procInsertPromocaoTempo();
-           // EditPromocaoInfoEF.procUpdatePromocoesTempo();
-            //EditDescontoInfoEF.procUpdatePromocoesDescontos();
-
-                    
-            Handler handler = new Handler(connectionString3);
+            bool ado=false;
+            Handler handler = new Handler(connectionString);
             String key;
             do
             {
+                Console.WriteLine("1 - Usar ADO.NET");
+                Console.WriteLine("2 - Usar Entity Frameworks");
+                key = Console.ReadLine();
+                switch (key)
+                {
+                    case "1": ado=true; break;
+                    case "2": ado=false; break;
+                }
+            } while (key != "1" && key != "2");
+            do
+            {
+                Console.WriteLine("\n*******************************************************");
                 Console.WriteLine("1 - Inserir Promoção do tipo Desconto");
                 Console.WriteLine("2 - Remover Promoção do tipo Desconto");
                 Console.WriteLine("3 - Actualizar informação de uma Promoção do tipo Desconto");
@@ -54,19 +52,19 @@ namespace App
                 key = Console.ReadLine();
                 switch (key)
                 {
-                    case "1": EditDescontoInfo.InserirDesconto(handler); break;
-                    case "2": EditDescontoInfo.RemoverDesconto(handler); break;
-                    case "3": EditDescontoInfo.AlterarDesconto(handler); break;
-                    case "4": EditTempoExtraInfo.InserirTempoExtra(handler); break;
-                    case "5": EditTempoExtraInfo.RemoverTempoExtra(handler); break;
-                    case "6": EditTempoExtraInfo.AlterarTempoExtra(handler); break;
-                    case "7": InserirAluguer.PrintsSemCliente(handler); break;
-                    case "8": InserirAluguer.InserirAluguerComCliente(handler); break;
-                    case "9": RemoverAluguer.procRemoverAluger(handler); break;
-                    case "10": AlteracaoPrecario.GetParamsFromConsole(handler); break;
-                    case "11": ListarEquipamentos.GetParamsFromConsole(handler); break;
-                    case "12": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
-                    case "13": XmlAlugueres.GetParamsFromConsole(handler); break;
+                    case "1": if (ado) EditDescontoInfo.InserirDesconto(handler); else EditDescontoInfoEF.InserirPromocao(); break;
+                    case "2": if (ado) EditDescontoInfo.RemoverDesconto(handler); else EditDescontoInfoEF.RemoverPromocao(); break;
+                    case "3": if (ado) EditDescontoInfo.AlterarDesconto(handler); else EditDescontoInfoEF.AlterarPromocao(); break;
+                    case "4": if (ado) EditTempoExtraInfo.InserirTempoExtra(handler); else EditPromocaoInfoEF.InserirPromocao(); break;
+                    case "5": if (ado) EditTempoExtraInfo.RemoverTempoExtra(handler); else EditPromocaoInfoEF.RemoverPromocao(); break;
+                    case "6": if (ado) EditTempoExtraInfo.AlterarTempoExtra(handler); else EditPromocaoInfoEF.AlterarPromocao(); break;
+                    case "7": if (ado) InserirAluguer.PrintsSemCliente(handler); else InserirAluguerSemClienteEF.procInserirAluguerSemCliente(); break;
+                    case "8": if (ado) InserirAluguer.InserirAluguerComCliente(handler); else InserirAluguerComClienteEF.procInserirAluguerComCliente(); break;
+                    case "9": if (ado) RemoverAluguer.procRemoverAluger(handler); else RemoverAluguerEF.procRemoverAluger(); break;
+                    case "10": if (ado) AlteracaoPrecario.GetParamsFromConsole(handler); else AlteracaoPrecarioEF.procAlteracaoPrecario(); break;
+                    case "11": if (ado) ListarEquipamentos.GetParamsFromConsole(handler); else ListarEquipamentosEF.proclistarEquipamentos(); break;
+                    case "12": if (ado) EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); else EquipSemAluguerUltimaSemanaEF.procEquipamentosSemAluguerUltimaSemana(); break;
+                    case "13": if (ado) XmlAlugueres.GetParamsFromConsole(handler); else XmlAlugueresEF.GetParamsFromConsole(handler); break;
 
                     default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }

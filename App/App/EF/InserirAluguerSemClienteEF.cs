@@ -7,7 +7,7 @@ namespace App
 {
     class InserirAluguerSemClienteEF
     {
-        private static int numEmp, niff, duracaoo;
+        private static int numEmp, niff, duracaoo, tuplos;
         private static string dI, dF, moradaa, nomee;
 
         public static void procInserirAluguerSemCliente()
@@ -21,12 +21,12 @@ namespace App
 
                 var idC = new ObjectParameter("idCliente", 0);            
                 var id = new ObjectParameter("idAluguer", 0);  
-                ctx.InserirAluguerSemCliente(niff, nomee, moradaa, idC, duracaoo, numEmp, Convert.ToDateTime(dI), Convert.ToDateTime(dF), id);
+                tuplos = ctx.InserirAluguerSemCliente(niff, nomee, moradaa, idC, duracaoo, numEmp, Convert.ToDateTime(dI), Convert.ToDateTime(dF), id);
 
-                Console.WriteLine("id Cliente : " + idC.Value + "  id Aluguer : " + id.Value);
+                Console.WriteLine("id Cliente gerado : " + idC.Value + "  id Aluguer gerado : " + id.Value);
             }
-            Console.WriteLine("Insercao feita com sucesso !!");
-
+            Console.WriteLine("Insercao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
         }
 
         private static void printQuestoesCliente()

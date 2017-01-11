@@ -9,7 +9,7 @@ namespace App
 {
     class AlteracaoPrecarioEF
     {
-        private static int idC, valor, duracao;
+        private static int idC, valor, duracao, tuplos;
         private static string dataI, dataF;
 
         public static void procAlteracaoPrecario()
@@ -21,17 +21,19 @@ namespace App
                 printQuestoesPrecario();
 
                 if(dataF.Equals("") && valor == -1)
-                    ctx.alteracoesPrecario(Convert.ToDateTime(dataI), null, duracao, null, idC);
+                    tuplos = ctx.alteracoesPrecario(Convert.ToDateTime(dataI), null, duracao, null, idC);
 
                 else if(dataF.Equals(""))
-                    ctx.alteracoesPrecario(Convert.ToDateTime(dataI), null, duracao, valor, idC);
+                    tuplos = ctx.alteracoesPrecario(Convert.ToDateTime(dataI), null, duracao, valor, idC);
 
                 else if (valor == -1)
-                    ctx.alteracoesPrecario(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), duracao, null, idC);
+                    tuplos = ctx.alteracoesPrecario(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), duracao, null, idC);
 
                 else
-                    ctx.alteracoesPrecario(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), duracao, valor, idC);               
+                    tuplos = ctx.alteracoesPrecario(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), duracao, valor, idC);               
             }
+            Console.WriteLine("Alteracao concluida, foram afectados " + tuplos + " tuplos");
+            Console.ReadKey();
 
         }
 

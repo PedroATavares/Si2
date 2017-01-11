@@ -24,9 +24,8 @@ namespace App
 
                 foreach (var row in rs)
                         Console.WriteLine(row.Codigo + "   |  " + row.Descricao + "   |  " + row.Tipo);
-
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
 
         private static void printQuestoes()
