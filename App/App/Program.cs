@@ -13,15 +13,24 @@ namespace App
 {
     class Program
     {
-        static readonly string connectionString1 = @"Server=localhost;Database=TestesSI2;User=jdbcuser;Password=jdbcuser;";
-        static readonly string connectionString2 = @"Server=localhost;Database=SI2.SInverno;User=sa;Password=plastico.2";
-        static readonly string connectionString3 = @"Server=CAROLINA;Database=TestesSI2;User=ls;Password=ls;";
-
+        static readonly string connectionString = @"Server=localhost;Database=TestesSI2;Trusted_Connection=True;";
         static void Main(string[] args)
         {
-                    
-            Handler handler = new Handler(connectionString1);
+            bool ado=false;
+            Handler handler = new Handler(connectionString);
             String key;
+            do
+            {
+                Console.WriteLine("1 - Usar ADO.NET");
+                Console.WriteLine("2 - Usar Entity Frameworks");
+                key = Console.ReadLine();
+                switch (key)
+                {
+                    case "1": ado=true; break;
+                    case "2": ado=false; break;
+                }
+            } while (key != "1" && key != "2");
+            Console.WriteLine("*******************************************************");
             do
             {
                 Console.WriteLine("1 - Inserir Promoção do tipo Desconto");
@@ -57,7 +66,7 @@ namespace App
                     case "10": AlteracaoPrecario.GetParamsFromConsole(handler); break;
                     case "11": ListarEquipamentos.GetParamsFromConsole(handler); break;
                     case "12": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
-                    case "13": XmlAlugueres.GetParamsFromConsole(handler); break;
+                    case "13": if (ado) XmlAlugueres.GetParamsFromConsole(handler); else XmlAlugueresEF.GetParamsFromConsole(handler); break;
 
                     default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }
