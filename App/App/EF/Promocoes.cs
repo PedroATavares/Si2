@@ -12,24 +12,23 @@ namespace App.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Equipamento
+    public partial class Promocoes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Equipamento()
+        public Promocoes()
         {
-            this.AluguerEquipamentos = new HashSet<AluguerEquipamento>();
-            this.PrecoAluguers = new HashSet<PrecoAluguer>();
+            this.Aluguer = new HashSet<Aluguer>();
         }
     
-        public int Codigo { get; set; }
+        public int Id { get; set; }
+        public System.DateTime DataInicio { get; set; }
+        public System.DateTime DataFim { get; set; }
         public string Descricao { get; set; }
-        public string Tipo { get; set; }
         public Nullable<int> Removido { get; set; }
     
+        public virtual Descontos Descontos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AluguerEquipamento> AluguerEquipamentos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrecoAluguer> PrecoAluguers { get; set; }
-        public virtual Tipo Tipo1 { get; set; }
+        public virtual ICollection<Aluguer> Aluguer { get; set; }
+        public virtual TempoExtra TempoExtra { get; set; }
     }
 }

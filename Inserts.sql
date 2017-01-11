@@ -1,3 +1,5 @@
+use TestesSI2
+
 insert into Tipo(Nome,Descricao) values ('Gaivota', 'Tem pedais e um escorrega') 
 insert into Equipamentos(Descricao,Tipo) values ('Gaivota Azul', 'Gaivota') --Id  1
 insert into PrecoAluguer values ('2016-01-01','2017-01-01',60,35,1)

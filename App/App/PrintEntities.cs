@@ -28,5 +28,10 @@ namespace App
                 int cod = Int32.Parse(Console.ReadLine());
             }
         }
+
+        public static void PrintPromocoes()
+        {
+            //using(SqlCommand cmd = Console.)
+        }
     }
 }

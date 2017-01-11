@@ -30,9 +30,9 @@ namespace App
                     case "2": ado=false; break;
                 }
             } while (key != "1" && key != "2");
-            Console.WriteLine("*******************************************************");
             do
             {
+                Console.WriteLine("\n*******************************************************");
                 Console.WriteLine("1 - Inserir Promoção do tipo Desconto");
                 Console.WriteLine("2 - Remover Promoção do tipo Desconto");
                 Console.WriteLine("3 - Actualizar informação de uma Promoção do tipo Desconto");
@@ -52,18 +52,18 @@ namespace App
                 key = Console.ReadLine();
                 switch (key)
                 {
-                    case "1": EditDescontoInfo.InserirDesconto(handler); break;
-                    case "2": EditDescontoInfo.RemoverDesconto(handler); break;
-                    case "3": EditDescontoInfo.AlterarDesconto(handler); break;
-                    case "4": EditTempoExtraInfo.InserirTempoExtra(handler); break;
-                    case "5": EditTempoExtraInfo.RemoverTempoExtra(handler); break;
-                    case "6": EditTempoExtraInfo.AlterarTempoExtra(handler); break;
-                    case "7": InserirAluguer.PrintsSemCliente(handler); break;
-                    case "8": InserirAluguer.InserirAluguerComCliente(handler); break;
-                    case "9": RemoverAluguer.procRemoverAluger(handler); break;
-                    case "10": AlteracaoPrecario.GetParamsFromConsole(handler); break;
-                    case "11": ListarEquipamentos.GetParamsFromConsole(handler); break;
-                    case "12": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
+                    case "1": if (ado) EditDescontoInfo.InserirDesconto(handler); else EditDescontoInfoEF.InserirPromocao(); break;
+                    case "2": if (ado) EditDescontoInfo.RemoverDesconto(handler); else EditDescontoInfoEF.RemoverPromocao(); break;
+                    case "3": if (ado) EditDescontoInfo.AlterarDesconto(handler); else EditDescontoInfoEF.AlterarPromocao(); break;
+                    case "4": if (ado) EditTempoExtraInfo.InserirTempoExtra(handler); else EditPromocaoInfoEF.InserirPromocao(); break;
+                    case "5": if (ado) EditTempoExtraInfo.RemoverTempoExtra(handler); else EditPromocaoInfoEF.RemoverPromocao(); break;
+                    case "6": if (ado) EditTempoExtraInfo.AlterarTempoExtra(handler); else EditPromocaoInfoEF.AlterarPromocao(); break;
+                    case "7": if (ado) InserirAluguer.PrintsSemCliente(handler); else InserirAluguerSemClienteEF.procInserirAluguerSemCliente(); break;
+                    case "8": if (ado) InserirAluguer.InserirAluguerComCliente(handler); else InserirAluguerComClienteEF.procInserirAluguerComCliente(); break;
+                    case "9": if (ado) RemoverAluguer.procRemoverAluger(handler); else RemoverAluguerEF.procRemoverAluger(); break;
+                    case "10": if (ado) AlteracaoPrecario.GetParamsFromConsole(handler); else AlteracaoPrecarioEF.procAlteracaoPrecario(); break;
+                    case "11": if (ado) ListarEquipamentos.GetParamsFromConsole(handler); else ListarEquipamentosEF.proclistarEquipamentos(); break;
+                    case "12": if (ado) EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); else EquipSemAluguerUltimaSemanaEF.procEquipamentosSemAluguerUltimaSemana(); break;
                     case "13": if (ado) XmlAlugueres.GetParamsFromConsole(handler); else XmlAlugueresEF.GetParamsFromConsole(handler); break;
 
                     default: Console.WriteLine("Por favor insira um numero valido"); break;

@@ -17,7 +17,7 @@ namespace App.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Empregado()
         {
-            this.Aluguers = new HashSet<Aluguer>();
+            this.Aluguer = new HashSet<Aluguer>();
         }
     
         public int Codigo { get; set; }
@@ -25,6 +25,6 @@ namespace App.EF
         public Nullable<int> Removido { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Aluguer> Aluguers { get; set; }
+        public virtual ICollection<Aluguer> Aluguer { get; set; }
     }
 }

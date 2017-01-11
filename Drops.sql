@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('AluguerPromocao') is not null  DROP TABLE AluguerPromocao
 if object_id('AluguerEquipamentos') is not null  DROP TABLE AluguerEquipamentos
 if object_id('fbo.Aluguer') is not null  DROP TABLE fbo.Aluguer

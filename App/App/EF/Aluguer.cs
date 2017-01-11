@@ -17,8 +17,8 @@ namespace App.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Aluguer()
         {
-            this.AluguerEquipamentos = new HashSet<AluguerEquipamento>();
-            this.Promocoes = new HashSet<Promocao>();
+            this.AluguerEquipamentos = new HashSet<AluguerEquipamentos>();
+            this.Promocoes = new HashSet<Promocoes>();
         }
     
         public int Num { get; set; }
@@ -30,10 +30,10 @@ namespace App.EF
         public Nullable<int> Removido { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AluguerEquipamento> AluguerEquipamentos { get; set; }
+        public virtual ICollection<AluguerEquipamentos> AluguerEquipamentos { get; set; }
         public virtual Cliente Cliente { get; set; }
         public virtual Empregado Empregado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Promocao> Promocoes { get; set; }
+        public virtual ICollection<Promocoes> Promocoes { get; set; }
     }
 }

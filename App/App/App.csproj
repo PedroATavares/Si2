@@ -55,40 +55,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlteracaoPrecario.cs" />
-    <Compile Include="EditDescontoInfo.cs" />
-    <Compile Include="EditPromocaoInfo.cs" />
+    <Compile Include="ADO.net\AlteracaoPrecario.cs" />
+    <Compile Include="EF\AlteracaoPrecarioEF.cs" />
+    <Compile Include="ADO.net\EditDescontoInfo.cs" />
+    <Compile Include="ADO.net\EditPromocaoInfo.cs" />
     <Compile Include="EF\Aluguer.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\AluguerEquipamento.cs">
+    <Compile Include="EF\Aluguer1.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\AluguerView.cs">
+    <Compile Include="EF\AluguerEquipamentos.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Cliente.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\ClienteView.cs">
+    <Compile Include="EF\Cliente1.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Descontos.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\EditDescontoInfoEF.cs" />
+    <Compile Include="EF\EditPromocaoInfoEF.cs" />
     <Compile Include="EF\Empregado.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\EmpregadoView.cs">
+    <Compile Include="EF\Empregado1.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\Equipamento.cs">
+    <Compile Include="EF\Equipamentos.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Equipamentos1.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\EquipamentosSemAluguerUltimaSemana_Result.cs">
-      <DependentUpon>Si2Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\EquipamentosView.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\listarEquipamentos_Result.cs">
@@ -97,10 +100,10 @@
     <Compile Include="EF\PrecoAluguer.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\Promocao.cs">
+    <Compile Include="EF\Promocoes.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\PromocoesView.cs">
+    <Compile Include="EF\Promocoes1.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Si2Context.Context.cs">
@@ -124,14 +127,19 @@
     <Compile Include="EF\Tipo.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EquipSemAluguerUltimaSemana.cs" />
-    <Compile Include="Handlers.cs" />
-    <Compile Include="InserirAluguer.cs" />
-    <Compile Include="ListarEquipamentos.cs" />
     <Compile Include="PrintEntities.cs" />
+    <Compile Include="ADO.net\EquipSemAluguerUltimaSemana.cs" />
+    <Compile Include="EF\EquipSemAluguerUltimaSemanaEF.cs" />
+    <Compile Include="ADO.net\Handlers.cs" />
+    <Compile Include="ADO.net\InserirAluguer.cs" />
+    <Compile Include="EF\InserirAluguerComClienteEF.cs" />
+    <Compile Include="EF\InserirAluguerSemClienteEF.cs" />
+    <Compile Include="ADO.net\ListarEquipamentos.cs" />
+    <Compile Include="EF\ListarEquipamentosEF.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemoverAluguer.cs" />
+    <Compile Include="ADO.net\RemoverAluguer.cs" />
+    <Compile Include="EF\RemoverAluguerEF.cs" />
     <Compile Include="XmlAlugueresEF.cs" />
     <Compile Include="XmlAlugueres.cs" />
   </ItemGroup>
@@ -147,6 +155,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="EF\Si2Context.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Si2Context.edmx</DependentUpon>
@@ -157,9 +168,6 @@
       <DependentUpon>Si2Context.edmx</DependentUpon>
       <LastGenOutput>Si2Context.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

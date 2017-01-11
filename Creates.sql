@@ -1,3 +1,5 @@
+use TestesSI2
+
 go
 create schema fbo
 go
@@ -43,7 +45,7 @@ create table Descontos(
 
 create table TempoExtra(
 	TempoExtra int, --Em minutos
-	Id int foreign key references fbo.Promocoes primary key
+	Id int foreign key references fbo.Promocoes
 )
 
 create table fbo.Cliente(

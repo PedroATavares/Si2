@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('EquipamentosSemAluguerUltimaSemana') is not null drop proc EquipamentosSemAluguerUltimaSemana
 go
 create proc EquipamentosSemAluguerUltimaSemana

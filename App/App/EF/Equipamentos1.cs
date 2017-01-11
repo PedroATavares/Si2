@@ -12,9 +12,10 @@ namespace App.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class EmpregadoView
+    public partial class Equipamentos1
     {
-        public int codigo { get; set; }
-        public string nome { get; set; }
+        public int Codigo { get; set; }
+        public string Descricao { get; set; }
+        public string Tipo { get; set; }
     }
 }

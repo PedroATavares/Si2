@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('alteracoesPrecario') is not null drop proc alteracoesPrecario
 go
 create proc alteracoesPrecario

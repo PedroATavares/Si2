@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('dbo.InsertCliente') is not null drop proc dbo.InsertCliente
 
 go

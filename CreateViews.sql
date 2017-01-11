@@ -1,3 +1,5 @@
+use TestesSI2
+
 go
 
 create view dbo.Equipamentos as

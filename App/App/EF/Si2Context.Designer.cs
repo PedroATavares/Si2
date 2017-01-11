@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\User1\Documents\Isel\5 semestre\SI2\TP1\Si2\App\App\EF\Si2Context.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Goncalo Santos\Documents\ISEL 16-17 SI\SI2\Repositorio\App\App\EF\Si2Context.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

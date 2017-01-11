@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('RemoverAluger') is not null drop proc RemoverAluger
 go
 create proc RemoverAluger

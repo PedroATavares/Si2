@@ -35,7 +35,7 @@ namespace App
         private static void XmlAluguerEF(String dataInicio,String dataFim)
         {
 
-            using (var context = new SI2Entities())
+            using (var context = new TestesSI2Entities())
             {
                 var blogs = context.Database.SqlQuery<MyRow>( "select NumAluguer,CodCli,Tipo,CodEquip from aluguer \n" +
                                                             "inner join AluguerEquipamentos\n" +

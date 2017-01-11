@@ -20,6 +20,6 @@ namespace App.EF
         public Nullable<decimal> Valor { get; set; }
         public int EquipId { get; set; }
     
-        public virtual Equipamento Equipamento { get; set; }
+        public virtual Equipamentos Equipamentos { get; set; }
     }
 }

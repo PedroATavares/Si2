@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SI2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TestesSI2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AluguerEquipamentos">
           <Key>
             <PropertyRef Name="NumAluguer" />
@@ -26,7 +26,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Preco" Type="smallmoney" />
+          <Property Name="Percentagem" Type="int" />
           <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PrecoAluguer">
@@ -109,9 +109,9 @@ warning 6002: The table/view 'TestesSI2.dbo.Aluguer' does not have a primary key
         <EntityType Name="Aluguer1">
           <Key>
             <PropertyRef Name="Num" />
-            
-            
-            
+            <PropertyRef Name="DataInicio" />
+            <PropertyRef Name="DataFim" />
+            <PropertyRef Name="Duracao" />
           </Key>
           <Property Name="Num" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DataInicio" Type="datetime" Nullable="false" />
@@ -136,7 +136,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Empregado' does not have a primary k
         <EntityType Name="Empregado1">
           <Key>
             <PropertyRef Name="codigo" />
-            
+            <PropertyRef Name="nome" />
           </Key>
           <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
@@ -146,7 +146,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Equipamentos' does not have a primar
         <EntityType Name="Equipamentos1">
           <Key>
             <PropertyRef Name="Codigo" />
-            
+            <PropertyRef Name="Descricao" />
           </Key>
           <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="200" Nullable="false" />
@@ -157,16 +157,16 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
         <EntityType Name="Promocoes1">
           <Key>
             <PropertyRef Name="Id" />
-            
-            
-            
+            <PropertyRef Name="Descricao" />
+            <PropertyRef Name="DataInicio" />
+            <PropertyRef Name="DataFim" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="DataInicio" Type="date" Nullable="false" />
           <Property Name="DataFim" Type="date" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Aluguer__CodCli__2C3393D0">
+        <Association Name="FK__Aluguer__CodCli__2D27B809">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -178,7 +178,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Aluguer__NumEmp__2B3F6F97">
+        <Association Name="FK__Aluguer__NumEmp__2C3393D0">
           <End Role="Empregado" Type="Self.Empregado" Multiplicity="0..1" />
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -190,7 +190,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AluguerEq__CodEq__32E0915F">
+        <Association Name="FK__AluguerEq__CodEq__33D4B598">
           <End Role="Equipamentos" Type="Self.Equipamentos" Multiplicity="1" />
           <End Role="AluguerEquipamentos" Type="Self.AluguerEquipamentos" Multiplicity="*" />
           <ReferentialConstraint>
@@ -202,7 +202,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AluguerEq__NumAl__31EC6D26">
+        <Association Name="FK__AluguerEq__NumAl__32E0915F">
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="1" />
           <End Role="AluguerEquipamentos" Type="Self.AluguerEquipamentos" Multiplicity="*" />
           <ReferentialConstraint>
@@ -214,7 +214,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AluguerPr__IdPro__36B12243">
+        <Association Name="FK__AluguerPr__IdPro__37A5467C">
           <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="1" />
           <End Role="AluguerPromocao" Type="Self.AluguerPromocao" Multiplicity="*" />
           <ReferentialConstraint>
@@ -226,7 +226,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AluguerPr__NumAl__35BCFE0A">
+        <Association Name="FK__AluguerPr__NumAl__36B12243">
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="1" />
           <End Role="AluguerPromocao" Type="Self.AluguerPromocao" Multiplicity="*" />
           <ReferentialConstraint>
@@ -238,7 +238,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Descontos__Id__60A75C0F">
+        <Association Name="FK__Descontos__Id__1ED998B2">
           <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="1" />
           <End Role="Descontos" Type="Self.Descontos" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -274,7 +274,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TempoExtra__Id__6383C8BA">
+        <Association Name="FK__TempoExtra__Id__5629CD9C">
           <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="1" />
           <End Role="TempoExtra" Type="Self.TempoExtra" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -333,10 +333,18 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Parameter Name="tipo" Type="varchar" Mode="In" />
           <Parameter Name="toRet" Type="int" Mode="InOut" />
         </Function>
-        <Function Name="InsertPromocoes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="InsertPromocaoDesconto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DataInicio" Type="date" Mode="In" />
           <Parameter Name="DataFim" Type="date" Mode="In" />
           <Parameter Name="Descricao" Type="varchar" Mode="In" />
+          <Parameter Name="Preco" Type="smallmoney" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="InsertPromocaoTempo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DataInicio" Type="date" Mode="In" />
+          <Parameter Name="DataFim" Type="date" Mode="In" />
+          <Parameter Name="Descricao" Type="varchar" Mode="In" />
+          <Parameter Name="Tempo" Type="int" Mode="In" />
           <Parameter Name="id" Type="int" Mode="InOut" />
         </Function>
         <Function Name="listarEquipamentos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -358,13 +366,21 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Parameter Name="descr" Type="varchar" Mode="In" />
           <Parameter Name="tipo" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="UpdatePromocoes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="UpdatePromocoesDescontos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="DataInicio" Type="date" Mode="In" />
           <Parameter Name="DataFim" Type="date" Mode="In" />
           <Parameter Name="Descricao" Type="varchar" Mode="In" />
+          <Parameter Name="Preco" Type="smallmoney" Mode="In" />
         </Function>
-        <EntityContainer Name="SI2ModelStoreContainer">
+        <Function Name="UpdatePromocoesTempo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="DataInicio" Type="date" Mode="In" />
+          <Parameter Name="DataFim" Type="date" Mode="In" />
+          <Parameter Name="Descricao" Type="varchar" Mode="In" />
+          <Parameter Name="Tempo" Type="smallmoney" Mode="In" />
+        </Function>
+        <EntityContainer Name="TestesSI2ModelStoreContainer">
           <EntitySet Name="AluguerEquipamentos" EntityType="Self.AluguerEquipamentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AluguerPromocao" EntityType="Self.AluguerPromocao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Descontos" EntityType="Self.Descontos" Schema="dbo" store:Type="Tables" />
@@ -415,31 +431,31 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
     [Promocoes1].[DataFim] AS [DataFim]
     FROM [dbo].[Promocoes] AS [Promocoes1]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Aluguer__CodCli__2C3393D0" Association="Self.FK__Aluguer__CodCli__2C3393D0">
+          <AssociationSet Name="FK__Aluguer__CodCli__2D27B809" Association="Self.FK__Aluguer__CodCli__2D27B809">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Aluguer" EntitySet="Aluguer" />
           </AssociationSet>
-          <AssociationSet Name="FK__Aluguer__NumEmp__2B3F6F97" Association="Self.FK__Aluguer__NumEmp__2B3F6F97">
+          <AssociationSet Name="FK__Aluguer__NumEmp__2C3393D0" Association="Self.FK__Aluguer__NumEmp__2C3393D0">
             <End Role="Empregado" EntitySet="Empregado" />
             <End Role="Aluguer" EntitySet="Aluguer" />
           </AssociationSet>
-          <AssociationSet Name="FK__AluguerEq__CodEq__32E0915F" Association="Self.FK__AluguerEq__CodEq__32E0915F">
+          <AssociationSet Name="FK__AluguerEq__CodEq__33D4B598" Association="Self.FK__AluguerEq__CodEq__33D4B598">
             <End Role="Equipamentos" EntitySet="Equipamentos" />
             <End Role="AluguerEquipamentos" EntitySet="AluguerEquipamentos" />
           </AssociationSet>
-          <AssociationSet Name="FK__AluguerEq__NumAl__31EC6D26" Association="Self.FK__AluguerEq__NumAl__31EC6D26">
+          <AssociationSet Name="FK__AluguerEq__NumAl__32E0915F" Association="Self.FK__AluguerEq__NumAl__32E0915F">
             <End Role="Aluguer" EntitySet="Aluguer" />
             <End Role="AluguerEquipamentos" EntitySet="AluguerEquipamentos" />
           </AssociationSet>
-          <AssociationSet Name="FK__AluguerPr__IdPro__36B12243" Association="Self.FK__AluguerPr__IdPro__36B12243">
+          <AssociationSet Name="FK__AluguerPr__IdPro__37A5467C" Association="Self.FK__AluguerPr__IdPro__37A5467C">
             <End Role="Promocoes" EntitySet="Promocoes" />
             <End Role="AluguerPromocao" EntitySet="AluguerPromocao" />
           </AssociationSet>
-          <AssociationSet Name="FK__AluguerPr__NumAl__35BCFE0A" Association="Self.FK__AluguerPr__NumAl__35BCFE0A">
+          <AssociationSet Name="FK__AluguerPr__NumAl__36B12243" Association="Self.FK__AluguerPr__NumAl__36B12243">
             <End Role="Aluguer" EntitySet="Aluguer" />
             <End Role="AluguerPromocao" EntitySet="AluguerPromocao" />
           </AssociationSet>
-          <AssociationSet Name="FK__Descontos__Id__60A75C0F" Association="Self.FK__Descontos__Id__60A75C0F">
+          <AssociationSet Name="FK__Descontos__Id__1ED998B2" Association="Self.FK__Descontos__Id__1ED998B2">
             <End Role="Promocoes" EntitySet="Promocoes" />
             <End Role="Descontos" EntitySet="Descontos" />
           </AssociationSet>
@@ -451,7 +467,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             <End Role="Equipamentos" EntitySet="Equipamentos" />
             <End Role="PrecoAluguer" EntitySet="PrecoAluguer" />
           </AssociationSet>
-          <AssociationSet Name="FK__TempoExtra__Id__6383C8BA" Association="Self.FK__TempoExtra__Id__6383C8BA">
+          <AssociationSet Name="FK__TempoExtra__Id__5629CD9C" Association="Self.FK__TempoExtra__Id__5629CD9C">
             <End Role="Promocoes" EntitySet="Promocoes" />
             <End Role="TempoExtra" EntitySet="TempoExtra" />
           </AssociationSet>
@@ -459,8 +475,8 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SI2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AluguerEquipamento">
+      <Schema Namespace="TestesSI2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AluguerEquipamentos">
           <Key>
             <PropertyRef Name="NumAluguer" />
             <PropertyRef Name="CodEquip" />
@@ -468,8 +484,16 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="preco" Type="Decimal" Precision="10" Scale="4" />
           <Property Name="NumAluguer" Type="Int32" Nullable="false" />
           <Property Name="CodEquip" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Equipamento" Relationship="Self.FK__AluguerEq__CodEq__32E0915F" FromRole="AluguerEquipamentos" ToRole="Equipamentos" />
-          <NavigationProperty Name="Aluguer" Relationship="Self.FK__AluguerEq__NumAl__31EC6D26" FromRole="AluguerEquipamentos" ToRole="Aluguer" />
+          <NavigationProperty Name="Equipamentos" Relationship="Self.FK__AluguerEq__CodEq__33D4B598" FromRole="AluguerEquipamentos" ToRole="Equipamentos" />
+          <NavigationProperty Name="Aluguer" Relationship="Self.FK__AluguerEq__NumAl__32E0915F" FromRole="AluguerEquipamentos" ToRole="Aluguer" />
+        </EntityType>
+        <EntityType Name="Descontos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Percentagem" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Promocoes" Relationship="Self.FK__Descontos__Id__1ED998B2" FromRole="Descontos" ToRole="Promocoes" />
         </EntityType>
         <EntityType Name="PrecoAluguer">
           <Key>
@@ -482,7 +506,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="Duracao" Type="Int32" Nullable="false" />
           <Property Name="Valor" Type="Decimal" Precision="10" Scale="4" />
           <Property Name="EquipId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Equipamento" Relationship="Self.FK__PrecoAlug__Equip__173876EA" FromRole="PrecoAluguer" ToRole="Equipamentos" />
+          <NavigationProperty Name="Equipamentos" Relationship="Self.FK__PrecoAlug__Equip__173876EA" FromRole="PrecoAluguer" ToRole="Equipamentos" />
         </EntityType>
         <EntityType Name="Tipo">
           <Key>
@@ -503,9 +527,9 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="NumEmp" Type="Int32" />
           <Property Name="CodCli" Type="Int32" />
           <Property Name="Removido" Type="Int32" />
-          <NavigationProperty Name="AluguerEquipamentos" Relationship="Self.FK__AluguerEq__NumAl__31EC6D26" FromRole="Aluguer" ToRole="AluguerEquipamentos" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK__Aluguer__CodCli__2C3393D0" FromRole="Aluguer" ToRole="Cliente" />
-          <NavigationProperty Name="Empregado" Relationship="Self.FK__Aluguer__NumEmp__2B3F6F97" FromRole="Aluguer" ToRole="Empregado" />
+          <NavigationProperty Name="AluguerEquipamentos" Relationship="Self.FK__AluguerEq__NumAl__32E0915F" FromRole="Aluguer" ToRole="AluguerEquipamentos" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Aluguer__CodCli__2D27B809" FromRole="Aluguer" ToRole="Cliente" />
+          <NavigationProperty Name="Empregado" Relationship="Self.FK__Aluguer__NumEmp__2C3393D0" FromRole="Aluguer" ToRole="Empregado" />
           <NavigationProperty Name="Promocoes" Relationship="Self.AluguerPromocao" FromRole="Aluguer" ToRole="Promocoes" />
         </EntityType>
         <EntityType Name="Cliente">
@@ -517,7 +541,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Morada" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Removido" Type="Int32" />
-          <NavigationProperty Name="Aluguers" Relationship="Self.FK__Aluguer__CodCli__2C3393D0" FromRole="Cliente" ToRole="Aluguer" />
+          <NavigationProperty Name="Aluguer" Relationship="Self.FK__Aluguer__CodCli__2D27B809" FromRole="Cliente" ToRole="Aluguer" />
         </EntityType>
         <EntityType Name="Empregado">
           <Key>
@@ -526,9 +550,9 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Removido" Type="Int32" />
-          <NavigationProperty Name="Aluguers" Relationship="Self.FK__Aluguer__NumEmp__2B3F6F97" FromRole="Empregado" ToRole="Aluguer" />
+          <NavigationProperty Name="Aluguer" Relationship="Self.FK__Aluguer__NumEmp__2C3393D0" FromRole="Empregado" ToRole="Aluguer" />
         </EntityType>
-        <EntityType Name="Equipamento">
+        <EntityType Name="Equipamentos">
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
@@ -536,11 +560,11 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="Descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Removido" Type="Int32" />
-          <NavigationProperty Name="AluguerEquipamentos" Relationship="Self.FK__AluguerEq__CodEq__32E0915F" FromRole="Equipamentos" ToRole="AluguerEquipamentos" />
-          <NavigationProperty Name="PrecoAluguers" Relationship="Self.FK__PrecoAlug__Equip__173876EA" FromRole="Equipamentos" ToRole="PrecoAluguer" />
+          <NavigationProperty Name="AluguerEquipamentos" Relationship="Self.FK__AluguerEq__CodEq__33D4B598" FromRole="Equipamentos" ToRole="AluguerEquipamentos" />
+          <NavigationProperty Name="PrecoAluguer" Relationship="Self.FK__PrecoAlug__Equip__173876EA" FromRole="Equipamentos" ToRole="PrecoAluguer" />
           <NavigationProperty Name="Tipo1" Relationship="Self.FK__Equipament__Tipo__1273C1CD" FromRole="Equipamentos" ToRole="Tipo" />
         </EntityType>
-        <EntityType Name="Promocao">
+        <EntityType Name="Promocoes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -549,13 +573,16 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="DataFim" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Removido" Type="Int32" />
-          <NavigationProperty Name="Aluguers" Relationship="Self.AluguerPromocao" FromRole="Promocoes" ToRole="Aluguer" />
-          <NavigationProperty Name="Descontos" Relationship="SI2Model.FK__Descontos__Id__60A75C0F" FromRole="Promocao" ToRole="Descontos" />
-          <NavigationProperty Name="TempoExtra" Relationship="SI2Model.FK__TempoExtra__Id__6383C8BA" FromRole="Promocao" ToRole="TempoExtra" />
+          <NavigationProperty Name="Descontos" Relationship="Self.FK__Descontos__Id__1ED998B2" FromRole="Promocoes" ToRole="Descontos" />
+          <NavigationProperty Name="Aluguer" Relationship="Self.AluguerPromocao" FromRole="Promocoes" ToRole="Aluguer" />
+          <NavigationProperty Name="TempoExtra" Relationship="TestesSI2Model.FK__TempoExtra__Id__5629CD9C" FromRole="Promocoes" ToRole="TempoExtra" />
         </EntityType>
-        <EntityType Name="AluguerView">
+        <EntityType Name="Aluguer1">
           <Key>
             <PropertyRef Name="Num" />
+            <PropertyRef Name="DataInicio" />
+            <PropertyRef Name="DataFim" />
+            <PropertyRef Name="Duracao" />
           </Key>
           <Property Name="Num" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DataInicio" Type="DateTime" Nullable="false" Precision="3" />
@@ -564,7 +591,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="NumEmp" Type="Int32" />
           <Property Name="CodCli" Type="Int32" />
         </EntityType>
-        <EntityType Name="ClienteView">
+        <EntityType Name="Cliente1">
           <Key>
             <PropertyRef Name="codigo" />
           </Key>
@@ -573,33 +600,38 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="morada" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="EmpregadoView">
+        <EntityType Name="Empregado1">
           <Key>
             <PropertyRef Name="codigo" />
+            <PropertyRef Name="nome" />
           </Key>
           <Property Name="codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="EquipamentosView">
+        <EntityType Name="Equipamentos1">
           <Key>
             <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Descricao" />
           </Key>
           <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="PromocoesView">
+        <EntityType Name="Promocoes1">
           <Key>
             <PropertyRef Name="Id" />
+            <PropertyRef Name="Descricao" />
+            <PropertyRef Name="DataInicio" />
+            <PropertyRef Name="DataFim" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DataInicio" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DataFim" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
-        <Association Name="FK__AluguerEq__CodEq__32E0915F">
-          <End Role="Equipamentos" Type="Self.Equipamento" Multiplicity="1" />
-          <End Role="AluguerEquipamentos" Type="Self.AluguerEquipamento" Multiplicity="*" />
+        <Association Name="FK__AluguerEq__CodEq__33D4B598">
+          <End Role="Equipamentos" Type="Self.Equipamentos" Multiplicity="1" />
+          <End Role="AluguerEquipamentos" Type="Self.AluguerEquipamentos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipamentos">
               <PropertyRef Name="Codigo" />
@@ -609,9 +641,9 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AluguerEq__NumAl__31EC6D26">
+        <Association Name="FK__AluguerEq__NumAl__32E0915F">
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="1" />
-          <End Role="AluguerEquipamentos" Type="Self.AluguerEquipamento" Multiplicity="*" />
+          <End Role="AluguerEquipamentos" Type="Self.AluguerEquipamentos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Aluguer">
               <PropertyRef Name="Num" />
@@ -621,8 +653,20 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Descontos__Id__1ED998B2">
+          <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="1" />
+          <End Role="Descontos" Type="Self.Descontos" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Promocoes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Descontos">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PrecoAlug__Equip__173876EA">
-          <End Role="Equipamentos" Type="Self.Equipamento" Multiplicity="1" />
+          <End Role="Equipamentos" Type="Self.Equipamentos" Multiplicity="1" />
           <End Role="PrecoAluguer" Type="Self.PrecoAluguer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipamentos">
@@ -635,7 +679,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
         </Association>
         <Association Name="FK__Equipament__Tipo__1273C1CD">
           <End Role="Tipo" Type="Self.Tipo" Multiplicity="0..1" />
-          <End Role="Equipamentos" Type="Self.Equipamento" Multiplicity="*" />
+          <End Role="Equipamentos" Type="Self.Equipamentos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tipo">
               <PropertyRef Name="Nome" />
@@ -645,7 +689,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Aluguer__CodCli__2C3393D0">
+        <Association Name="FK__Aluguer__CodCli__2D27B809">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -657,7 +701,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Aluguer__NumEmp__2B3F6F97">
+        <Association Name="FK__Aluguer__NumEmp__2C3393D0">
           <End Role="Empregado" Type="Self.Empregado" Multiplicity="0..1" />
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -670,50 +714,55 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           </ReferentialConstraint>
         </Association>
         <Association Name="AluguerPromocao">
-          <End Role="Promocoes" Type="SI2Model.Promocao" Multiplicity="*" />
+          <End Role="Promocoes" Type="Self.Promocoes" Multiplicity="*" />
           <End Role="Aluguer" Type="Self.Aluguer" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="SI2Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AluguerEquipamentos" EntityType="Self.AluguerEquipamento" />
-          <EntitySet Name="PrecoAluguers" EntityType="Self.PrecoAluguer" />
-          <EntitySet Name="Tipoes" EntityType="Self.Tipo" />
-          <EntitySet Name="Aluguers" EntityType="Self.Aluguer" />
-          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
-          <EntitySet Name="Empregadoes" EntityType="Self.Empregado" />
-          <EntitySet Name="Equipamentos" EntityType="Self.Equipamento" />
-          <EntitySet Name="Promocoes" EntityType="SI2Model.Promocao" />
-          <EntitySet Name="AluguerViews" EntityType="SI2Model.AluguerView" />
-          <EntitySet Name="ClienteViews" EntityType="SI2Model.ClienteView" />
-          <EntitySet Name="EmpregadoViews" EntityType="SI2Model.EmpregadoView" />
-          <EntitySet Name="EquipamentosViews" EntityType="SI2Model.EquipamentosView" />
-          <EntitySet Name="PromocoesViews" EntityType="SI2Model.PromocoesView" />
-          <AssociationSet Name="FK__AluguerEq__CodEq__32E0915F" Association="Self.FK__AluguerEq__CodEq__32E0915F">
+        <EntityContainer Name="TestesSI2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AluguerEquipamentos" EntityType="Self.AluguerEquipamentos" />
+          <EntitySet Name="Descontos" EntityType="Self.Descontos" />
+          <EntitySet Name="PrecoAluguer" EntityType="Self.PrecoAluguer" />
+          <EntitySet Name="Tipo" EntityType="Self.Tipo" />
+          <EntitySet Name="Aluguer" EntityType="Self.Aluguer" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Empregado" EntityType="Self.Empregado" />
+          <EntitySet Name="Equipamentos" EntityType="Self.Equipamentos" />
+          <EntitySet Name="Promocoes" EntityType="Self.Promocoes" />
+          <EntitySet Name="Aluguer1" EntityType="Self.Aluguer1" />
+          <EntitySet Name="Cliente1" EntityType="Self.Cliente1" />
+          <EntitySet Name="Empregado1" EntityType="Self.Empregado1" />
+          <EntitySet Name="Equipamentos1" EntityType="Self.Equipamentos1" />
+          <EntitySet Name="Promocoes1" EntityType="Self.Promocoes1" />
+          <AssociationSet Name="FK__AluguerEq__CodEq__33D4B598" Association="Self.FK__AluguerEq__CodEq__33D4B598">
             <End Role="Equipamentos" EntitySet="Equipamentos" />
             <End Role="AluguerEquipamentos" EntitySet="AluguerEquipamentos" />
           </AssociationSet>
-          <AssociationSet Name="FK__AluguerEq__NumAl__31EC6D26" Association="Self.FK__AluguerEq__NumAl__31EC6D26">
-            <End Role="Aluguer" EntitySet="Aluguers" />
+          <AssociationSet Name="FK__AluguerEq__NumAl__32E0915F" Association="Self.FK__AluguerEq__NumAl__32E0915F">
+            <End Role="Aluguer" EntitySet="Aluguer" />
             <End Role="AluguerEquipamentos" EntitySet="AluguerEquipamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Descontos__Id__1ED998B2" Association="Self.FK__Descontos__Id__1ED998B2">
+            <End Role="Promocoes" EntitySet="Promocoes" />
+            <End Role="Descontos" EntitySet="Descontos" />
           </AssociationSet>
           <AssociationSet Name="FK__PrecoAlug__Equip__173876EA" Association="Self.FK__PrecoAlug__Equip__173876EA">
             <End Role="Equipamentos" EntitySet="Equipamentos" />
-            <End Role="PrecoAluguer" EntitySet="PrecoAluguers" />
+            <End Role="PrecoAluguer" EntitySet="PrecoAluguer" />
           </AssociationSet>
           <AssociationSet Name="FK__Equipament__Tipo__1273C1CD" Association="Self.FK__Equipament__Tipo__1273C1CD">
-            <End Role="Tipo" EntitySet="Tipoes" />
+            <End Role="Tipo" EntitySet="Tipo" />
             <End Role="Equipamentos" EntitySet="Equipamentos" />
           </AssociationSet>
-          <AssociationSet Name="FK__Aluguer__CodCli__2C3393D0" Association="Self.FK__Aluguer__CodCli__2C3393D0">
-            <End Role="Cliente" EntitySet="Clientes" />
-            <End Role="Aluguer" EntitySet="Aluguers" />
+          <AssociationSet Name="FK__Aluguer__CodCli__2D27B809" Association="Self.FK__Aluguer__CodCli__2D27B809">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Aluguer" EntitySet="Aluguer" />
           </AssociationSet>
-          <AssociationSet Name="FK__Aluguer__NumEmp__2B3F6F97" Association="Self.FK__Aluguer__NumEmp__2B3F6F97">
-            <End Role="Empregado" EntitySet="Empregadoes" />
-            <End Role="Aluguer" EntitySet="Aluguers" />
+          <AssociationSet Name="FK__Aluguer__NumEmp__2C3393D0" Association="Self.FK__Aluguer__NumEmp__2C3393D0">
+            <End Role="Empregado" EntitySet="Empregado" />
+            <End Role="Aluguer" EntitySet="Aluguer" />
           </AssociationSet>
           <AssociationSet Name="AluguerPromocao" Association="Self.AluguerPromocao">
             <End Role="Promocoes" EntitySet="Promocoes" />
-            <End Role="Aluguer" EntitySet="Aluguers" />
+            <End Role="Aluguer" EntitySet="Aluguer" />
           </AssociationSet>
           <FunctionImport Name="alteracoesPrecario">
             <Parameter Name="ValidadeI" Mode="In" Type="DateTime" />
@@ -731,7 +780,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <FunctionImport Name="DeletePromocoes">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="EquipamentosSemAluguerUltimaSemana" ReturnType="Collection(SI2Model.EquipamentosSemAluguerUltimaSemana_Result)" />
+          <FunctionImport Name="EquipamentosSemAluguerUltimaSemana" ReturnType="Collection(TestesSI2Model.EquipamentosSemAluguerUltimaSemana_Result)" />
           <FunctionImport Name="InserirAluguerComCliente">
             <Parameter Name="DataI" Mode="In" Type="DateTime" />
             <Parameter Name="DataF" Mode="In" Type="DateTime" />
@@ -762,13 +811,21 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             <Parameter Name="tipo" Mode="In" Type="String" />
             <Parameter Name="toRet" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="InsertPromocoes">
+          <FunctionImport Name="InsertPromocaoDesconto">
             <Parameter Name="DataInicio" Mode="In" Type="DateTime" />
             <Parameter Name="DataFim" Mode="In" Type="DateTime" />
             <Parameter Name="Descricao" Mode="In" Type="String" />
+            <Parameter Name="Preco" Mode="In" Type="Decimal" />
             <Parameter Name="id" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="listarEquipamentos" ReturnType="Collection(SI2Model.listarEquipamentos_Result)">
+          <FunctionImport Name="InsertPromocaoTempo">
+            <Parameter Name="DataInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="DataFim" Mode="In" Type="DateTime" />
+            <Parameter Name="Descricao" Mode="In" Type="String" />
+            <Parameter Name="Tempo" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="listarEquipamentos" ReturnType="Collection(TestesSI2Model.listarEquipamentos_Result)">
             <Parameter Name="ValidadeI" Mode="In" Type="DateTime" />
             <Parameter Name="ValidadeF" Mode="In" Type="DateTime" />
             <Parameter Name="tipo" Mode="In" Type="String" />
@@ -787,20 +844,23 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             <Parameter Name="descr" Mode="In" Type="String" />
             <Parameter Name="tipo" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UpdatePromocoes">
+          <FunctionImport Name="UpdatePromocoesDescontos">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="DataInicio" Mode="In" Type="DateTime" />
             <Parameter Name="DataFim" Mode="In" Type="DateTime" />
             <Parameter Name="Descricao" Mode="In" Type="String" />
+            <Parameter Name="Preco" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <EntitySet Name="Descontos" EntityType="SI2Model.Descontos" />
-          <EntitySet Name="TempoExtra" EntityType="SI2Model.TempoExtra" />
-          <AssociationSet Name="FK__Descontos__Id__60A75C0F" Association="SI2Model.FK__Descontos__Id__60A75C0F">
-            <End Role="Promocao" EntitySet="Promocoes" />
-            <End Role="Descontos" EntitySet="Descontos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TempoExtra__Id__6383C8BA" Association="SI2Model.FK__TempoExtra__Id__6383C8BA">
-            <End Role="Promocao" EntitySet="Promocoes" />
+          <FunctionImport Name="UpdatePromocoesTempo">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="DataInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="DataFim" Mode="In" Type="DateTime" />
+            <Parameter Name="Descricao" Mode="In" Type="String" />
+            <Parameter Name="Tempo" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <EntitySet Name="TempoExtra" EntityType="TestesSI2Model.TempoExtra" />
+          <AssociationSet Name="FK__TempoExtra__Id__5629CD9C" Association="TestesSI2Model.FK__TempoExtra__Id__5629CD9C">
+            <End Role="Promocoes" EntitySet="Promocoes" />
             <End Role="TempoExtra" EntitySet="TempoExtra" />
           </AssociationSet>
         </EntityContainer>
@@ -814,39 +874,19 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
           <Property Type="String" Name="Descricao" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="Tipo" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="Descontos">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Preco" Type="Decimal" Precision="10" Scale="4" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Promocoes" Relationship="SI2Model.FK__Descontos__Id__60A75C0F" FromRole="Descontos" ToRole="Promocao" />
-        </EntityType>
         <EntityType Name="TempoExtra">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="TempoExtra1" Type="Int32" />
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Promocoes" Relationship="SI2Model.FK__TempoExtra__Id__6383C8BA" FromRole="TempoExtra" ToRole="Promocao" />
+          <NavigationProperty Name="Promocoes" Relationship="TestesSI2Model.FK__TempoExtra__Id__5629CD9C" FromRole="TempoExtra" ToRole="Promocoes" />
         </EntityType>
-        <Association Name="FK__Descontos__Id__60A75C0F">
-          <End Type="SI2Model.Promocao" Role="Promocao" Multiplicity="1" />
-          <End Type="SI2Model.Descontos" Role="Descontos" Multiplicity="0..1" />
+        <Association Name="FK__TempoExtra__Id__5629CD9C">
+          <End Type="TestesSI2Model.Promocoes" Role="Promocoes" Multiplicity="1" />
+          <End Type="TestesSI2Model.TempoExtra" Role="TempoExtra" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="Promocao">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Descontos">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__TempoExtra__Id__6383C8BA">
-          <End Type="SI2Model.Promocao" Role="Promocao" Multiplicity="1" />
-          <End Type="SI2Model.TempoExtra" Role="TempoExtra" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Promocao">
+            <Principal Role="Promocoes">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="TempoExtra">
@@ -859,9 +899,9 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SI2ModelStoreContainer" CdmEntityContainer="SI2Entities">
+        <EntityContainerMapping StorageEntityContainer="TestesSI2ModelStoreContainer" CdmEntityContainer="TestesSI2Entities">
           <EntitySetMapping Name="AluguerEquipamentos">
-            <EntityTypeMapping TypeName="SI2Model.AluguerEquipamento">
+            <EntityTypeMapping TypeName="TestesSI2Model.AluguerEquipamentos">
               <MappingFragment StoreEntitySet="AluguerEquipamentos">
                 <ScalarProperty Name="preco" ColumnName="preco" />
                 <ScalarProperty Name="NumAluguer" ColumnName="NumAluguer" />
@@ -869,8 +909,16 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PrecoAluguers">
-            <EntityTypeMapping TypeName="SI2Model.PrecoAluguer">
+          <EntitySetMapping Name="Descontos">
+            <EntityTypeMapping TypeName="TestesSI2Model.Descontos">
+              <MappingFragment StoreEntitySet="Descontos">
+                <ScalarProperty Name="Percentagem" ColumnName="Percentagem" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrecoAluguer">
+            <EntityTypeMapping TypeName="TestesSI2Model.PrecoAluguer">
               <MappingFragment StoreEntitySet="PrecoAluguer">
                 <ScalarProperty Name="ValidadeI" ColumnName="ValidadeI" />
                 <ScalarProperty Name="ValidadeF" ColumnName="ValidadeF" />
@@ -880,16 +928,16 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tipoes">
-            <EntityTypeMapping TypeName="SI2Model.Tipo">
+          <EntitySetMapping Name="Tipo">
+            <EntityTypeMapping TypeName="TestesSI2Model.Tipo">
               <MappingFragment StoreEntitySet="Tipo">
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Aluguers">
-            <EntityTypeMapping TypeName="SI2Model.Aluguer">
+          <EntitySetMapping Name="Aluguer">
+            <EntityTypeMapping TypeName="TestesSI2Model.Aluguer">
               <MappingFragment StoreEntitySet="Aluguer">
                 <ScalarProperty Name="Num" ColumnName="Num" />
                 <ScalarProperty Name="DataInicio" ColumnName="DataInicio" />
@@ -901,8 +949,8 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Clientes">
-            <EntityTypeMapping TypeName="SI2Model.Cliente">
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="TestesSI2Model.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="NIF" ColumnName="NIF" />
@@ -912,8 +960,8 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Empregadoes">
-            <EntityTypeMapping TypeName="SI2Model.Empregado">
+          <EntitySetMapping Name="Empregado">
+            <EntityTypeMapping TypeName="TestesSI2Model.Empregado">
               <MappingFragment StoreEntitySet="Empregado">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
@@ -922,7 +970,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Equipamentos">
-            <EntityTypeMapping TypeName="SI2Model.Equipamento">
+            <EntityTypeMapping TypeName="TestesSI2Model.Equipamentos">
               <MappingFragment StoreEntitySet="Equipamentos">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
@@ -932,7 +980,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Promocoes">
-            <EntityTypeMapping TypeName="SI2Model.Promocao">
+            <EntityTypeMapping TypeName="TestesSI2Model.Promocoes">
               <MappingFragment StoreEntitySet="Promocoes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DataInicio" ColumnName="DataInicio" />
@@ -942,8 +990,8 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AluguerViews">
-            <EntityTypeMapping TypeName="SI2Model.AluguerView">
+          <EntitySetMapping Name="Aluguer1">
+            <EntityTypeMapping TypeName="TestesSI2Model.Aluguer1">
               <MappingFragment StoreEntitySet="Aluguer1">
                 <ScalarProperty Name="Num" ColumnName="Num" />
                 <ScalarProperty Name="DataInicio" ColumnName="DataInicio" />
@@ -954,8 +1002,8 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ClienteViews">
-            <EntityTypeMapping TypeName="SI2Model.ClienteView">
+          <EntitySetMapping Name="Cliente1">
+            <EntityTypeMapping TypeName="TestesSI2Model.Cliente1">
               <MappingFragment StoreEntitySet="Cliente1">
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="nif" ColumnName="nif" />
@@ -964,16 +1012,16 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EmpregadoViews">
-            <EntityTypeMapping TypeName="SI2Model.EmpregadoView">
+          <EntitySetMapping Name="Empregado1">
+            <EntityTypeMapping TypeName="TestesSI2Model.Empregado1">
               <MappingFragment StoreEntitySet="Empregado1">
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EquipamentosViews">
-            <EntityTypeMapping TypeName="SI2Model.EquipamentosView">
+          <EntitySetMapping Name="Equipamentos1">
+            <EntityTypeMapping TypeName="TestesSI2Model.Equipamentos1">
               <MappingFragment StoreEntitySet="Equipamentos1">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
@@ -981,8 +1029,8 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PromocoesViews">
-            <EntityTypeMapping TypeName="SI2Model.PromocoesView">
+          <EntitySetMapping Name="Promocoes1">
+            <EntityTypeMapping TypeName="TestesSI2Model.Promocoes1">
               <MappingFragment StoreEntitySet="Promocoes1">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
@@ -991,7 +1039,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AluguerPromocao" TypeName="SI2Model.AluguerPromocao" StoreEntitySet="AluguerPromocao">
+          <AssociationSetMapping Name="AluguerPromocao" TypeName="TestesSI2Model.AluguerPromocao" StoreEntitySet="AluguerPromocao">
             <EndProperty Name="Promocoes">
               <ScalarProperty Name="Id" ColumnName="IdProm" />
             </EndProperty>
@@ -999,47 +1047,41 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
               <ScalarProperty Name="Num" ColumnName="NumAluguer" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="alteracoesPrecario" FunctionName="SI2Model.Store.alteracoesPrecario" />
-          <FunctionImportMapping FunctionImportName="DeleteCliente" FunctionName="SI2Model.Store.DeleteCliente" />
-          <FunctionImportMapping FunctionImportName="DeleteEquipamentos" FunctionName="SI2Model.Store.DeleteEquipamentos" />
-          <FunctionImportMapping FunctionImportName="DeletePromocoes" FunctionName="SI2Model.Store.DeletePromocoes" />
-          <FunctionImportMapping FunctionImportName="EquipamentosSemAluguerUltimaSemana" FunctionName="SI2Model.Store.EquipamentosSemAluguerUltimaSemana">
+          <FunctionImportMapping FunctionImportName="alteracoesPrecario" FunctionName="TestesSI2Model.Store.alteracoesPrecario" />
+          <FunctionImportMapping FunctionImportName="DeleteCliente" FunctionName="TestesSI2Model.Store.DeleteCliente" />
+          <FunctionImportMapping FunctionImportName="DeleteEquipamentos" FunctionName="TestesSI2Model.Store.DeleteEquipamentos" />
+          <FunctionImportMapping FunctionImportName="DeletePromocoes" FunctionName="TestesSI2Model.Store.DeletePromocoes" />
+          <FunctionImportMapping FunctionImportName="EquipamentosSemAluguerUltimaSemana" FunctionName="TestesSI2Model.Store.EquipamentosSemAluguerUltimaSemana">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="SI2Model.EquipamentosSemAluguerUltimaSemana_Result">
+              <ComplexTypeMapping TypeName="TestesSI2Model.EquipamentosSemAluguerUltimaSemana_Result">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InserirAluguerComCliente" FunctionName="SI2Model.Store.InserirAluguerComCliente" />
-          <FunctionImportMapping FunctionImportName="InserirAluguerSemCliente" FunctionName="SI2Model.Store.InserirAluguerSemCliente" />
-          <FunctionImportMapping FunctionImportName="InsertCliente" FunctionName="SI2Model.Store.InsertCliente" />
-          <FunctionImportMapping FunctionImportName="InsertEquipamentos" FunctionName="SI2Model.Store.InsertEquipamentos" />
-          <FunctionImportMapping FunctionImportName="InsertPromocoes" FunctionName="SI2Model.Store.InsertPromocoes" />
-          <FunctionImportMapping FunctionImportName="listarEquipamentos" FunctionName="SI2Model.Store.listarEquipamentos">
+          <FunctionImportMapping FunctionImportName="InserirAluguerComCliente" FunctionName="TestesSI2Model.Store.InserirAluguerComCliente" />
+          <FunctionImportMapping FunctionImportName="InserirAluguerSemCliente" FunctionName="TestesSI2Model.Store.InserirAluguerSemCliente" />
+          <FunctionImportMapping FunctionImportName="InsertCliente" FunctionName="TestesSI2Model.Store.InsertCliente" />
+          <FunctionImportMapping FunctionImportName="InsertEquipamentos" FunctionName="TestesSI2Model.Store.InsertEquipamentos" />
+          <FunctionImportMapping FunctionImportName="InsertPromocaoDesconto" FunctionName="TestesSI2Model.Store.InsertPromocaoDesconto" />
+          <FunctionImportMapping FunctionImportName="InsertPromocaoTempo" FunctionName="TestesSI2Model.Store.InsertPromocaoTempo" />
+          <FunctionImportMapping FunctionImportName="listarEquipamentos" FunctionName="TestesSI2Model.Store.listarEquipamentos">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="SI2Model.listarEquipamentos_Result">
+              <ComplexTypeMapping TypeName="TestesSI2Model.listarEquipamentos_Result">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RemoverAluger" FunctionName="SI2Model.Store.RemoverAluger" />
-          <FunctionImportMapping FunctionImportName="UpdateCliente" FunctionName="SI2Model.Store.UpdateCliente" />
-          <FunctionImportMapping FunctionImportName="UpdateEquipamentos" FunctionName="SI2Model.Store.UpdateEquipamentos" />
-          <FunctionImportMapping FunctionImportName="UpdatePromocoes" FunctionName="SI2Model.Store.UpdatePromocoes" />
-          <EntitySetMapping Name="Descontos">
-            <EntityTypeMapping TypeName="SI2Model.Descontos">
-              <MappingFragment StoreEntitySet="Descontos">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Preco" ColumnName="Preco" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="RemoverAluger" FunctionName="TestesSI2Model.Store.RemoverAluger" />
+          <FunctionImportMapping FunctionImportName="UpdateCliente" FunctionName="TestesSI2Model.Store.UpdateCliente" />
+          <FunctionImportMapping FunctionImportName="UpdateEquipamentos" FunctionName="TestesSI2Model.Store.UpdateEquipamentos" />
+          <FunctionImportMapping FunctionImportName="UpdatePromocoesDescontos" FunctionName="TestesSI2Model.Store.UpdatePromocoesDescontos" />
+          <FunctionImportMapping FunctionImportName="UpdatePromocoesTempo" FunctionName="TestesSI2Model.Store.UpdatePromocoesTempo" />
           <EntitySetMapping Name="TempoExtra">
-            <EntityTypeMapping TypeName="SI2Model.TempoExtra">
+            <EntityTypeMapping TypeName="TestesSI2Model.TempoExtra">
               <MappingFragment StoreEntitySet="TempoExtra">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TempoExtra1" ColumnName="TempoExtra" />
@@ -1060,7 +1102,7 @@ warning 6002: The table/view 'TestesSI2.dbo.Promocoes' does not have a primary k
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
