@@ -36,7 +36,8 @@ namespace App
                 Console.WriteLine("10 - Alterar Preçário");
                 Console.WriteLine("11 - Listar todos os equipamentos livres, para um determinado tempo e tipo");
                 Console.WriteLine("12 - Listar os equipamentos sem alugueres na última semana");
-                Console.WriteLine("13 - Sair");
+                Console.WriteLine("13 - Produzir XML de Alugueres num determinado intervalo");
+                Console.WriteLine("14 - Sair");
                 Console.WriteLine("Insira o numero da operação que pretende");
                 Console.Write(">");
                 key = Console.ReadLine();
@@ -54,12 +55,41 @@ namespace App
                     case "10": AlteracaoPrecario.GetParamsFromConsole(handler); break;
                     case "11": ListarEquipamentos.GetParamsFromConsole(handler); break;
                     case "12": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
-                 
+                    case "13": XmlAlugueres.GetParamsFromConsole(handler); break;
+
                     default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }
+<<<<<<< HEAD
             } while (key != "13");
+=======
+            } while (key != "14");
+            
+            /*
+            using(var context = new SI2Entities()) {
+                // var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
+                //context.Clientes.Add(blog);
+                //context.SaveChanges();
+
+                var query = from emp in context.Empregadoes
+                            where emp.Codigo == 1
+                            select emp;
+
+
+                Console.WriteLine("All Empregados in the database:");
+                foreach (var item in query)
+                {
+                    Console.WriteLine(item.Codigo);
+                }
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+                
+            }
+            */
+>>>>>>> 82d00cf289198209b3416bbc677d6967966c3973
 
         }
+
+        
     }
 }
 
