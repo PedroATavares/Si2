@@ -129,19 +129,18 @@ namespace App
         public static void PrintsComCliente()
         {
             Console.WriteLine("Dados do novo Aluguer  -----------------");
-            Console.WriteLine("\n Coloque a Data Inicial");
+            Console.WriteLine("\n Coloque a Data Inicial (AAAA-MM-DD HH:MM:SS):\n>");
             dI = Console.ReadLine();
-            Console.WriteLine("\n Coloque a Data Final");
+            Console.WriteLine("\n Coloque a Data Final(AAAA-MM-DD HH:MM:SS):\n>");
             dF = Console.ReadLine();
-            Console.WriteLine("\n Coloque a Duracao");
+            Console.WriteLine("\n Coloque a Duração (em minutos): \n>");
             duracaoo = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\n Coloque o Nº Empregado");
+            Console.WriteLine("\n Coloque o Nº Empregado: \n>");
             numEmp = Convert.ToInt32(Console.ReadLine());
         }
 
         private static void InitParametrosComCliente(SqlCommand cmd)
         {
-
             SqlParameter dataI = new SqlParameter("@DataI", SqlDbType.DateTime);
             SqlParameter dataF = new SqlParameter("@DataF", SqlDbType.DateTime);
             SqlParameter duracao = new SqlParameter("@Duracao", SqlDbType.Int);
@@ -155,10 +154,6 @@ namespace App
             duracao.Value = duracaoo;
             numEmpregado.Value = numEmp;
             codigoCliente.Value = cod;
-
-
-            Console.WriteLine(dataI.Value.ToString());
-            Console.WriteLine(dataF.Value.ToString());
             
             cmd.Parameters.Add(dataI);
             cmd.Parameters.Add(dataF);
