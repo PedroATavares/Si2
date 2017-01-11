@@ -6,14 +6,14 @@ create procedure InsertPromocaoDesconto
 @DataInicio Date,
 @DataFim Date,
 @Descricao varchar(200),
-@Preco smallmoney, 
+@Percentagem int, 
 @id int output
 as
 	begin tran
 	begin try 
 		INSERT INTO Promocoes(DataInicio,DataFim,Descricao) values( @DataInicio, @DataFim, @Descricao)
 		select @id= SCOPE_IDENTITY()
-		Insert into Descontos values(@Preco,@id)
+		Insert into Descontos values(@Percentagem,@id)
 		commit
 	end try
 	begin catch
@@ -55,8 +55,6 @@ create procedure DeletePromocoes
 as
 	begin tran
 	begin try 
-		DELETE FROM Promocoes 
-		where id = @id
 		
 		DELETE FROM  Descontos
 		where id = @id
@@ -64,6 +62,9 @@ as
 		DELETE FROM  TempoExtra
 		where id = @id
 		
+		DELETE FROM Promocoes 
+		where id = @id
+
 		commit
 	end try
 	begin catch
@@ -79,7 +80,7 @@ create procedure UpdatePromocoesDescontos
 @DataInicio Date = null,
 @DataFim Date = null,
 @Descricao varchar(200) = null,
-@Preco smallmoney =null
+@Percentagem smallmoney =null
 as
 
 begin tran
@@ -104,10 +105,10 @@ begin
 	where id = @id
 end
 
-IF @Preco is not null
+IF @Percentagem is not null
 begin
 	update Descontos
-	set Percentagem = @Preco
+	set Percentagem = @Percentagem
 	where id = @id
 end
 

@@ -31,7 +31,7 @@ namespace App
             //EditDescontoInfoEF.procUpdatePromocoesDescontos();
 
                     
-            Handler handler = new Handler(connectionString1);
+            Handler handler = new Handler(connectionString3);
             String key;
             do
             {
@@ -47,58 +47,31 @@ namespace App
                 Console.WriteLine("10 - Alterar Preçário");
                 Console.WriteLine("11 - Listar todos os equipamentos livres, para um determinado tempo e tipo");
                 Console.WriteLine("12 - Listar os equipamentos sem alugueres na última semana");
-                Console.WriteLine("13 - Sair");
+                Console.WriteLine("13 - Produzir XML de Alugueres num determinado intervalo");
+                Console.WriteLine("14 - Sair");
                 Console.WriteLine("Insira o numero da operação que pretende");
                 Console.Write(">");
                 key = Console.ReadLine();
                 switch (key)
                 {
-                    case "1": EditDescontoInfo.InserirPromoçãoDesconto(handler); break;
-                    case "2": EditDescontoInfo.RemoverPromoção(handler); break;
-                    case "3": EditDescontoInfo.AlterarPromoção(handler); break;
-                    case "4": EditTempoExtraInfo.InserirPromoçãoTempo(handler); break;
-                    case "5": EditTempoExtraInfo.RemoverPromoção(handler); break;
-                    case "6": EditTempoExtraInfo.AlterarPromoção(handler); break;
-
-                    case "7": InserirAluguer.InserirAluguerSemCliente(handler); break;
-                        //inserçao com cliente nao funca, diz que falta um parametro
+                    case "1": EditDescontoInfo.InserirDesconto(handler); break;
+                    case "2": EditDescontoInfo.RemoverDesconto(handler); break;
+                    case "3": EditDescontoInfo.AlterarDesconto(handler); break;
+                    case "4": EditTempoExtraInfo.InserirTempoExtra(handler); break;
+                    case "5": EditTempoExtraInfo.RemoverTempoExtra(handler); break;
+                    case "6": EditTempoExtraInfo.AlterarTempoExtra(handler); break;
+                    case "7": InserirAluguer.PrintsSemCliente(handler); break;
                     case "8": InserirAluguer.InserirAluguerComCliente(handler); break;
                     case "9": RemoverAluguer.procRemoverAluger(handler); break;
                     case "10": AlteracaoPrecario.GetParamsFromConsole(handler); break;
                     case "11": ListarEquipamentos.GetParamsFromConsole(handler); break;
                     case "12": EquipSemAluguerUltimaSemana.GetParamsFromConsole(handler); break;
-                 
+                    case "13": XmlAlugueres.GetParamsFromConsole(handler); break;
+
                     default: Console.WriteLine("Por favor insira um numero valido"); break;
                 }
-            } while (key != "13");            
 
-            /*
-            using(var context = new SI2Entities()) {
-                // var blog = new Cliente { NIF=1213243,Nome="Test",Morada="test",Removido=0};
-                //context.Clientes.Add(blog);
-                //context.SaveChanges();
-                
-                var query = from b in context.ClienteView
-                            orderby b.nome
-                            select b;
-
-
-                var query = from emp in context.Empregadoes
-                            where emp.Codigo == 1
-                            select emp;
-
-
-                Console.WriteLine("All Empregados in the database:");
-                foreach (var item in query)
-                {
-                    Console.WriteLine(item.Codigo);
-                }
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
-                
-
-            }
-            */
+            } while (key != "14");
 
         }
     }
