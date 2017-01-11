@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
@@ -33,12 +31,9 @@ namespace App
                         tipo.Value = type;
                         cmd.Parameters.Add(tipo);
 
-                        cmd.CommandText = "exec listarEquipamentos @ValidadeI,@ValidadeF,@tipo";
-                        con.Open();
-
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
-                            Console.WriteLine(type + " livres entre " + dataI + " e " + dataF + ":\n");
+                            Console.WriteLine(type + " livres entre " + dataI + " e " + dataF + ":");
                             while (dr.Read())
                             {
                                 Console.Write("Código:" + dr["Codigo"] + "\t");
