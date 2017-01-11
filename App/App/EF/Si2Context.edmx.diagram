@@ -28,7 +28,7 @@
         <AssociationConnector Association="TestesSI2Model.FK__Aluguer__NumEmp__2C3393D0" ManuallyRouted="false" />
         <AssociationConnector Association="TestesSI2Model.AluguerPromocao" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TestesSI2Model.TempoExtra" Width="1.5" PointX="3" PointY="13.375" />
-        <AssociationConnector Association="TestesSI2Model.FK__TempoExtra__Id__5629CD9C" />
+        <AssociationConnector Association="TestesSI2Model.FK__TempoExtra__Id__24285DB4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
