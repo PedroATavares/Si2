@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('ShowEquipamentos') is not null drop proc ShowEquipamentos
 go
 create procedure ShowEquipamentos

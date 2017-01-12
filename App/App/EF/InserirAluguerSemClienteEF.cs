@@ -30,7 +30,7 @@ namespace App
 
                     do
                     {
-                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ?? (para sair persione -> q)");
+                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ? (para sair persione -> q)");
                         idEq = Console.ReadLine();
 
                         if (idEq.Equals("q"))

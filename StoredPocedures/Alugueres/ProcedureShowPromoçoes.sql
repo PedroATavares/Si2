@@ -1,3 +1,5 @@
+use TestesSI2
+
 if object_id('ShowPromocoes') is not null drop proc ShowPromocoes
 go
 create procedure ShowPromocoes
@@ -8,5 +10,5 @@ as
 return
 go
 
---exec ShowPromocoesAluguer '2017-01-01 00:00:00', '2017-01-01 01:00:00'
+exec ShowPromocoes '2016-12-12 12:00:00', '2016-12-12 13:00:00'
 --Apresenta a Promoçao 5

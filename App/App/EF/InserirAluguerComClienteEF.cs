@@ -42,14 +42,14 @@ namespace App
                     do
                     {
                         printEquipamentos(ctx);
-                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ?? (para sair persione -> q)");
+                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ? (para sair pressione -> q)");
                         idEq = Console.ReadLine();
 
                         if (idEq.Equals("q"))
                             break;
 
                         printEspecificos(ctx);
-                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ?? (coloque a duracao) ");
+                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ? (coloque a duracao) ");
                         string aux = Console.ReadLine();
 
                         if (aux.Equals(""))
