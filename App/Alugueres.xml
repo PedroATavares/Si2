@@ -1,0 +1,17 @@
+<xml>
+<alugueres dataInicio="2016-11-22" dataFim="2016-11-23"><aluguer id="1" tipo="Gaivota"> 
+<cliente>1</cliente>
+<equipamento>1</equipamento>
+</aluguer>
+</alugueres> 
+ </xml > <aluguer id="1" tipo="Gaivota"> 
+<cliente>1</cliente>
+<equipamento>2</equipamento>
+</aluguer>
+</alugueres> 
+ </xml > <aluguer id="2" tipo="Mota de Agua"> 
+<cliente>2</cliente>
+<equipamento>3</equipamento>
+</aluguer>
+</alugueres> 
+ </xml > 

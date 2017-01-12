@@ -20,10 +20,10 @@ namespace App
             String dataInicio = Console.ReadLine();
             Console.Write("Data de Fim (AAAA-MM-DD):");
             String dataFim = Console.ReadLine();
-            XmlAluguer(dataInicio,dataFim);
+            XmlAluguer(dataInicio, dataFim);
         }
 
-        private static void XmlAluguer(String dataInicio,String dataFim)
+        private static void XmlAluguer(String dataInicio, String dataFim)
         {
             using (SqlConnection con = new SqlConnection())
             {
@@ -54,15 +54,29 @@ namespace App
                             {
                                 xml = createXmlAluguer(dr, xml);
 
-                            }
 
-                            xml += "</alugueres> \n </xml > ";
-                            Console.WriteLine(xml);
-                            Console.WriteLine("***********************************************************************");
+
+                                xml += "</alugueres> \n </xml > ";
+                                using (System.IO.StreamWriter file =
+                                    new System.IO.StreamWriter(@"../../../Alugueres.xml")) {
+                                    file.WriteLine(xml);
+
+                                }
+
+                            }
                         }
                     }
 
+
+
+
+
+
+                    Console.WriteLine("***********************************************************************");
                 }
+
+
+
                 catch (DbException ex)
                 {
                     Console.WriteLine("E R R O : " + ex.Message);
@@ -71,6 +85,8 @@ namespace App
 
             }
         }
+
+        
 
         private static String createXmlAluguer(SqlDataReader dr, String xml)
         {
