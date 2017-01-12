@@ -10,5 +10,3 @@ as
 return
 go
 
-exec ShowPromocoes '2016-12-12 12:00:00', '2016-12-12 13:00:00'
---Apresenta a Promoçao 5

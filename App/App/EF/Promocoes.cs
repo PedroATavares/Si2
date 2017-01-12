@@ -27,8 +27,8 @@ namespace App.EF
         public Nullable<int> Removido { get; set; }
     
         public virtual Descontos Descontos { get; set; }
+        public virtual TempoExtra TempoExtra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Aluguer> Aluguer { get; set; }
-        public virtual TempoExtra TempoExtra { get; set; }
     }
 }
