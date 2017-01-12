@@ -59,8 +59,8 @@ namespace App
                     case "4": if (ado) EditTempoExtraInfo.InserirTempoExtra(handler); else EditPromocaoInfoEF.InserirPromocao(); break;
                     case "5": if (ado) EditTempoExtraInfo.RemoverTempoExtra(handler); else EditPromocaoInfoEF.RemoverPromocao(); break;
                     case "6": if (ado) EditTempoExtraInfo.AlterarTempoExtra(handler); else EditPromocaoInfoEF.AlterarPromocao(); break;
-                    case "7": if (ado) InserirAluguer.PrintsSemCliente(handler); else InserirAluguerSemClienteEF.procInserirAluguerSemCliente(); break;
-                    case "8": if (ado) InserirAluguer.InserirAluguerComCliente(handler); else InserirAluguerComClienteEF.procInserirAluguerComCliente(); break;
+                    case "7": if (ado) InserirAluguer.AluguerSemCliente(handler); else InserirAluguerSemClienteEF.procInserirAluguerSemCliente(); break;
+                    case "8": if (ado) InserirAluguer.AluguerComCliente(handler); else InserirAluguerComClienteEF.procInserirAluguerComCliente(); break;
                     case "9": if (ado) RemoverAluguer.procRemoverAluger(handler); else RemoverAluguerEF.procRemoverAluger(); break;
                     case "10": if (ado) AlteracaoPrecario.GetParamsFromConsole(handler); else AlteracaoPrecarioEF.procAlteracaoPrecario(); break;
                     case "11": if (ado) ListarEquipamentos.GetParamsFromConsole(handler); else ListarEquipamentosEF.proclistarEquipamentos(); break;

@@ -8,9 +8,23 @@ namespace App
     class InserirAluguer
     {
         private static Handler handler;
-        private static int numEmp, niff, cod, duracaoo, idAluguerr;
-        private static string dI, dF, moradaa, nomee;
-        //private static SqlParameter dataI, dataF, duracao, numEmpregado, codigoCliente, nif, idAluguer, morada, nome;
+        private static int numEmp, nif, cod, duracao, idAluguer;
+        private static float precoTotal;
+        private static string dI, dF, morada, nome;
+        private static int[] promos;
+
+        public static void AluguerSemCliente(Handler h)
+        {
+            if (handler == null) handler = h;
+            PrintsSemCliente();
+            GetPromocoes();
+            AplicarTempoExtra();
+            InserirAluguerSemCliente();
+            InserirPromos();
+            AplicarEquipamentos();
+            Console.WriteLine("Total a pagar: " + precoTotal);
+            Console.WriteLine("Tempo total de Aluguer:" + duracao);
+        }
 
         private static void InserirAluguerSemCliente()
         {
@@ -26,8 +40,13 @@ namespace App
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         InitParametrosSemCliente(cmd);
-
+                        SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                        id.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(id);
                         cmd.ExecuteNonQuery();
+                        idAluguer = Int32.Parse(id.Value.ToString());
+                        Console.WriteLine("Inserido com sucesso");
+                        Console.WriteLine("********************************************************************\t");
                     }
                 }
                 catch (DbException ex)
@@ -39,19 +58,17 @@ namespace App
             }
         }
 
-        public static void PrintsSemCliente(Handler h)
+        private static void PrintsSemCliente()
         {
-            if (handler == null) handler = h;
             Console.WriteLine("********************************************************** \n");
             Console.WriteLine("Dados do novo Cliente  -----------------");
             Console.WriteLine("\n NIF do Cliente :");
-            niff = Convert.ToInt32(Console.ReadLine());
+            nif = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("\n Nome do Cliente :");
-            nomee = Console.ReadLine();
+            nome = Console.ReadLine();
             Console.WriteLine("\n Morada do Cliente :");
-            moradaa = Console.ReadLine();
+            morada = Console.ReadLine();
             PrintsComCliente();
-            InserirAluguerSemCliente();
         }
 
         private static void InitParametrosSemCliente(SqlCommand cmd)
@@ -60,37 +77,222 @@ namespace App
             SqlParameter nome = new SqlParameter("@Nome", SqlDbType.VarChar, 50);
             SqlParameter morada = new SqlParameter("@Morada", SqlDbType.VarChar, 100);
 
-            nif.Value = niff;
-            nome.Value = nomee;
-            morada.Value = moradaa;
+            nif.Value = InserirAluguer.nif;
+            nome.Value = InserirAluguer.nome;
+            morada.Value = InserirAluguer.morada;
 
             cmd.Parameters.Add(nif);
             cmd.Parameters.Add(nome);
             cmd.Parameters.Add(morada);
             InitParametrosComCliente(cmd);
+        }
+        //------------------------ METODOS PARTILHADOS --------------------------------------------------------------
 
+        private static void GetPromocoes()
+        {
+            Console.WriteLine("Aplicar Promoçao? (S/N)");
+            String result = Console.ReadLine();
+            promos = new int[3] {0,0,0};
+            if (result.Equals("S"))
+            {
+                EntitiesUtils.PrintPromocoesLivres(dI,dF,handler);
+                Console.WriteLine("Insira o Id de uma Promoção do tipo Desconto, caso nao queira aplicar, insira 0: ");
+                promos[0] = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Insira o Id de uma Promoção do tipo Tempo Extra, caso nao queira aplicar, insira 0: ");
+                promos[1] = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Insira o Id de uma Promoção do tipo Desconto e TempoExtra, caso nao queira aplicar, insira 0: ");
+                promos[2] = Int32.Parse(Console.ReadLine());
+            }
         }
 
-        //------------------ INSERIR ALUGUER COM CLIENTE  ----------------------------------------------------------
-
-
-        public static void InserirAluguerComCliente(Handler h)
+        private static void AplicarTempoExtra()
         {
-            if (handler == null) handler = h;
-
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    PrintsComCliente();
-                    PrintClientes(con);
+                    int tempoExtra = 0;
+                    using (SqlCommand cmd = con.CreateCommand())
+                    {
+                        cmd.CommandText = "select TempoExtra from TempoExtra where Id=" + promos[0] + " or Id=" +
+                                          promos[2];
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                tempoExtra += Int32.Parse(dr["TempoExtra"].ToString());
+                            }
+                        }
+                    }
+                    duracao += tempoExtra;
+                }
+                catch (DbException e)
+                {
+                    Console.WriteLine("E R R O" + e.Message);
+
+                }
+            }
+        }
+
+        private static void InserirPromos()
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("AplicarPromo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        for (int i = 0; i < promos.Length; i++)
+                        {
+                            if (promos[i] != 0)
+                            {
+                                SqlParameter aluguer = new SqlParameter("@NumAluguer", SqlDbType.Int);
+                                SqlParameter promo = new SqlParameter("@CodPromo", SqlDbType.Int);
+
+                                promo.Value = promos[i];
+                                aluguer.Value = idAluguer;
+
+                                cmd.Parameters.Add(promo);
+                                cmd.Parameters.Add(aluguer);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+                catch (DbException e)
+                {
+                    Console.WriteLine("E R R O" + e.Message);
+                }
+            }
+        }
+
+        private static void AplicarEquipamentos()
+        {
+            int idEq = -1;
+            EntitiesUtils.PrintEquipamentosLivres(dI,dF,handler);
+            while (idEq!=0)
+            {
+                Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ? (para sair escreva -> 0)");
+                idEq = Int32.Parse(Console.ReadLine());
+                if (idEq == 0) break;
+                EntitiesUtils.PrintPrecarioParaEquipamento(dI, dF, idEq, handler);
+                Console.WriteLine("Indique a duração do Preço pretendido:");
+                int duracao = Int32.Parse(Console.ReadLine());
+                float preco = EntitiesUtils.PrintAndGetValor(dI, dF, idEq, duracao, handler);
+                InserirEquipamento(preco, idEq); 
+            }
+               
+            
+
+        }
+
+        private static void InserirEquipamento(float valor, int idEquip)
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
+                    int percentagem = 0;
+                    using (SqlCommand cmd = con.CreateCommand())
+                    {
+                        cmd.CommandText = "select Percentagem from Descontos where Id=" + promos[0] + " or Id=" +
+                                          promos[2];
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                percentagem += Int32.Parse(dr["Percentagem"].ToString());
+                            }
+                        }
+                    }
+                    using (SqlCommand cmd = new SqlCommand("InserirAluguerEquipamentos", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                       
+                                SqlParameter preco = new SqlParameter("@Preco", SqlDbType.SmallMoney);
+                                SqlParameter aluguer = new SqlParameter("@NumAluguer", SqlDbType.Int);
+                                SqlParameter equipId = new SqlParameter("@CodEquip", SqlDbType.Int);
+
+                                float precoEquip = ((100 - percentagem) / 100)*valor;
+
+                                preco.Value = precoEquip;
+                                aluguer.Value = idAluguer;
+                                equipId.Value = idEquip;
+                                precoTotal += precoEquip;
+
+                                cmd.Parameters.Add(preco);
+                                cmd.Parameters.Add(aluguer);
+                                cmd.Parameters.Add(equipId);
+
+                                cmd.ExecuteNonQuery();
+                            
+                    }
+                }
+                catch (DbException e)
+                {
+                    Console.WriteLine("E R R O" + e.Message);
+                }
+            }
+        }
+
+
+        //------------------ INSERIR ALUGUER COM CLIENTE  ----------------------------------------------------------
+
+        public static void AluguerComCliente(Handler h)
+        {
+            if (handler == null) handler = h;
+            PrintsComCliente();
+            GetPromocoes();
+            AplicarTempoExtra();
+            InserirAluguerComCliente();
+            InserirPromos();
+            AplicarEquipamentos();
+            Console.WriteLine("Total a pagar: " + precoTotal);
+            Console.WriteLine("Tempo total de Aluguer:"+duracao);
+        }
+        public static void InserirAluguerComCliente()
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
+                    EntitiesUtils.PrintClientes(con);
+                    Console.WriteLine("\nEscolha um dos Clientes (codigo NIF):");
+                    nif = Convert.ToInt32(Console.ReadLine());
+                    if (nif <= 0)
+                     {
+                        Console.WriteLine("O NIF que colocou esta incorrecto, volte a tentar");
+                        EntitiesUtils.PrintClientes(con);
+                     }
+                    using (SqlCommand cmd = con.CreateCommand())
+                    {
+                        cmd.CommandText = "select Codigo from Cliente where Cliente.Nif="+nif;
+ 
+                         using (SqlDataReader dr = cmd.ExecuteReader())
+                         {
+                             while (dr.Read())
+                                cod=Int32.Parse(dr["Codigo"].ToString());
+                         }
+                    }
                     using (SqlCommand cmd = new SqlCommand("InserirAluguerComCliente", con))
                     {
                         cmd.CommandType= CommandType.StoredProcedure;
                         InitParametrosComCliente(cmd);
+                        SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                        id.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(id);
                         cmd.ExecuteNonQuery();
+                        idAluguer = Int32.Parse(id.Value.ToString());
                         Console.WriteLine("Inserido com sucesso");
                         Console.WriteLine("********************************************************************\t");
                     }
@@ -105,37 +307,16 @@ namespace App
             }
         }
 
-        private static void PrintClientes(SqlConnection con)
-        {
-            using (SqlCommand cmd = con.CreateCommand())
-            {
-                cmd.CommandText = "select * from Cliente";
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    Console.WriteLine(
-                        "Estes sao os Clientes existentes -------------------\nCODIGO|  NIF   |     NOME   |      MORADA");
-                    while (dr.Read())
-                        if (!dr["nif"].Equals(0))
-                            Console.Write(dr["codigo"] + " | " + dr["nif"] + " | " + dr["nome"] + " |  " + dr["morada"] +
-                                          "\n");
-                }
-                Console.WriteLine("Insira o código de Cliente pretendido:");
-                cod = Int32.Parse(Console.ReadLine());
-            }
-        }
-
-
-
-        public static void PrintsComCliente()
+        private static void PrintsComCliente()
         {
             Console.WriteLine("Dados do novo Aluguer  -----------------");
-            Console.WriteLine("\n Coloque a Data Inicial (AAAA-MM-DD HH:MM:SS):\n>");
+            Console.WriteLine("\n Coloque a Data Inicial (AAAA-MM-DD HH:MM:SS):");
             dI = Console.ReadLine();
-            Console.WriteLine("\n Coloque a Data Final(AAAA-MM-DD HH:MM:SS):\n>");
+            Console.WriteLine("\n Coloque a Data Final(AAAA-MM-DD HH:MM:SS):");
             dF = Console.ReadLine();
-            Console.WriteLine("\n Coloque a Duração (em minutos): \n>");
-            duracaoo = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\n Coloque o Nº Empregado: \n>");
+            Console.WriteLine("\n Coloque a Duração (em minutos):");
+            duracao = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\n Coloque o Nº Empregado:");
             numEmp = Convert.ToInt32(Console.ReadLine());
         }
 
@@ -146,12 +327,10 @@ namespace App
             SqlParameter duracao = new SqlParameter("@Duracao", SqlDbType.Int);
             SqlParameter numEmpregado = new SqlParameter("@NumEmp", SqlDbType.Int);
             SqlParameter codigoCliente = new SqlParameter("@CodCli", SqlDbType.Int);
-            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
-            id.Direction = ParameterDirection.Output;
 
             dataI.Value = dI;
             dataF.Value = dF;
-            duracao.Value = duracaoo;
+            duracao.Value = InserirAluguer.duracao;
             numEmpregado.Value = numEmp;
             codigoCliente.Value = cod;
             
@@ -160,8 +339,6 @@ namespace App
             cmd.Parameters.Add(duracao);
             cmd.Parameters.Add(numEmpregado);
             cmd.Parameters.Add(codigoCliente);
-            cmd.Parameters.Add(id);
-
         }
     
     }

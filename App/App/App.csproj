@@ -133,6 +133,7 @@
     <Compile Include="EF\Tipo.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntitiesUtils.cs" />
     <Compile Include="ADO.net\EquipSemAluguerUltimaSemana.cs" />
     <Compile Include="EF\EquipSemAluguerUltimaSemanaEF.cs" />
     <Compile Include="ADO.net\Handlers.cs" />

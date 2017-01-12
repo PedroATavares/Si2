@@ -17,3 +17,5 @@ PrecoAluguer.EquipId = Equipamentos.Codigo
 			) and Equipamentos.Codigo = @CodEquip 
 return
 go
+
+exec EquipamentosEspecificos '2017-01-01','2017-01-02',1

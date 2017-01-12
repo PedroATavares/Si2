@@ -12,43 +12,13 @@ namespace App
         public static void RemoverDesconto(Handler h)
         {
             if (handler == null) handler = h;
-            ShowDescontos();
+            EntitiesUtils.ShowDescontos(handler);
             Console.Write("Id da Promoção Desconto a Remover:");
             int id = Convert.ToInt32(Console.ReadLine());
             RemoverDesconto(id);
         }
 
-        private static void ShowDescontos()
-        {
-            using(SqlConnection con = new SqlConnection())
-            {
-                try
-                {
-                    con.ConnectionString = handler.CONNECTION_STRING;
-                    con.Open();
-                    using (SqlCommand cmd = con.CreateCommand())
-                    {
-                        cmd.CommandText = "select Promocoes.Id as Id, Promocoes.Descricao as Descr, Promocoes.DataInicio as DI, Promocoes.DataFim as DF, Descontos.Percentagem as perc " +
-                                          "from Descontos "+
-	                                      "inner join Promocoes "+
-	                                      "on Descontos.Id = Promocoes.Id ";
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                                if (!dr["Id"].Equals(0))
-                                    Console.Write("-ID:"+dr["Id"] + "\t Percentagem:"+dr["perc"]+ "\t Descr:" + dr["Descr"] + "\t Data Inicio:" + dr["DI"] + "\t Data Fim:" + dr["DF"] + "\n");
-                        }
-
-                    }
-
-                }
-                catch (DbException e)
-                {
-                    Console.WriteLine("E R R O" + e.Message);
-            
-                }
-            }
-        }
+        
 
         private static void RemoverDesconto(int id)
         {
@@ -142,7 +112,7 @@ namespace App
         public static void AlterarDesconto(Handler h)
         {
             if (handler == null) handler = h;
-            ShowDescontos();
+            EntitiesUtils.ShowDescontos(handler);
             Console.Write("Id da Promoção a alterar (obrigatório):");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.Write("Data de Inicio (AAAA-MM-DD)(opcional):");
@@ -216,6 +186,5 @@ namespace App
                 }
             }
         }
-
     }
 }
