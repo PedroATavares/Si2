@@ -31,6 +31,7 @@ namespace App
                     case "2": ado=false; break;
                 }
             } while (key != "1" && key != "2");
+
             do
             {
                 Console.WriteLine("\n*******************************************************");
