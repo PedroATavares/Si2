@@ -79,8 +79,6 @@ namespace App
 
         private static void printEquipamentos(TestesSI2Entities ctx)
         {
-            dI = "2000-01-01";
-            dF = "2005-01-01";
             Console.WriteLine("Estes sao os Equipamentos existentes -------------------\nCodigo |       Descricao   |  Tipo ");
             foreach ( var row in ctx.ShowEquipamentos(Convert.ToDateTime(dI), Convert.ToDateTime(dF)) )
                 Console.WriteLine(row.Codigo + "   |  " + row.Descricao + "  |  " + row.Tipo);
