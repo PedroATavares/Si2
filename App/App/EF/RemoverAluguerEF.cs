@@ -15,9 +15,8 @@ namespace App
             {
                 printAluguer(ctx);
                 Console.WriteLine("Escolha o Aluguer (id) que deseja eliminar : ");
-                int idAluguer = Convert.ToInt32(Console.ReadLine());
 
-                tuplos = ctx.RemoverAluger(idAluguer);
+                tuplos = ctx.RemoverAluger(Convert.ToInt32(Console.ReadLine()));
             }
             Console.WriteLine("Remocao concluida, foram afectados " + tuplos + " tuplos");
             Console.ReadKey();

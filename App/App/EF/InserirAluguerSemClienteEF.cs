@@ -30,16 +30,10 @@ namespace App
 
                     Console.WriteLine("id Cliente gerado : " + idC.Value + "  id Aluguer gerado : " + id.Value);
 
-                    float percentagem = 0;
-                    foreach (var row in ctx.BuscarPercentagem(idTmpEx, id2Promocoes))
-                        percentagem += Convert.ToInt16(row.Value);
-
-                    preco = Convert.ToInt32(((100 - percentagem) / 100) * preco);
-
                     do
                     {
                         printEquipamentos(ctx);
-                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ?? (para sair persione -> q)");
+                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ? (Coloque o ID) (para sair pressione -> q)");
                         idEq = Console.ReadLine();
 
                         if (idEq.Equals("q"))
@@ -54,8 +48,14 @@ namespace App
                         duracaoEq = Convert.ToInt32(aux);
 
                         buscarPreco(ctx);
-                        tuplos += ctx.InserirAluguerEquipamentos(preco, Convert.ToInt32(id.Value), Convert.ToInt32(idEq));
 
+                        float percentagem = 0;
+                        foreach (var row in ctx.BuscarPercentagem(idDesconto, id2Promocoes))
+                            percentagem += Convert.ToInt16(row.Value);
+
+                        preco = Convert.ToInt32(((100 - percentagem) / 100) * preco);
+
+                        tuplos += ctx.InserirAluguerEquipamentos(preco, Convert.ToInt32(id.Value), Convert.ToInt32(idEq));
 
                     } while (true);
 

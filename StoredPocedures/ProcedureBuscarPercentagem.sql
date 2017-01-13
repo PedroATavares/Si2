@@ -5,6 +5,8 @@ go
 create procedure BuscarPercentagem
 @id1 int,
 @id2 int
-as select Percentagem from Descontos where Id= @id1 or Id= @id2
+as select Percentagem from Descontos inner join Promocoes on Descontos.Id = Promocoes.Id
+ where Promocoes.Id= @id1 or Promocoes.Id= @id2
 return
 go
+

@@ -5,6 +5,7 @@ go
 create procedure BuscarTempoExtra
 @id1 int,
 @id2 int
-as select TempoExtra from TempoExtra where Id= @id1 or Id= @id2
+as select TempoExtra from TempoExtra inner join Promocoes on TempoExtra.Id = Promocoes.Id
+ where Promocoes.Id= @id1 or Promocoes.Id= @id2
 return
 go
