@@ -18,3 +18,6 @@ PrecoAluguer.EquipId = Equipamentos.Codigo
 			) and Equipamentos.Codigo = @CodEquip and PrecoAluguer.Duracao = @Duracao 
 return
 go
+
+--exec BuscarPrecoEspecifico '2017-01-01 12:00:00', '2017-01-01 13:00:00',1,60
+--Apresenta 35,00

@@ -154,7 +154,7 @@ namespace App
                             dataF.Value = dataFim;
                             cmd.Parameters.Add(dataF);
                         }
-                        if (dataInicio != ""){
+                        if (desc != "" ){
                             SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
                             descr.Value = desc;
                             cmd.Parameters.Add(descr);
@@ -164,12 +164,6 @@ namespace App
                             SqlParameter perc = new SqlParameter("@Percentagem", SqlDbType.Int);
                             perc.Value = percentagem;
                             cmd.Parameters.Add(perc);
-                        }
-                        if (desc != "")
-                        {
-                            SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
-                            descr.Value = desc;
-                            cmd.Parameters.Add(descr);
                         }
 
                         cmd.ExecuteNonQuery();
