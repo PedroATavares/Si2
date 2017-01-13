@@ -12,11 +12,9 @@ namespace App
 
             using (var ctx = new TestesSI2Entities())
             {
-                ObjectResult<EquipamentosSemAluguerUltimaSemana_Result> rs = ctx.EquipamentosSemAluguerUltimaSemana();
-
                 Console.WriteLine("Estes sao os Equipamentos existentes entre na ultima semana -------------"  + "\nCODIGO|  Descricao      |     Tipo  ");
 
-                foreach (var row in rs)
+                foreach (var row in ctx.EquipamentosSemAluguerUltimaSemana())
                     Console.WriteLine(row.Codigo + "   |  " + row.Descricao + "   |  " + row.Tipo);
 
                 Console.ReadKey();

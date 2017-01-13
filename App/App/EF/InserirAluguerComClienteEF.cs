@@ -7,7 +7,7 @@ namespace App
 {
     class InserirAluguerComClienteEF
     {
-        private static int numEmp, niff, duracaoo, tuplos, preco, duracao;
+        private static int numEmp, niff, duracaoAlg, tuplos, preco, duracaoEq, idDesconto, idTmpEx, id2Promocoes;
         private static string dI, dF, idEq;
 
         public static void procInserirAluguerComCliente()
@@ -34,15 +34,19 @@ namespace App
                         num = i;
                     }
 
+                    printPromocoes(ctx);
+                    printQuestoesPromocao();
+                    aplicarTempoExtra(ctx);
+
                     var id = new ObjectParameter("id", 0);
-                    tuplos = ctx.InserirAluguerComCliente(Convert.ToDateTime(dI), Convert.ToDateTime(dF), duracaoo, numEmp, num, id);
+                    tuplos += ctx.InserirAluguerComCliente(Convert.ToDateTime(dI), Convert.ToDateTime(dF), duracaoAlg, numEmp, num, id);
 
                     Console.WriteLine("ID gerado : " + id.Value);
-         
+
                     do
                     {
                         printEquipamentos(ctx);
-                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ? (para sair pressione -> q)");
+                        Console.WriteLine("Que equipamentos quer adicionar ao Alguer criado ? (Coloque o ID) (para sair pressione -> q)");
                         idEq = Console.ReadLine();
 
                         if (idEq.Equals("q"))
@@ -54,10 +58,17 @@ namespace App
 
                         if (aux.Equals(""))
                             break;
-                        duracao = Convert.ToInt32(aux);
+                        duracaoEq = Convert.ToInt32(aux);
 
                         buscarPreco(ctx);
-                        tuplos += ctx.InserirAluguerEquipamentos(preco, Convert.ToInt32(id.Value), Convert.ToInt32(idEq));
+
+                        float percentagem = 0;
+                        foreach (var row in ctx.BuscarPercentagem(idDesconto, id2Promocoes))
+                            percentagem += Convert.ToInt16(row.Value);
+
+                        preco = Convert.ToInt32(((100 - percentagem) / 100) * preco);
+
+                        tuplos += ctx.InserirAluguerEquipamentos(Convert.ToDecimal(preco), Convert.ToInt32(id.Value), Convert.ToInt32(idEq));
 
 
                     } while (true);
@@ -71,18 +82,49 @@ namespace App
             }
         }
 
+        private static void buscarPercentagem(TestesSI2Entities ctx)
+        {
+            
+        }
+
+        private static void aplicarTempoExtra(TestesSI2Entities ctx)
+        {
+            foreach (var row in ctx.BuscarTempoExtra(idTmpEx, id2Promocoes))
+                duracaoAlg += Convert.ToInt32(row.Value);            
+        }
+
+        private static void printPromocoes(TestesSI2Entities ctx)
+        {
+            Console.WriteLine("Estes sao as Promocoes existentes -------------------\nId |  Data Inicial  |  Data Final   |  Descricao ");
+            foreach (var row in ctx.ShowPromocoes(Convert.ToDateTime(dI), Convert.ToDateTime(dF)))
+                    Console.WriteLine(row.Id + "   |  " + row.DataInicio + "  |  " + row.DataFim + "  |  " + row.Descricao);
+        }
+
+        private static void printQuestoesPromocao()
+        {
+            Console.WriteLine("Aplicar Promoçao? (S/N)");
+            String result = Console.ReadLine();
+            if (result.Equals("S") || result.Equals("s"))
+            {
+                Console.WriteLine("Insira o Id de uma Promoção do tipo Desconto, caso nao queira aplicar, insira 0: ");
+                idDesconto = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Insira o Id de uma Promoção do tipo Tempo Extra, caso nao queira aplicar, insira 0: ");
+                idTmpEx = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Insira o Id de uma Promoção do tipo Desconto e TempoExtra, caso nao queira aplicar, insira 0: ");
+                id2Promocoes = Int32.Parse(Console.ReadLine());
+            }
+        }
+
         private static void buscarPreco(TestesSI2Entities ctx)
         {
-            foreach (var row in ctx.BuscarPrecoEspecifico(Convert.ToDateTime(dI), Convert.ToDateTime(dF), Convert.ToInt32(idEq), duracao))
+            foreach (var row in ctx.BuscarPrecoEspecifico(Convert.ToDateTime(dI), Convert.ToDateTime(dF), Convert.ToInt32(idEq), duracaoEq))
                 preco = Convert.ToInt32(row.Value);
         }
 
         private static void printEquipamentos(TestesSI2Entities ctx)
         {
-            dI = "2000-01-01";
-            dF = "2005-01-01";
             Console.WriteLine("Estes sao os Equipamentos existentes -------------------\nCodigo |       Descricao   |  Tipo ");
-            foreach ( var row in ctx.ShowEquipamentos(Convert.ToDateTime(dI), Convert.ToDateTime(dF)) )
+            foreach ( var row in ctx.ShowEquipamentosEspecificos(Convert.ToDateTime(dI), Convert.ToDateTime(dF)) )
                 Console.WriteLine(row.Codigo + "   |  " + row.Descricao + "  |  " + row.Tipo);
         }
 
@@ -109,7 +151,7 @@ namespace App
             Console.WriteLine("\n Coloque a Data Final");
             dF = Console.ReadLine();
             Console.WriteLine("\n Coloque a Duracao");
-            duracaoo = Convert.ToInt32(Console.ReadLine());
+            duracaoAlg = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("\n Coloque o Nº Empregado");
             numEmp = Convert.ToInt32(Console.ReadLine());
         }

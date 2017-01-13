@@ -19,10 +19,9 @@ namespace App
             {
                 printQuestoes();
 
-                ObjectResult<listarEquipamentos_Result> rs = ctx.listarEquipamentos(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), tipo) ;
                 Console.WriteLine("\nEstes sao os Equipamentos existentes entre : " + dataI + " e " + dataF + "\nCODIGO|  Descricao      |     Tipo  ");
 
-                foreach (var row in rs)
+                foreach (var row in ctx.listarEquipamentos(Convert.ToDateTime(dataI), Convert.ToDateTime(dataF), tipo) )
                         Console.WriteLine(row.Codigo + "   |  " + row.Descricao + "   |  " + row.Tipo);
             }
             Console.ReadKey();

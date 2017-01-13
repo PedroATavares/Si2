@@ -12,7 +12,7 @@ namespace App
         public static void RemoverDesconto(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtils.ShowDescontos(handler);
+            EntitiesUtilsADO.ShowDescontos(handler);
             Console.Write("Id da Promoção Desconto a Remover:");
             int id = Convert.ToInt32(Console.ReadLine());
             RemoverDesconto(id);
@@ -112,7 +112,7 @@ namespace App
         public static void AlterarDesconto(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtils.ShowDescontos(handler);
+            EntitiesUtilsADO.ShowDescontos(handler);
             Console.Write("Id da Promoção a alterar (obrigatório):");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.Write("Data de Inicio (AAAA-MM-DD)(opcional):");

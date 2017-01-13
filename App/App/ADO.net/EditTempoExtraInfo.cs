@@ -12,7 +12,7 @@ namespace App
         public static void RemoverTempoExtra(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtils.ShowDescontos(handler);
+            EntitiesUtilsADO.ShowDescontos(handler);
             Console.Write("Id da Promoção a Remover:");
             int id = Convert.ToInt32(Console.ReadLine());
             RemoverTempoExtra(id);
@@ -112,7 +112,11 @@ namespace App
         public static void AlterarTempoExtra(Handler h)
         {
             if (handler == null) handler = h;
+<<<<<<< HEAD:App/App/ADO.net/EditTempoExtraInfo.cs
             EntitiesUtils.ShowTempoExtra(handler);
+=======
+            EntitiesUtilsADO.ShowDescontos(handler);
+>>>>>>> 99c87dfd347f048f77b6045af26def302cc5af89:App/App/ADO.net/EditPromocaoInfo.cs
             Console.Write("Id da Promoção a alterar (obrigatório):");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.Write("Data de Inicio (AAAA-MM-DD) (opcional):");
