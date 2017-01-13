@@ -13,3 +13,6 @@ as
 insert into Aluguer values (@DataI,@DataF,@Duracao,@NumEmp,@CodCli)
 set @id = IDENT_CURRENT('Aluguer')
 go
+
+select * from aluguer
+select *from AluguerEquipamentos

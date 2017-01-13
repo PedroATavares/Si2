@@ -18,7 +18,7 @@ begin tran
 set transaction isolation level REPEATABLE READ
 begin try
 	INSERT INTO Cliente values( @Nif, @Nome, @Morada)
-	select @CodCli = IDENT_CURRENT('Promocoes')
+	select @CodCli = IDENT_CURRENT('Cliente')
 
 	exec InserirAluguerComCliente @DataI,@DataF,@Duracao,@NumEmp,@CodCli,@idAluguer output
 
