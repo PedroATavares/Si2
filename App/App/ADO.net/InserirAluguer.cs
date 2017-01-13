@@ -144,13 +144,15 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("AplicarPromo", con))
+                    for (int i = 0; i < promos.Length; i++)
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        for (int i = 0; i < promos.Length; i++)
+                        if (promos[i] != 0)
                         {
-                            if (promos[i] != 0)
+                            using (SqlCommand cmd = new SqlCommand("AplicarPromo", con))
                             {
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+
                                 SqlParameter aluguer = new SqlParameter("@NumAluguer", SqlDbType.Int);
                                 SqlParameter promo = new SqlParameter("@CodPromo", SqlDbType.Int);
 
@@ -174,6 +176,7 @@ namespace App
 
         private static void AplicarEquipamentos()
         {
+            float percentagem = GetDesconto();
             int idEq;
             do
             {
@@ -185,7 +188,7 @@ namespace App
                 Console.WriteLine("Indique a duração do Preço pretendido:");
                 int duracao = Int32.Parse(Console.ReadLine());
                 float preco = EntitiesUtilsADO.PrintAndGetValor(dI, dF, idEq, duracao, handler);
-                InserirEquipamento(preco, idEq);
+                InserirEquipamento(preco, idEq, percentagem);
             } while (idEq != 0);
 
 
@@ -193,15 +196,16 @@ namespace App
 
         }
 
-        private static void InserirEquipamento(float valor, int idEquip)
+        private static float GetDesconto()
         {
+            float percentagem = 0;
             using (SqlConnection con = new SqlConnection())
             {
                 try
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    float percentagem = 0;
+                    
                     using (SqlCommand cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "select Percentagem from Descontos where Id=" + promos[0] + " or Id=" +
@@ -214,6 +218,24 @@ namespace App
                             }
                         }
                     }
+                    
+                }
+                catch (DbException e)
+                {
+                    Console.WriteLine("E R R O" + e.Message);
+                }
+            }
+            return percentagem;
+        }
+
+        private static void InserirEquipamento(float valor, int idEquip, float percentagem)
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = handler.CONNECTION_STRING;
+                    con.Open();
                     using (SqlCommand cmd = new SqlCommand("InserirAluguerEquipamentos", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
