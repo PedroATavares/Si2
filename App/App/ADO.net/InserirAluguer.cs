@@ -116,7 +116,7 @@ namespace App
                     int tempoExtra = 0;
                     using (SqlCommand cmd = con.CreateCommand())
                     {
-                        cmd.CommandText = "select TempoExtra from TempoExtra where Id=" + promos[0] + " or Id=" +
+                        cmd.CommandText = "select TempoExtra from TempoExtra where Id=" + promos[1] + " or Id=" +
                                           promos[2];
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
@@ -200,7 +200,7 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-                    int percentagem = 0;
+                    float percentagem = 0;
                     using (SqlCommand cmd = con.CreateCommand())
                     {
                         cmd.CommandText = "select Percentagem from Descontos where Id=" + promos[0] + " or Id=" +
@@ -209,7 +209,7 @@ namespace App
                         {
                             while (dr.Read())
                             {
-                                percentagem += Int32.Parse(dr["Percentagem"].ToString());
+                                percentagem += float.Parse(dr["Percentagem"].ToString());
                             }
                         }
                     }

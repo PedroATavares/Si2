@@ -127,7 +127,7 @@ create procedure UpdatePromocoesTempo
 @DataInicio Date = null,
 @DataFim Date = null,
 @Descricao varchar(200) = null,
-@Tempo smallmoney =null
+@Tempo int =null
 as
 
 begin tran

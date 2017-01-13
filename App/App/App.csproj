@@ -58,7 +58,7 @@
     <Compile Include="ADO.net\AlteracaoPrecario.cs" />
     <Compile Include="EF\AlteracaoPrecarioEF.cs" />
     <Compile Include="ADO.net\EditDescontoInfo.cs" />
-    <Compile Include="ADO.net\EditPromocaoInfo.cs" />
+    <Compile Include="ADO.net\EditTempoExtraInfo.cs" />
     <Compile Include="EF\Aluguer.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
