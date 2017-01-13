@@ -12,7 +12,7 @@ namespace App
         public static void RemoverTempoExtra(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtilsADO.ShowDescontos(handler);
+            EntitiesUtilsADO.ShowTempoExtra(handler);
             Console.Write("Id da Promoção a Remover:");
             int id = Convert.ToInt32(Console.ReadLine());
             RemoverTempoExtra(id);

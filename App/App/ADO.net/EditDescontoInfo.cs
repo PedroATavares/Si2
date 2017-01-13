@@ -96,7 +96,7 @@ namespace App
                         cmd.Parameters.Add(toRet);
 
                         cmd.ExecuteNonQuery();
-                        Console.WriteLine("Inserido com Sucesso");
+                        Console.WriteLine("Inserido com Sucesso: " + toRet.Value);
                         Console.Write("***********************************************************************\n");
                     }
 

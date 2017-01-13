@@ -49,7 +49,12 @@ namespace App
                     xml+=createXmlAluguer(item.NumAluguer,item.Tipo,item.CodCli,item.CodEquip,xml);
                 }
                 xml += "</alugueres> \n </xml > ";
-                Console.WriteLine(xml);
+                using (System.IO.StreamWriter file =
+                                    new System.IO.StreamWriter(@"../../../Alugueres.xml"))
+                {
+                    file.WriteLine(xml);
+
+                }
                 Console.WriteLine("***********************************************************************");
             }
 

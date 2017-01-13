@@ -6,7 +6,7 @@ create procedure InserirAluguerSemCliente
 @Nif int,
 @Nome varchar(50),
 @Morada varchar(100),
-@idCliente int output,
+@CodCli int output,
 @Duracao int,
 @NumEmp int,
 @DataI DateTime,
@@ -18,9 +18,9 @@ begin tran
 set transaction isolation level REPEATABLE READ
 begin try
 	INSERT INTO Cliente values( @Nif, @Nome, @Morada)
-	select @idCliente= SCOPE_IDENTITY()
+	select @CodCli = IDENT_CURRENT('Promocoes')
 
-	exec InserirAluguerComCliente @DataI,@DataF,@Duracao,@NumEmp,@idCliente,@idAluguer output
+	exec InserirAluguerComCliente @DataI,@DataF,@Duracao,@NumEmp,@CodCli,@idAluguer output
 
 	commit
 end try

@@ -11,5 +11,5 @@ create procedure InserirAluguerComCliente
 @id int output
 as
 insert into Aluguer values (@DataI,@DataF,@Duracao,@NumEmp,@CodCli)
-set @id = SCOPE_IDENTITY()
+set @id = IDENT_CURRENT('Aluguer')
 go

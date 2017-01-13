@@ -40,7 +40,7 @@ namespace App
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         InitParametrosSemCliente(cmd);
-                        SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                        SqlParameter id = new SqlParameter("@idAluguer", SqlDbType.Int);
                         id.Direction = ParameterDirection.Output;
                         cmd.Parameters.Add(id);
                         cmd.ExecuteNonQuery();

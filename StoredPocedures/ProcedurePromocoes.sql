@@ -12,12 +12,12 @@ as
 	begin tran
 	begin try 
 		INSERT INTO Promocoes(DataInicio,DataFim,Descricao) values( @DataInicio, @DataFim, @Descricao)
-		select @id= SCOPE_IDENTITY()
+		select @id= IDENT_CURRENT('Promocoes')
 		Insert into Descontos values(@Percentagem,@id)
 		commit
 	end try
 	begin catch
-		select @id=0
+		select @id=-1
 		rollback
 	end catch
 
@@ -37,7 +37,7 @@ as
 	begin tran
 	begin try 
 		INSERT INTO Promocoes(DataInicio,DataFim,Descricao) values( @DataInicio, @DataFim, @Descricao)
-		select @id= SCOPE_IDENTITY()
+		select @id= IDENT_CURRENT('Promocoes')
 		Insert into TempoExtra values(@Tempo,@id)
 		commit
 	end try
