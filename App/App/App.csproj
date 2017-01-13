@@ -58,7 +58,7 @@
     <Compile Include="ADO.net\AlteracaoPrecario.cs" />
     <Compile Include="EF\AlteracaoPrecarioEF.cs" />
     <Compile Include="ADO.net\EditDescontoInfo.cs" />
-    <Compile Include="ADO.net\EditPromocaoInfo.cs" />
+    <Compile Include="ADO.net\EditTempoExtraInfo.cs" />
     <Compile Include="EF\Aluguer.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
@@ -109,7 +109,13 @@
     <Compile Include="EF\Promocoes1.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\ShowEquipamentosEspecificos_Result.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\ShowEquipamentos_Result.cs">
+      <DependentUpon>Si2Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\ShowPromocoes_Result.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Si2Context.Context.cs">
@@ -133,7 +139,7 @@
     <Compile Include="EF\Tipo.cs">
       <DependentUpon>Si2Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntitiesUtils.cs" />
+    <Compile Include="EntitiesUtilsADO.cs" />
     <Compile Include="ADO.net\EquipSemAluguerUltimaSemana.cs" />
     <Compile Include="EF\EquipSemAluguerUltimaSemanaEF.cs" />
     <Compile Include="ADO.net\Handlers.cs" />

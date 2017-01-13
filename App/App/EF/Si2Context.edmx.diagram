@@ -4,31 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8522fa0759dc4d3cbc37d53142afac45" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="TestesSI2Model.AluguerEquipamentos" Width="1.5" PointX="8.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Descontos" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.PrecoAluguer" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Tipo" Width="1.5" PointX="3.75" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Aluguer" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+      <Diagram DiagramId="3821938c591146d1922543328625bc45" Name="Diagram1">
+        <EntityTypeShape EntityType="TestesSI2Model.AluguerEquipamentos" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Descontos" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.PrecoAluguer" Width="1.5" PointX="8.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.TempoExtra" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Tipo" Width="1.5" PointX="3.75" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Aluguer" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TestesSI2Model.Cliente" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Empregado" Width="1.5" PointX="3.75" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Equipamentos" Width="1.5" PointX="6" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Promocoes" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Aluguer1" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Cliente1" Width="1.5" PointX="8.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Empregado1" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Equipamentos1" Width="1.5" PointX="10.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestesSI2Model.Promocoes1" Width="1.5" PointX="10.75" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="TestesSI2Model.FK__AluguerEq__CodEq__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="TestesSI2Model.FK__AluguerEq__NumAl__32E0915F" ManuallyRouted="false" />
-        <AssociationConnector Association="TestesSI2Model.FK__Descontos__Id__1ED998B2" ManuallyRouted="false" />
-        <AssociationConnector Association="TestesSI2Model.FK__PrecoAlug__Equip__173876EA" ManuallyRouted="false" />
-        <AssociationConnector Association="TestesSI2Model.FK__Equipament__Tipo__1273C1CD" ManuallyRouted="false" />
-        <AssociationConnector Association="TestesSI2Model.FK__Aluguer__CodCli__2D27B809" ManuallyRouted="false" />
-        <AssociationConnector Association="TestesSI2Model.FK__Aluguer__NumEmp__2C3393D0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TestesSI2Model.Empregado" Width="1.5" PointX="3.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Equipamentos" Width="1.5" PointX="6" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Promocoes" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Aluguer1" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Cliente1" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Empregado1" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Equipamentos1" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestesSI2Model.Promocoes1" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="TestesSI2Model.FK__AluguerEq__CodEq__52E34C9D" ManuallyRouted="false" />
+        <AssociationConnector Association="TestesSI2Model.FK__AluguerEq__NumAl__51EF2864" ManuallyRouted="false" />
+        <AssociationConnector Association="TestesSI2Model.FK__Descontos__Id__3CF40B7E" ManuallyRouted="false" />
+        <AssociationConnector Association="TestesSI2Model.FK__PrecoAlug__Equip__3552E9B6" ManuallyRouted="false" />
+        <AssociationConnector Association="TestesSI2Model.FK__TempoExtra__Id__3FD07829" ManuallyRouted="false" />
+        <AssociationConnector Association="TestesSI2Model.FK__Equipament__Tipo__308E3499" ManuallyRouted="false" />
+        <AssociationConnector Association="TestesSI2Model.FK__Aluguer__CodCli__4C364F0E" ManuallyRouted="false" />
+        <AssociationConnector Association="TestesSI2Model.FK__Aluguer__NumEmp__4B422AD5" ManuallyRouted="false" />
         <AssociationConnector Association="TestesSI2Model.AluguerPromocao" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="TestesSI2Model.TempoExtra" Width="1.5" PointX="3" PointY="13.375" />
-        <AssociationConnector Association="TestesSI2Model.FK__TempoExtra__Id__24285DB4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

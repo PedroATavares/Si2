@@ -18,7 +18,7 @@ namespace App.EF
     public partial class TestesSI2Entities : DbContext
     {
         public TestesSI2Entities()
-            : base("name=TestesSI2Entities")
+            : base("name=TestesSI2Entities1")
         {
         }
     
@@ -30,6 +30,7 @@ namespace App.EF
         public virtual DbSet<AluguerEquipamentos> AluguerEquipamentos { get; set; }
         public virtual DbSet<Descontos> Descontos { get; set; }
         public virtual DbSet<PrecoAluguer> PrecoAluguer { get; set; }
+        public virtual DbSet<TempoExtra> TempoExtra { get; set; }
         public virtual DbSet<Tipo> Tipo { get; set; }
         public virtual DbSet<Aluguer> Aluguer { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
@@ -41,7 +42,6 @@ namespace App.EF
         public virtual DbSet<Empregado1> Empregado1 { get; set; }
         public virtual DbSet<Equipamentos1> Equipamentos1 { get; set; }
         public virtual DbSet<Promocoes1> Promocoes1 { get; set; }
-        public virtual DbSet<TempoExtra> TempoExtra { get; set; }
     
         public virtual int alteracoesPrecario(Nullable<System.DateTime> validadeI, Nullable<System.DateTime> validadeF, Nullable<int> duracao, Nullable<decimal> valor, Nullable<int> equipId)
         {
@@ -66,6 +66,66 @@ namespace App.EF
                 new ObjectParameter("EquipId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("alteracoesPrecario", validadeIParameter, validadeFParameter, duracaoParameter, valorParameter, equipIdParameter);
+        }
+    
+        public virtual int AplicarPromo(Nullable<int> numAluguer, Nullable<int> codPromo)
+        {
+            var numAluguerParameter = numAluguer.HasValue ?
+                new ObjectParameter("NumAluguer", numAluguer) :
+                new ObjectParameter("NumAluguer", typeof(int));
+    
+            var codPromoParameter = codPromo.HasValue ?
+                new ObjectParameter("CodPromo", codPromo) :
+                new ObjectParameter("CodPromo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AplicarPromo", numAluguerParameter, codPromoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> BuscarPrecoEspecifico(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF, Nullable<int> codEquip, Nullable<int> duracao)
+        {
+            var dataIParameter = dataI.HasValue ?
+                new ObjectParameter("DataI", dataI) :
+                new ObjectParameter("DataI", typeof(System.DateTime));
+    
+            var dataFParameter = dataF.HasValue ?
+                new ObjectParameter("DataF", dataF) :
+                new ObjectParameter("DataF", typeof(System.DateTime));
+    
+            var codEquipParameter = codEquip.HasValue ?
+                new ObjectParameter("CodEquip", codEquip) :
+                new ObjectParameter("CodEquip", typeof(int));
+    
+            var duracaoParameter = duracao.HasValue ?
+                new ObjectParameter("Duracao", duracao) :
+                new ObjectParameter("Duracao", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("BuscarPrecoEspecifico", dataIParameter, dataFParameter, codEquipParameter, duracaoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> BuscarTempoExtra(Nullable<int> id1, Nullable<int> id2)
+        {
+            var id1Parameter = id1.HasValue ?
+                new ObjectParameter("id1", id1) :
+                new ObjectParameter("id1", typeof(int));
+    
+            var id2Parameter = id2.HasValue ?
+                new ObjectParameter("id2", id2) :
+                new ObjectParameter("id2", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("BuscarTempoExtra", id1Parameter, id2Parameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> BuscarTempoExtraa(Nullable<int> id1, Nullable<int> id2)
+        {
+            var id1Parameter = id1.HasValue ?
+                new ObjectParameter("id1", id1) :
+                new ObjectParameter("id1", typeof(int));
+    
+            var id2Parameter = id2.HasValue ?
+                new ObjectParameter("id2", id2) :
+                new ObjectParameter("id2", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("BuscarTempoExtraa", id1Parameter, id2Parameter);
         }
     
         public virtual int DeleteCliente(Nullable<int> id)
@@ -93,6 +153,23 @@ namespace App.EF
                 new ObjectParameter("id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePromocoes", idParameter);
+        }
+    
+        public virtual ObjectResult<EquipamentosEspecificos_Result> EquipamentosEspecificos(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF, Nullable<int> codEquip)
+        {
+            var dataIParameter = dataI.HasValue ?
+                new ObjectParameter("DataI", dataI) :
+                new ObjectParameter("DataI", typeof(System.DateTime));
+    
+            var dataFParameter = dataF.HasValue ?
+                new ObjectParameter("DataF", dataF) :
+                new ObjectParameter("DataF", typeof(System.DateTime));
+    
+            var codEquipParameter = codEquip.HasValue ?
+                new ObjectParameter("CodEquip", codEquip) :
+                new ObjectParameter("CodEquip", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EquipamentosEspecificos_Result>("EquipamentosEspecificos", dataIParameter, dataFParameter, codEquipParameter);
         }
     
         public virtual ObjectResult<EquipamentosSemAluguerUltimaSemana_Result> EquipamentosSemAluguerUltimaSemana()
@@ -123,6 +200,23 @@ namespace App.EF
                 new ObjectParameter("CodCli", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InserirAluguerComCliente", dataIParameter, dataFParameter, duracaoParameter, numEmpParameter, codCliParameter, id);
+        }
+    
+        public virtual int InserirAluguerEquipamentos(Nullable<decimal> preco, Nullable<int> numAluguer, Nullable<int> codEquip)
+        {
+            var precoParameter = preco.HasValue ?
+                new ObjectParameter("Preco", preco) :
+                new ObjectParameter("Preco", typeof(decimal));
+    
+            var numAluguerParameter = numAluguer.HasValue ?
+                new ObjectParameter("NumAluguer", numAluguer) :
+                new ObjectParameter("NumAluguer", typeof(int));
+    
+            var codEquipParameter = codEquip.HasValue ?
+                new ObjectParameter("CodEquip", codEquip) :
+                new ObjectParameter("CodEquip", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InserirAluguerEquipamentos", precoParameter, numAluguerParameter, codEquipParameter);
         }
     
         public virtual int InserirAluguerSemCliente(Nullable<int> nif, string nome, string morada, ObjectParameter idCliente, Nullable<int> duracao, Nullable<int> numEmp, Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF, ObjectParameter idAluguer)
@@ -256,6 +350,32 @@ namespace App.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoverAluger", idParameter);
         }
     
+        public virtual ObjectResult<ShowEquipamentos_Result> ShowEquipamentos(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF)
+        {
+            var dataIParameter = dataI.HasValue ?
+                new ObjectParameter("DataI", dataI) :
+                new ObjectParameter("DataI", typeof(System.DateTime));
+    
+            var dataFParameter = dataF.HasValue ?
+                new ObjectParameter("DataF", dataF) :
+                new ObjectParameter("DataF", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowEquipamentos_Result>("ShowEquipamentos", dataIParameter, dataFParameter);
+        }
+    
+        public virtual ObjectResult<ShowPromocoes_Result> ShowPromocoes(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF)
+        {
+            var dataIParameter = dataI.HasValue ?
+                new ObjectParameter("DataI", dataI) :
+                new ObjectParameter("DataI", typeof(System.DateTime));
+    
+            var dataFParameter = dataF.HasValue ?
+                new ObjectParameter("DataF", dataF) :
+                new ObjectParameter("DataF", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowPromocoes_Result>("ShowPromocoes", dataIParameter, dataFParameter);
+        }
+    
         public virtual int UpdateCliente(Nullable<int> id, Nullable<int> nIF, string nome, string morada)
         {
             var idParameter = id.HasValue ?
@@ -344,24 +464,20 @@ namespace App.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdatePromocoesTempo", idParameter, dataInicioParameter, dataFimParameter, descricaoParameter, tempoParameter);
         }
     
-        public virtual int InserirAluguerEquipamentos(Nullable<int> preco, Nullable<int> numAluguer, Nullable<int> codEquip)
+        public virtual ObjectResult<Nullable<int>> BuscarPercentagem(Nullable<int> id1, Nullable<int> id2)
         {
-            var precoParameter = preco.HasValue ?
-                new ObjectParameter("Preco", preco) :
-                new ObjectParameter("Preco", typeof(int));
+            var id1Parameter = id1.HasValue ?
+                new ObjectParameter("id1", id1) :
+                new ObjectParameter("id1", typeof(int));
     
-            var numAluguerParameter = numAluguer.HasValue ?
-                new ObjectParameter("NumAluguer", numAluguer) :
-                new ObjectParameter("NumAluguer", typeof(int));
+            var id2Parameter = id2.HasValue ?
+                new ObjectParameter("id2", id2) :
+                new ObjectParameter("id2", typeof(int));
     
-            var codEquipParameter = codEquip.HasValue ?
-                new ObjectParameter("CodEquip", codEquip) :
-                new ObjectParameter("CodEquip", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InserirAluguerEquipamentos", precoParameter, numAluguerParameter, codEquipParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("BuscarPercentagem", id1Parameter, id2Parameter);
         }
     
-        public virtual ObjectResult<ShowEquipamentos_Result> ShowEquipamentos(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF)
+        public virtual ObjectResult<ShowEquipamentosEspecificos_Result> ShowEquipamentosEspecificos(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF)
         {
             var dataIParameter = dataI.HasValue ?
                 new ObjectParameter("DataI", dataI) :
@@ -371,45 +487,7 @@ namespace App.EF
                 new ObjectParameter("DataF", dataF) :
                 new ObjectParameter("DataF", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowEquipamentos_Result>("ShowEquipamentos", dataIParameter, dataFParameter);
-        }
-    
-        public virtual ObjectResult<EquipamentosEspecificos_Result> EquipamentosEspecificos(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF, Nullable<int> codEquip)
-        {
-            var dataIParameter = dataI.HasValue ?
-                new ObjectParameter("DataI", dataI) :
-                new ObjectParameter("DataI", typeof(System.DateTime));
-    
-            var dataFParameter = dataF.HasValue ?
-                new ObjectParameter("DataF", dataF) :
-                new ObjectParameter("DataF", typeof(System.DateTime));
-    
-            var codEquipParameter = codEquip.HasValue ?
-                new ObjectParameter("CodEquip", codEquip) :
-                new ObjectParameter("CodEquip", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EquipamentosEspecificos_Result>("EquipamentosEspecificos", dataIParameter, dataFParameter, codEquipParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<decimal>> BuscarPrecoEspecifico(Nullable<System.DateTime> dataI, Nullable<System.DateTime> dataF, Nullable<int> codEquip, Nullable<int> duracao)
-        {
-            var dataIParameter = dataI.HasValue ?
-                new ObjectParameter("DataI", dataI) :
-                new ObjectParameter("DataI", typeof(System.DateTime));
-    
-            var dataFParameter = dataF.HasValue ?
-                new ObjectParameter("DataF", dataF) :
-                new ObjectParameter("DataF", typeof(System.DateTime));
-    
-            var codEquipParameter = codEquip.HasValue ?
-                new ObjectParameter("CodEquip", codEquip) :
-                new ObjectParameter("CodEquip", typeof(int));
-    
-            var duracaoParameter = duracao.HasValue ?
-                new ObjectParameter("Duracao", duracao) :
-                new ObjectParameter("Duracao", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("BuscarPrecoEspecifico", dataIParameter, dataFParameter, codEquipParameter, duracaoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowEquipamentosEspecificos_Result>("ShowEquipamentosEspecificos", dataIParameter, dataFParameter);
         }
     }
 }

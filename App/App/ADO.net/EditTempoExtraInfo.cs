@@ -12,7 +12,7 @@ namespace App
         public static void RemoverTempoExtra(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtils.ShowDescontos(handler);
+            EntitiesUtilsADO.ShowDescontos(handler);
             Console.Write("Id da Promoção a Remover:");
             int id = Convert.ToInt32(Console.ReadLine());
             RemoverTempoExtra(id);
@@ -112,7 +112,8 @@ namespace App
         public static void AlterarTempoExtra(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtils.ShowDescontos(handler);
+
+            EntitiesUtilsADO.ShowTempoExtra(handler);
             Console.Write("Id da Promoção a alterar (obrigatório):");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.Write("Data de Inicio (AAAA-MM-DD) (opcional):");
@@ -121,7 +122,7 @@ namespace App
             String dataFim = Console.ReadLine();
             Console.Write("Descrição (max 200 caracteres) (opcional):");
             String desc = Console.ReadLine();
-            Console.Write("Valor da percentagem (opcional):");
+            Console.Write("Valor do Tempo Extra(opcional):");
             string s = Console.ReadLine();
             int tempo = s == "" ? -1 : Convert.ToInt32(s);
             Console.Write("***********************************************************************\n");
@@ -156,7 +157,7 @@ namespace App
                             dataF.Value = dataFim;
                             cmd.Parameters.Add(dataF);
                         }
-                        if (dataInicio != "")
+                        if (desc != "")
                         {
                             SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
                             descr.Value = desc;
@@ -168,12 +169,6 @@ namespace App
                             SqlParameter tempo = new SqlParameter("@Tempo", SqlDbType.Int);
                             tempo.Value = t;
                             cmd.Parameters.Add(tempo);
-                        }
-                        if (desc != "")
-                        {
-                            SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
-                            descr.Value = desc;
-                            cmd.Parameters.Add(descr);
                         }
 
                         cmd.ExecuteNonQuery();

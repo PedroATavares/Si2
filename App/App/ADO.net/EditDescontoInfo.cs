@@ -12,7 +12,7 @@ namespace App
         public static void RemoverDesconto(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtils.ShowDescontos(handler);
+            EntitiesUtilsADO.ShowDescontos(handler);
             Console.Write("Id da Promoção Desconto a Remover:");
             int id = Convert.ToInt32(Console.ReadLine());
             RemoverDesconto(id);
@@ -112,7 +112,7 @@ namespace App
         public static void AlterarDesconto(Handler h)
         {
             if (handler == null) handler = h;
-            EntitiesUtils.ShowDescontos(handler);
+            EntitiesUtilsADO.ShowDescontos(handler);
             Console.Write("Id da Promoção a alterar (obrigatório):");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.Write("Data de Inicio (AAAA-MM-DD)(opcional):");
@@ -154,7 +154,7 @@ namespace App
                             dataF.Value = dataFim;
                             cmd.Parameters.Add(dataF);
                         }
-                        if (dataInicio != ""){
+                        if (desc != "" ){
                             SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
                             descr.Value = desc;
                             cmd.Parameters.Add(descr);
@@ -164,12 +164,6 @@ namespace App
                             SqlParameter perc = new SqlParameter("@Percentagem", SqlDbType.Int);
                             perc.Value = percentagem;
                             cmd.Parameters.Add(perc);
-                        }
-                        if (desc != "")
-                        {
-                            SqlParameter descr = new SqlParameter("@Descricao", SqlDbType.VarChar, 200);
-                            descr.Value = desc;
-                            cmd.Parameters.Add(descr);
                         }
 
                         cmd.ExecuteNonQuery();

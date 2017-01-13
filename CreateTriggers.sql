@@ -69,7 +69,7 @@ UPDATE fbo.Aluguer
    ON fbo.Aluguer.Num = inserted.Num
    inner join
    deleted
-   on fbo.Aluguer.DataInicio> GETDATE() and inserted.DataInicio>GETDATE()
+   on fbo.Aluguer.DataInicio > GETDATE() and inserted.DataInicio >= GETDATE() and inserted.DataFim > inserted.DataInicio 
 go
 
 create trigger fbo.DeleteEmpregado
@@ -108,4 +108,43 @@ UPDATE fbo.Equipamentos
 	WHERE Codigo IN (SELECT t.Codigo 
                   FROM deleted t)
 
+go
+
+create trigger fbo.InsertPromocoes
+on fbo.Promocoes
+Instead of insert
+as
+begin
+	insert into fbo.Promocoes(DataInicio,DataFim,Descricao)
+	select i.DataInicio, i.DataFim, i.Descricao 
+	from inserted as i 
+	where i.DataInicio >= GETDATE() and i.DataFim >= i.DataInicio
+
+end;
+go
+
+create trigger fbo.InsertAluguer
+on fbo.Aluguer
+Instead of insert
+as
+begin
+
+	insert into fbo.Aluguer(DataInicio, DataFim, Duracao, NumEmp, CodCli)
+	select i.DataInicio, i.DataFim, i.Duracao, i.NumEmp, i.CodCli
+	from inserted as i
+	where i.DataInicio >= GETDATE() and i.DataFim >= i.DataInicio		
+end;
+go
+
+create trigger InsertPrecoAluguer
+on PrecoAluguer
+Instead of insert
+as
+begin
+
+	insert into PrecoAluguer
+	select *
+	from inserted as i
+	where i.ValidadeI >= GETDATE() and i.ValidadeF >= i.ValidadeI		
+end;
 go

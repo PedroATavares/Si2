@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace App
 {
-    class EntitiesUtils
+    class EntitiesUtilsADO
     {
         public static void PrintClientes(SqlConnection con)
         {
@@ -14,8 +14,7 @@ namespace App
                 cmd.CommandText = "select * from Cliente";
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    Console.WriteLine(
-                        "Estes sao os Clientes existentes -------------------\nCODIGO|  NIF   |     NOME   |      MORADA");
+                    Console.WriteLine( "Estes sao os Clientes existentes -------------------\nCODIGO|  NIF   |     NOME   |      MORADA");
                     while (dr.Read())
                         if (!dr["nif"].Equals(0))
                             Console.Write(dr["codigo"] + " | " + dr["nif"] + " | " + dr["nome"] + " |  " + dr["morada"] +
@@ -43,15 +42,14 @@ namespace App
                         cmd.Parameters.Add(dataF);
 
                         Console.WriteLine("Promoçoes disponiveis entre " + dataI.Value + " e " +
-                                          dataF.Value+ ":");
+                                          dataF.Value + "\nID | Descricao | Data Inicial    | Data Final");
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
                             {
                                 if (!dr["Id"].Equals(0))
                                 {
-                                    Console.Write("-ID:" + dr["Id"] + "\t Descrição:" + dr["Descricao"] + "\t Data Inicio:" +
-                                                  dr["DataInicio"] + "\t Data Fim:" + dr["DataFim"] + "\n");
+                                    Console.Write( dr["Id"] + " | " + dr["Descricao"] + " | " + dr["DataInicio"] + " | " + dr["DataFim"] + "\n");
                                 }
                             }
 
@@ -66,7 +64,6 @@ namespace App
 
         }
 
-
         public static void ShowDescontos(Handler handler)
         {
 
@@ -76,7 +73,7 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
-
+                    Console.WriteLine("Estes sao Promocoes Desconto existentes ------------\nID | Percentagem | Descricao | Data Inicail | Data Final");
                     using (SqlCommand cmd = con.CreateCommand())
                     {
                         cmd.CommandText =
@@ -88,9 +85,7 @@ namespace App
                         {
                             while (dr.Read())
                                 if (!dr["Id"].Equals(0))
-                                    Console.Write("-ID:" + dr["Id"] + "\t Percentagem:" + dr["perc"] + "\t Descrição:" +
-                                                  dr["Descr"] + "\t Data Inicio:" + dr["DI"] + "\t Data Fim:" + dr["DF"] +
-                                                  "\n");
+                                    Console.Write(dr["Id"] + " | " + dr["perc"] + " | " + dr["Descr"] + " | " + dr["DI"] + " | " + dr["DF"] + "\n");
                         }
 
                     }
@@ -110,6 +105,7 @@ namespace App
                 {
                     con.ConnectionString = handler.CONNECTION_STRING;
                     con.Open();
+                    Console.WriteLine("Estes sao as Promocoes Tempo Extra existentes ------------\nID | Tempo Extra | Descricao | Data Inicail | Data Final");
                     using (SqlCommand cmd = con.CreateCommand())
                     {
                         cmd.CommandText =
@@ -121,13 +117,9 @@ namespace App
                         {
                             while (dr.Read())
                                 if (!dr["Id"].Equals(0))
-                                    Console.Write("-ID:" + dr["Id"] + "\t Tempo Extra:" + dr["TE"] + "\t Descr:" +
-                                                  dr["Descr"] + "\t Data Inicio:" + dr["DI"] + "\t Data Fim:" + dr["DF"] +
-                                                  "\n");
+                                    Console.Write(dr["Id"] + " | " + dr["TE"] + " | " + dr["Descr"] + " | " + dr["DI"] + " | " + dr["DF"] + "\n");
                         }
-
                     }
-
                 }
                 catch (DbException e)
                 {
@@ -155,16 +147,13 @@ namespace App
                         cmd.Parameters.Add(dataI);
                         cmd.Parameters.Add(dataF);
 
-                        Console.WriteLine("Equipamentos disponiveis entre " + dataI.Value + " e " +
-                                          dataF.Value + ":");
+                        Console.WriteLine("Equipamentos disponiveis entre " + dataI.Value + " e " + dataF.Value + ":\nCODIGO|   Descricao    |    Tipo " );
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
                             {
                                 if (!dr["Codigo"].Equals(0))
-                                    Console.Write("-Código:" + dr["Codigo"] + "\t Descrição:" + dr["Descricao"] +
-                                                  "\t Tipo:" +
-                                                  dr["Tipo"] + "\n");
+                                    Console.Write( dr["Codigo"] + " | " +  dr["Descricao"] + " | " +  dr["Tipo"] + "\n");
                             }
                         }
                     }
@@ -175,7 +164,6 @@ namespace App
                 }
             }
         }
-
 
         public static void PrintPrecarioParaEquipamento(string dI, string dF, int idEq, Handler handler)
         {
@@ -198,18 +186,15 @@ namespace App
                         cmd.Parameters.Add(dataF);
                         cmd.Parameters.Add(id);
 
-                        Console.WriteLine("Preços disponiveis para esse Equipamento:");
+                        Console.WriteLine("Preços disponiveis para esse Equipamento :\nCODIGO| Descricao |  Tipo |  Validade I | Validade F | Duracao | Valor");
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
                             {
                                 if (!dr["Codigo"].Equals(0))
-                                    Console.Write("-Código:" + dr["Codigo"] + "\tDescrição:" + dr["Descricao"] +
-                                                  "\tTipo:" + dr["Tipo"] + "\tValidade Inicial:" + dr["ValidadeI"] +
-                                                  "\tValidade Final:" + dr["ValidadeF"] + "\tDuração:" + dr["Duracao"] +
-                                                  "\tValor" + dr["Valor"] + "\n");
+                                    Console.Write(dr["Codigo"] + " | " + dr["Descricao"] + " | " + dr["Tipo"] + " | " + dr["ValidadeI"]
+                                        + " | " + dr["ValidadeF"] + " | " + dr["Duracao"] + " | " + dr["Valor"] + "\n");
                             }
-
                         }
                     }
                 }
